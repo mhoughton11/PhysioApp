@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="DIYHIIT.Views.ExecuteWorkoutPage">
+
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="LightGray">
+
+            <Grid Padding="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ProgressBar Progress="{Binding WorkoutProgress}"
+                             Margin="18"
+                             ProgressColor="Blue"/>
+
+                <Label Text="{Binding ProgressLabel}"
+                       Margin="18"
+                       TextColor="Gray"
+                       HorizontalOptions="StartAndExpand"
+                       Grid.Column="1"/>
+            </Grid>
+
+            <Image Aspect="AspectFit"
+                   HeightRequest="200"
+                   Source="{Binding ImageName}"/>
+
+            <Label Text="{Binding CurrentExercise}"
+                   Margin="20"
+                   FontSize="64"
+                   TextColor="White"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Start"/>
+
+            <Label Text="{Binding TimeLeft, StringFormat='{0:0}'}"
+                   Margin="12"
+                   FontSize="48"
+                   TextColor="{Binding TimeLeftColour}"
+                   IsVisible="{Binding TimeLabelEnabled}"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Start"/>
+
+            <Label Text="How was that?"
+                   HorizontalOptions="CenterAndExpand"
+                   FontSize="36"
+                   Margin="10"
+                   IsVisible="{Binding EffortDetailEnabled}"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Easy"
+                       FontSize="20"
+                       Margin="12, 0, 0, 0"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       IsVisible="{Binding EffortDetailEnabled}"/>
+
+                <Slider Value="{Binding EffortSliderValue}"
+                        IsVisible="{Binding EffortDetailEnabled}"
+                        Minimum="0"
+                        Maximum="10"
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"/>
+
+                <Label Text="Hard"
+                       Grid.Column="2"
+                       Margin="0, 0, 12, 0"
+                       FontSize="20"
+                       HorizontalOptions="Start"
+                       VerticalOptions="CenterAndExpand"
+                       IsVisible="{Binding EffortDetailEnabled}"/>
+            </Grid>
+
+            <Button Text="Done"
+                    Margin="10"
+                    Command="{Binding DoneCommand}"
+                    IsVisible="{Binding EffortDetailEnabled}"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+
+            <Label Text="{Binding NextExercise, StringFormat='Up next: {0}'}"
+                   Margin="15"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="EndAndExpand"
+                   FontSize="40"
+                   TextColor="White"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

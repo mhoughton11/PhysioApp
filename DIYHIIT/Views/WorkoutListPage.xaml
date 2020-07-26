@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIYHIIT.Views.WorkoutListPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Create"
+                     Command="{Binding AddWorkoutCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center"
+                     VerticalOptions="CenterAndExpand">
+
+
+            <ListView HasUnevenRows="True"
+                      ItemsSource="{Binding WorkoutList}"
+                      ItemSelected="ListView_ItemSelected"
+                      SeparatorVisibility="None">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="{Binding CellBackgroundColour}"
+                                   CornerRadius="10"
+                                   Margin="10, 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding Name}"
+                                           TextColor="Black"
+                                           FontSize="28"
+                                           Grid.Column="0"
+                                           Grid.Row="0"
+                                           Grid.RowSpan="2"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Text="{Binding Focus}"
+                                           FontSize="Large"
+                                           Grid.Row="0"
+                                           Grid.Column="1"
+                                           Grid.ColumnSpan="2"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Text="{Binding ExerciseCount, StringFormat='{0} Moves'}"
+                                           FontSize="Medium"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Text="{Binding Duration, StringFormat='{0} Mins'}"
+                                           FontSize="Medium"
+                                           Grid.Row="1"
+                                           Grid.Column="2"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+                                </Grid>
+
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:local="clr-namespace:DIYHIIT.Converters"
+             x:Class="DIYHIIT.Views.AddExercisePage"
+             Title="Add Exercise">
+
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="WhiteSmoke">
+
+            <Picker FontSize="20"
+                    Margin="6"
+                    ItemsSource="{Binding ExerciseTypes}"
+                    SelectedItem="{Binding SelectedFilter}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"/>
+            
+            <flv:FlowListView SeparatorVisibility="None"
+                              BackgroundColor="WhiteSmoke"
+                              FlowColumnCount="3"
+                              FlowItemsSource="{Binding FlowExercises}"
+                              FlowItemTapped="FlowListView_FlowItemTapped"
+                              HasUnevenRows="True"
+                              FlowTappedBackgroundColor="Blue">
+
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <Frame Margin="4"
+                               Padding="0"
+                               HasShadow="False"
+                               CornerRadius="10">
+                            <StackLayout>
+
+                                <Image Aspect="AspectFill"
+                                       HeightRequest="100"
+                                       Source="{Binding ImageName}"/>
+
+                                <Label Text="{Binding DisplayName}"
+                                       Margin="0, 8"
+                                       FontSize="16"
+                                       TextColor="DarkBlue"
+                                       VerticalOptions="EndAndExpand"
+                                       HorizontalOptions="CenterAndExpand"/>
+
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+
+        </StackLayout>
+       
+    </ContentPage.Content>
+</ContentPage>

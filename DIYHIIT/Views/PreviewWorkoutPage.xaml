@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIYHIIT.Views.PreviewWorkoutPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="White">
+
+            <Label Text="{Binding Name}"
+                   HorizontalOptions="Start"
+                   Margin="15, 10"
+                   MaxLines="1"
+                   FontSize="40"
+                   TextColor="Black"/>
+
+            <Label Text="{Binding BodyFocus}"
+                   FontSize="32"
+                   HorizontalOptions="Start"
+                   Margin="15, 0"
+                   TextColor="Black"/>
+
+            <Grid HeightRequest="120">
+                <Label Text="{Binding WorkoutMoves, StringFormat='{0} Exercises'}"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       Margin="10"
+                       FontSize="24"/>
+
+                <Label Text="{Binding WorkoutLength, StringFormat='{0} Minutes'}"
+                       Grid.Column="1"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       Margin="10"
+                       FontSize="24"/>
+            </Grid>
+
+            <ListView ItemsSource="{Binding Exercises}"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      BackgroundColor="White"
+                      Margin="4">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="LightGray"
+                                   CornerRadius="20"
+                                   Padding="8"
+                                   Margin="6">
+                                <StackLayout>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding Duration, StringFormat='{0} seconds'}"
+                                               FontSize="18"
+                                               HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding DisplayName}"
+                                               FontSize="18"
+                                               Grid.Column="1"/>
+                                    </Grid>
+                                </StackLayout>
+                                
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button BackgroundColor="Green"
+                    CornerRadius="20"
+                    Text="Let's go!"
+                    Command="{Binding BeginWorkoutCommand}"
+                    FontSize="36"
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="FillAndExpand"/>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

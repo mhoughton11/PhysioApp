@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIYHIIT.Views.CreateWorkoutPage"
+             xmlns:local="clr-namespace:DIYHIIT.Converters"
+             x:Name="CreateWorkout"
+             Title="Create Workout">
+
+    <ContentPage.Content>
+
+        <Grid Margin="8"
+              VerticalOptions="Fill">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.67*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="0.67*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Picker Title="Select a workout type"
+                    SelectedItem="{Binding SelectedWorkoutType}"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Margin="4">
+                <Picker.Items>
+                    <x:String>Select a workout type</x:String>
+                    <x:String>Calisthenics</x:String>
+                    <x:String>HIIT</x:String>
+                    <x:String>Pilates</x:String>
+                    <x:String>Yoga</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Entry Placeholder="Active Period"
+                       Margin="4"
+                       Keyboard="Numeric"
+                       Text="{Binding ActiveEntry}"
+                       Grid.Column="0"
+                       Grid.Row="1"/>
+
+            <Entry Placeholder="Rest Period"
+                       Keyboard="Numeric"
+                       Margin="4"
+                       Text="{Binding RestEntry}"
+                       Grid.Column="1"
+                       Grid.Row="1" />
+
+            <ListView Grid.Row="2"
+                      Grid.ColumnSpan="2"
+                      ItemsSource="{Binding Exercises}"
+                      VerticalOptions="Start"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      x:Name="ExerciseList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="0"
+                                   Margin="4"
+                                   BackgroundColor="LightGray"
+                                   CornerRadius="8">
+                                <Grid HorizontalOptions="FillAndExpand"
+                                          VerticalOptions="FillAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2.2*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="0.75*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Aspect="AspectFill"
+                                           Grid.Column="0"
+                                           Grid.RowSpan="2"
+                                           HeightRequest="80"
+                                           Source="{Binding ImageName}"/>
+
+                                    <Label Text="{Binding DisplayName}"
+                                           Margin="6, 0"
+                                           FontSize="28"
+                                           MaxLines="1"
+                                           TextColor="Black"
+                                           VerticalOptions="CenterAndExpand"
+                                           Grid.Column="1"/>
+
+                                    <Label Text="{Binding BodyFocus}"
+                                           FontSize="16"
+                                           TextColor="Black"
+                                           MaxLines="1"
+                                           Margin="6"
+                                           VerticalOptions="Start"
+                                           Grid.Column="1"
+                                           Grid.Row="1"/>
+
+                                    <Button Margin="0"
+                                            Padding="0"
+                                            Clicked="Button_Clicked"
+                                            CommandParameter="{Binding Index}"
+                                            BackgroundColor="LightGray"
+                                            VerticalOptions="Center"
+                                            HeightRequest="80"
+                                            Grid.Column="2"
+                                            Grid.RowSpan="2">
+                                        <Button.Image Aspect="AspectFit">
+                                            <OnPlatform x:TypeArguments="FileImageSource"
+                                                        iOS="BinIcon.png"
+                                                        Android="BinIcon.png"/>
+                                        </Button.Image>
+                                    </Button>
+
+                                    <Button Grid.Row="0"
+                                            Grid.Column="3"
+                                            Clicked="Button_Clicked_1"
+                                            BackgroundColor="LightGray">
+                                        <Button.Image Aspect="AspectFit">
+                                            <OnPlatform x:TypeArguments="FileImageSource"
+                                                        iOS="UpIcon.png"
+                                                        Android="UpIcon.png"/>
+                                        </Button.Image>
+                                    </Button>
+
+                                    <Button Grid.Row="1"
+                                            Grid.Column="3"
+                                            Clicked="Button_Clicked_2"
+                                            BackgroundColor="LightGray">
+                                        <Button.Image Aspect="AspectFit">
+                                            <OnPlatform x:TypeArguments="FileImageSource"
+                                                        iOS="DownIcon.png"
+                                                        Android="DownIcon.png"/>
+                                        </Button.Image>
+                                    </Button>
+
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button FontSize="Large"
+                    TextColor="Black"
+                    BackgroundColor="LightGreen"
+                    HeightRequest="64"
+                    CornerRadius="10"
+                    Text="Add exercise"
+                    Command="{Binding AddExerciseCommand}"
+                    CommandParameter="{Binding Index}"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="3"/>
+
+            <Button FontSize="Large"
+                    TextColor="Black"
+                    BackgroundColor="LightGreen"
+                    HeightRequest="64"
+                    CornerRadius="10"
+                    Text="Done"
+                    Command="{Binding DoneCommand}"
+                    CommandParameter="{Binding Index}"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="4"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

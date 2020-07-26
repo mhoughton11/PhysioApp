@@ -1,0 +1,36 @@
+[
+  {
+    "Name": "Burpees",
+    "DisplayName": "Burpees",
+    "Type": "HIIT",
+    "BodyFocus": [ 3, 3, 3, 10 ]
+  },
+
+  {
+    "Name": "StarJumps",
+    "DisplayName": "Star Jumps",
+    "Type": "HIIT",
+    "BodyFocus": [ 3, 3, 5, 10 ]
+  },
+
+  {
+    "Name": "BoxJumps",
+    "DisplayName": "Box Jumps",
+    "Type": "HIIT",
+    "BodyFocus": [ 0, 10, 5, 3 ]
+  },
+
+  {
+    "Name": "RopeWobblies",
+    "DisplayName": "Rope Wobblies",
+    "Type": "HIIT",
+    "BodyFocus": [ 10, 3, 5, 5 ]
+  },
+
+  {
+    "Name": "MountainClimbers",
+    "DisplayName": "Mountain Climbers",
+    "Type": "HIIT",
+    "BodyFocus": [ 2, 3, 8, 10 ]
+  }
+]

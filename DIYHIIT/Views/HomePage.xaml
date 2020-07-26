@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIYHIIT.Views.HomePage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="Welcome back"
+                   FontSize="44"
+                   Margin="10"
+                   VerticalOptions="Start"
+                   HorizontalOptions="StartAndExpand"
+                   TextColor="Black"/>
+
+            <Label Text="Recent workouts"
+                   Margin="10, 0"
+                   TextColor="Black"
+                   VerticalOptions="Start"
+                   HorizontalOptions="StartAndExpand"
+                   FontSize="24"/>
+
+            <Label Text="No recent workouts!"
+                   FontSize="32"
+                   Margin="10"
+                   TextColor="Gray"
+                   IsEnabled="{Binding RecentWorkoutsLabel}"
+                   IsVisible="{Binding RecentWorkoutsLabel}"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Start"/>
+
+            <ListView ItemsSource="{Binding WorkoutList}"
+                      HasUnevenRows="True"
+                      ItemSelected="ListView_ItemSelected">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="8">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding Name}"
+                                           Grid.RowSpan="2"
+                                           FontSize="20"
+                                           TextColor="Black"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Text="{Binding DateUsed, StringFormat='{0:MMMM d, yyyy HH:mm}'}"                                           
+                                           FontSize="16"
+                                           Grid.Column="1"
+                                           Grid.Row="0"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Text="{Binding Effort, StringFormat='Effort: {0:0.0}'}"
+                                           FontSize="Medium"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+                                </Grid>
+
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

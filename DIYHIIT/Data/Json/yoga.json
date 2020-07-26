@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "SeatedForwardBend",
+    "DisplayName": "Seated Forward Bend",
+    "Type": "Yoga",
+    "BodyFocus": [ 3, 8, 3, 5 ]
+  },
+
+  {
+    "Name": "BridgePose",
+    "DisplayName": "Bridge Pose",
+    "Type": "Yoga",
+    "BodyFocus": [ 3, 3, 8, 5 ]
+  },
+
+  {
+    "Name": "CatPose",
+    "DisplayName": "Cat Pose",
+    "Type": "Yoga",
+    "BodyFocus": [ 5, 0, 0, 0 ]
+  },
+  {
+    "Name": "CobraPose",
+    "DisplayName": "Cobra Pose",
+    "Type": "Yoga",
+    "BodyFocus": [ 5, 0, 8, 5 ]
+  },
+
+  {
+    "Name": "DownwardDog",
+    "DisplayName": "Downward Dog",
+    "Type": "Yoga",
+    "BodyFocus": [ 3, 0, 3, 2 ]
+  },
+
+  {
+    "Name": "PigeonPose",
+    "DisplayName": "Pigeon Pose",
+    "Type": "Yoga",
+    "BodyFocus": [ 3, 8, 3, 5 ]
+  }
+]

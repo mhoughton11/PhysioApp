@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "PikeStretch",
+    "DisplayName": "Pike Stretch",
+    "Type": "Stretches",
+    "BodyFocus": [ 3, 8, 3, 5 ]
+  },
+
+  {
+    "Name": "StraddleStretch",
+    "DisplayName": "Straddle Stretch",
+    "Type": "Stretches",
+    "BodyFocus": [ 3, 10, 5, 7 ]
+  }
+]
