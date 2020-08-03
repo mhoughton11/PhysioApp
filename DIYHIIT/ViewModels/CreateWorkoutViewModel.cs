@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using DIYHIIT.Models;
 using DIYHIIT.Models.Exercise;
 using DIYHIIT.Models.Workout;
 using DIYHIIT.Services.Dialog;
@@ -96,7 +97,7 @@ namespace DIYHIIT.ViewModels
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
                 ExercisesString = exstring,
-                Type = SelectedWorkoutType,
+                Type = WorkoutType.HIIT,
                 DateAdded = DateTime.Now
             };
 

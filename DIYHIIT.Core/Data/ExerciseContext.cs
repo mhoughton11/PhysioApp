@@ -11,6 +11,6 @@ namespace DIYHIIT.CORE.Data
         {
         }
 
-        public DbSet<Exercise> Exercises { get; set; }
+        //public DbSet<Exercise> Exercises { get; set; }
     }
 }

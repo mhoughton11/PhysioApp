@@ -1,14 +1,17 @@
 ﻿using System;
-using Xamarin.Forms;
 
 namespace DIYHIIT.Models.Exercise
 {
     public interface IExercise : IBaseModel
     {
-        string DisplayName { get; set; }
-        double Duration { get; set; }
-        string BackgroundColour { get; set; }
         int Index { get; set; }
-        string ImageName { get; }
+
+        string DisplayName { get; set; }
+        string ImageURL { get; }
+        string BackgroundColour { get; set; }
+        string Description { get; set; }
+
+        double Duration { get; set; }
+
     }
 }

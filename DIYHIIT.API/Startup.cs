@@ -1,10 +1,10 @@
+using DIYHIIT.API.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DIYHIIT.CORE.Data;
 using System;
 
 namespace DIYHIIT.Data
@@ -21,11 +21,12 @@ namespace DIYHIIT.Data
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddDbContextPool<ExerciseContext>(options =>
+            services.AddDbContextPool<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultString"));
             });
+
+            services.AddScoped<IExerciseData, SqlExericseData>();
 
             services.AddControllers();
         }

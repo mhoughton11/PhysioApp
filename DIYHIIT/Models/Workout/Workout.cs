@@ -17,7 +17,6 @@ namespace DIYHIIT.Models.Workout
         public int ExerciseCount { get => Exercises.Count; }
 
         public string Name { get; set; }
-        public string Type { get; set; }
         public string ExercisesString { get; set; }
         public string CellBackgroundColour { get => GetBackgroundColour(Type); }
         public string Focus { get => GetBodyFocus(Exercises); }
@@ -27,15 +26,16 @@ namespace DIYHIIT.Models.Workout
         public double Effort { get; set; }
         public double Duration { get => GetDuration(); }
 
-        public byte[] BodyFocus { get; set; }
+        public string BodyFocus { get; set; }
 
         public DateTime DateAdded { get; set; }
         public DateTime DateUsed { get; set; }
-        
+
+        public WorkoutType Type { get; set; }
 
         [Ignore]
         public List<Exercise.Exercise> Exercises { get; set; }
-        
+
 
         public Workout()
         {
@@ -96,24 +96,24 @@ namespace DIYHIIT.Models.Workout
         /// </summary>
         /// <param name="workoutType">The type of workout.</param>
         /// <returns>The background colour for the list cell as a hex string.</returns>
-        public string GetBackgroundColour(string workoutType)
+        public string GetBackgroundColour(WorkoutType type)
         {
             string background;
-            switch (Type)
+            switch (type)
             {
-                case "HIIT":
+                case WorkoutType.HIIT:
                     background = HIITBackground;
                     break;
 
-                case "Calisthenics":
+                case WorkoutType.Calisthenics:
                     background = CalisthenicsBackground;
                     break;
 
-                case "Yoga":
+                case WorkoutType.Yoga:
                     background = YogaBackground;
                     break;
 
-                case "Pilates":
+                case WorkoutType.Pilates:
                     background = PilatesBackground;
                     break;
 
@@ -156,7 +156,6 @@ namespace DIYHIIT.Models.Workout
                 if (!string.IsNullOrEmpty(exercise) || !string.IsNullOrWhiteSpace(exercise))
                 {
                     var ex = await App.ExerciseDatabase.GetItemAsync(exercise);
-                    ex.Init();
                     Exercises.Add(ex);
                 }
             }
@@ -181,14 +180,6 @@ namespace DIYHIIT.Models.Workout
 
             try
             {
-                foreach (var ex in exercises)
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        areas[i] += ex.BodyFocus[i];
-                    }
-                }
-
                 byte maxValue = areas.Max();
                 int maxIndex = areas.ToList().IndexOf(maxValue);
 
@@ -222,6 +213,11 @@ namespace DIYHIIT.Models.Workout
             }
 
             return focus;
+        }
+
+        public string GetBackgroundColour(string workoutType)
+        {
+            throw new NotImplementedException();
         }
     }
 }

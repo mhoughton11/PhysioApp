@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using DIYHIIT.Models;
 
 namespace DIYHIIT.Data
 {
@@ -11,8 +12,7 @@ namespace DIYHIIT.Data
         Task<int> GetItemCount();
         Task<T> GetItemAsync(int id);
         Task<T> GetItemAsync(string name);
-        Task<List<T>> GetItemsAsync();
-        Task<List<T>> GetItemsAsync(string type);
+        Task<List<T>> GetItemsAsync(WorkoutType? type);
         Task<int> SaveItemAsync(T item);
         Task<int> SaveItemsAsync(ICollection<T> items);
         Task<int> SaveItemsAsync(IList<T> items);

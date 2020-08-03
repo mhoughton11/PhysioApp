@@ -165,7 +165,7 @@ namespace DIYHIIT.ViewModels
 
             CurrentExercise = exercises[0].DisplayName;
             TimeLeft = exercises[0].Duration;
-            ImageName = exercises[0].ImageName;
+            ImageName = exercises[0].ImageURL;
 
             try
             {
@@ -216,7 +216,7 @@ namespace DIYHIIT.ViewModels
                 return;
 
             // Update image
-            ImageName = exercises[count].ImageName;
+            ImageName = exercises[count].ImageURL;
 
             // Update timer
             TimeLeft = exercises[count].Duration - timerValue + 1;

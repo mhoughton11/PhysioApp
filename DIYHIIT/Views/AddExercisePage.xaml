@@ -14,6 +14,7 @@
                     Margin="6"
                     ItemsSource="{Binding ExerciseTypes}"
                     SelectedItem="{Binding SelectedFilter}"
+                    SelectedIndex="{Binding SelectedIndex}"
                     VerticalOptions="Center"
                     HorizontalOptions="FillAndExpand"/>
             

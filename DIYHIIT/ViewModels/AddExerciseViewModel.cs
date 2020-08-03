@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System;
 using System.Linq;
 using MvvmCross.Binding.Extensions;
+using DIYHIIT.Models;
 
 namespace DIYHIIT.ViewModels
 {
@@ -35,6 +36,20 @@ namespace DIYHIIT.ViewModels
             }
         }
 
+        private int _selectedIndex = 0;
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                _selectedIndex = value;
+                RaisePropertyChanged(() => SelectedIndex);
+
+                var ex = Enum.GetName(typeof(WorkoutType), value);
+                GetExercises(ex);
+            }
+        }
+
         private string _selectedFilter = "All";
         public string SelectedFilter
         {
@@ -44,7 +59,7 @@ namespace DIYHIIT.ViewModels
                 _selectedFilter = value;
                 RaisePropertyChanged(() => SelectedFilter);
 
-                GetExercises(value);
+                GetExercises();
             }
         }
 
@@ -81,8 +96,12 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private async void GetExercises(string type = null)
+        private async void GetExercises(string t = null)
         {
+            if (t == null) { return; }
+
+            WorkoutType type = (WorkoutType)Enum.Parse(typeof(WorkoutType), t);
+
             var items = await App.ExerciseDatabase.GetItemsAsync(type);
             var sorted = items.OrderBy(o => o.Name).ToList();
 

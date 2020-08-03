@@ -20,8 +20,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DIYHIIT.Core\DIYHIIT.Core.csproj">
+    <ProjectReference Include="..\DIYHIIT\DIYHIIT.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

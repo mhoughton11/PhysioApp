@@ -1,44 +1,36 @@
-﻿using DIYHIIT.Services;
-using SQLite;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.IO;
-using Xamarin.Forms;
-
-using static DIYHIIT.Models.Constants;
 
 namespace DIYHIIT.Models.Exercise
 {
     public class Exercise : IExercise
     {
-        [PrimaryKey, AutoIncrement]
+        [Key]
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string DisplayName { get; set; }
-        public string Type { get; set; }
-        public byte[] BodyFocus { get; set; }
-        public double Duration { get; set; }
-        public string BackgroundColour { get; set; }
-        
+
         public int Index { get; set; }
 
-        public string ImageName
-        {
-            get => Name + ".jpg";
-        }
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
 
-        public Exercise()
-        {
-            
-        }
+        [StringLength(50)]
+        public string DisplayName { get; set; }
 
-        public void Init()
-        {
-            if (BodyFocus != null)
-                return;
+        [StringLength(500)]
+        public string Description { get; set; }
 
-            BodyFocus = new byte[4];
-        }
+        public string BackgroundColour { get; set; }
+
+        public string BodyFocus { get; set; }
+
+        public double Duration { get; set; }
+
+        public string ImageURL { get; set; }
+
+        [Required]
+        public WorkoutType Type { get; set; }
 
         public void DebugObject()
         {

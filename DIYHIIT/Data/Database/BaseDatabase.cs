@@ -92,9 +92,9 @@ namespace DIYHIIT.Data.Database
         /// </summary>
         /// <param name="type">The type of the desired items.</param>
         /// <returns>List of items with the desired type.</returns>
-        public Task<List<T>> GetItemsAsync(string type)
+        public Task<List<T>> GetItemsAsync(WorkoutType? type)
         {
-            if (type == "All")
+            if (type == WorkoutType.All || type == null)
             {
                 return _database.Table<T>().ToListAsync();
             }
