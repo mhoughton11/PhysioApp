@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DIYHIIT.Views.CreateWorkoutPage"
+             x:Class="DIYHIIT.Views.CreateWorkoutView"
+             xmlns:utility="clr-namespace:DIYHIIT.Utility"
+             utility:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:DIYHIIT.Converters"
-             x:Name="CreateWorkout"
              Title="Create Workout">
 
     <ContentPage.Content>
@@ -102,8 +103,6 @@
 
                                     <Button Margin="0"
                                             Padding="0"
-                                            Clicked="Button_Clicked"
-                                            CommandParameter="{Binding Index}"
                                             BackgroundColor="LightGray"
                                             VerticalOptions="Center"
                                             HeightRequest="80"
@@ -118,7 +117,6 @@
 
                                     <Button Grid.Row="0"
                                             Grid.Column="3"
-                                            Clicked="Button_Clicked_1"
                                             BackgroundColor="LightGray">
                                         <Button.Image Aspect="AspectFit">
                                             <OnPlatform x:TypeArguments="FileImageSource"
@@ -129,7 +127,6 @@
 
                                     <Button Grid.Row="1"
                                             Grid.Column="3"
-                                            Clicked="Button_Clicked_2"
                                             BackgroundColor="LightGray">
                                         <Button.Image Aspect="AspectFit">
                                             <OnPlatform x:TypeArguments="FileImageSource"

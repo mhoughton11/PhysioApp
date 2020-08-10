@@ -54,7 +54,7 @@ namespace DIYHIIT.ViewModels
 
         private async void ExecuteBeginWorkoutCommand()
         {
-            await Navigation.PushAsync(new ExecuteWorkoutPage(workout));
+            //await Navigation.PushAsync(new ExecuteWorkoutView(workout));
         }
     }
 }

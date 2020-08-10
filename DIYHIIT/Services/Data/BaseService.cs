@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIYHIIT.Models.Exercise;
 using System.Reactive.Linq;
+using System.Linq;
+using DIYHIIT.Models;
+using System;
 
 namespace DIYHIIT.Services.Data
 {
-    public class BaseService
+    public class BaseService 
     {
         protected IBlobCache Cache;
 
@@ -28,9 +31,22 @@ namespace DIYHIIT.Services.Data
             }
         }
 
-        public void InvalidateCache()
+        public async Task<T> GetFromCache<T>(int id) where T : IBaseModel
         {
-            Cache.InvalidateAllObjects<Exercise>();
+            try
+            {
+                var all = await Cache.GetAllObjects<T>();
+                return all.Where(t => t.ID == id).SingleOrDefault();
+            }
+            catch (Exception)
+            {
+                return default(T);
+            }
+        }
+
+        public void InvalidateCache<T>()
+        {
+            Cache.InvalidateAllObjects<T>();
         }
     }
 }

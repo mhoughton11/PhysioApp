@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DIYHIIT.Views.HomePage">
+             xmlns:utility="clr-namespace:DIYHIIT.Utility"
+             utility:ViewModelLocator.AutoWireViewModel="True"
+             x:Class="DIYHIIT.Views.HomeView">
     <ContentPage.Content>
         <StackLayout>
 
@@ -29,8 +31,7 @@
                    VerticalOptions="Start"/>
 
             <ListView ItemsSource="{Binding WorkoutList}"
-                      HasUnevenRows="True"
-                      ItemSelected="ListView_ItemSelected">
+                      HasUnevenRows="True">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>

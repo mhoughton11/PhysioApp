@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using DIYHIIT.Models.Exercise;
 using DIYHIIT.ViewModels;
 using Xamarin.Forms;
 
 namespace DIYHIIT.Views
 {
-    public partial class ProfilePage : ContentPage
+    public partial class CreateWorkoutView : ContentPage
     {
-        ProfileViewModel viewModel;
-
-        public ProfilePage()
+        public CreateWorkoutView()
         {
             InitializeComponent();
-
-            BindingContext = viewModel = new ProfileViewModel();
         }
     }
 }
+ 

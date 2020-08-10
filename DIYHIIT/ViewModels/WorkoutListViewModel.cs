@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
-    public class WorkoutListViewModel : MvxViewModel
+    public class WorkoutListViewModel : BaseViewModel
     {
         private List<Workout> _workoutList;
         public List<Workout> WorkoutList
@@ -29,15 +29,14 @@ namespace DIYHIIT.ViewModels
 
         public Command AddWorkoutCommand { get; set; }
 
-        public INavigation Navigation;
+        private readonly INavigation navigation;
 
-        private readonly IDialogService dialogService;
-
-        public WorkoutListViewModel()
+        public WorkoutListViewModel(INavigation navigation, IDialogService dialogService)
+            : base(dialogService)
         {
-            WorkoutList = new List<Workout>();
+            this.navigation = navigation;
 
-            dialogService = new DialogService();
+            WorkoutList = new List<Workout>();
 
             AddWorkoutCommand = new Command(() => ExecuteAddWorkoutCommand());
         }
@@ -67,7 +66,7 @@ namespace DIYHIIT.ViewModels
         {
             try
             {
-                await Navigation.PushAsync(new PreviewWorkoutPage(workout));
+                //await Navigation.PushAsync(new PreviewWorkoutView(workout));
             }
             catch (Exception ex)
             {
@@ -80,7 +79,7 @@ namespace DIYHIIT.ViewModels
 
         private async void ExecuteAddWorkoutCommand()
         {
-            await Navigation.PushAsync(new CreateWorkoutPage());
+            await Navigation.PushAsync(new CreateWorkoutView());
         }
     }
 }

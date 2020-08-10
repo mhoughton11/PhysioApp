@@ -9,11 +9,15 @@ using System;
 using System.Linq;
 using MvvmCross.Binding.Extensions;
 using DIYHIIT.Models;
+using DIYHIIT.Services.Data;
+using DIYHIIT.Contracts.Data;
 
 namespace DIYHIIT.ViewModels
 {
     public class AddExerciseViewModel : MvxViewModel
     {
+        private readonly IExerciseDataService _exeriseDataService;
+
         private ObservableCollection<Exercise> _flowExercises;
         public ObservableCollection<Exercise> FlowExercises 
         {
@@ -63,18 +67,13 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public AddExerciseViewModel()
+        public AddExerciseViewModel(IExerciseDataService exerciseDataService)
         {
+            _exeriseDataService = exerciseDataService;
+
             FlowExercises = new ObservableCollection<Exercise>();
-            ExerciseTypes = new List<string>()
-            {
-                "All",
-                "Calisthenics",
-                "HIIT",
-                "Pilates",
-                "Stretches",
-                "Yoga"
-            };
+            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
+
             SelectedFilter = ExerciseTypes[0];
         }
 
@@ -100,19 +99,9 @@ namespace DIYHIIT.ViewModels
         {
             if (t == null) { return; }
 
-            WorkoutType type = (WorkoutType)Enum.Parse(typeof(WorkoutType), t);
+            var items = await _exeriseDataService.GetAllExercisesAsync();
 
-            var items = await App.ExerciseDatabase.GetItemsAsync(type);
-            var sorted = items.OrderBy(o => o.Name).ToList();
-
-            // Remove list 
-            for (int i = 0; i < sorted.Count; i++)
-            {
-                if (sorted[i].Name == "Rest")
-                    sorted.RemoveAt(i);
-            }
-
-            FlowExercises = new ObservableCollection<Exercise>(sorted);
+            FlowExercises = new ObservableCollection<Exercise>(items);
         }
     }
 }

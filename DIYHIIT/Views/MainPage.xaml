@@ -10,7 +10,7 @@
         <NavigationPage Title="Home">
 
             <x:Arguments>
-                <views:HomePage />
+                <views:HomeView />
             </x:Arguments>
 
             <NavigationPage.Icon>
@@ -23,7 +23,7 @@
         <NavigationPage Title="Workouts">
 
             <x:Arguments>
-                <views:WorkoutListPage />
+                <views:WorkoutListView />
             </x:Arguments>
 
             <NavigationPage.Icon>
@@ -37,7 +37,7 @@
         <NavigationPage Title="Profile">
 
             <x:Arguments>
-                <views:ProfilePage />
+                <views:ProfileView />
             </x:Arguments>
 
             <NavigationPage.Icon>

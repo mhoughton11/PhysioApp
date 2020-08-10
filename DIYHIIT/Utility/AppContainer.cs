@@ -1,0 +1,59 @@
+﻿using System;
+using System.Diagnostics;
+using Autofac;
+using DIYHIIT.Contracts;
+using DIYHIIT.Contracts.Data;
+using DIYHIIT.Repository;
+using DIYHIIT.Services.Data;
+using DIYHIIT.ViewModels;
+using Xamarin.Forms;
+
+namespace DIYHIIT.Utility
+{
+    public class AppContainer
+    {
+        private static IContainer _container;
+
+        public static void RegisterDependancies()
+        {
+            var builder = new ContainerBuilder();
+
+            // ViewModels
+            builder.RegisterType<AddExerciseViewModel>();
+            builder.RegisterType<CreateWorkoutViewModel>();
+            builder.RegisterType<ExecuteWorkoutViewModel>();
+            builder.RegisterType<HomeViewModel>();
+            builder.RegisterType<PreviewWorkoutViewModel>();
+            builder.RegisterType<ProfileViewModel>();
+            builder.RegisterType<WorkoutListViewModel>();
+
+            // Services - Data
+            builder.RegisterType<ExerciseDataService>().As<IExerciseDataService>();
+            //builder.RegisterType<Navigation>().As<INavigation>();
+            //builder.RegisterType<>().As<>();
+            //builder.RegisterType<>().As<>();
+
+            // Services - General
+
+
+            // General
+            builder.RegisterType<GenericRepository>().As<IGenericRepository>();
+
+            _container = builder.Build();
+        }
+        
+        public static object Resolve(Type typeName)
+        {
+            Debug.Write("Resolving for type: ");
+            Debug.WriteLine(typeName);
+            return _container.Resolve(typeName);
+        }
+        
+
+        public static T Resolve<T>()
+        {
+            return _container.Resolve<T>();
+        }
+        
+    }
+}

@@ -124,7 +124,7 @@ namespace DIYHIIT.ViewModels
 
         private async void ExecuteAddExerciseCommand()
         {
-            await Navigation.PushAsync(new AddExercisePage());
+            await Navigation.PushAsync(new AddExerciseView());
         }
 
         internal void ShiftItemUp(int commandParameter)
@@ -140,5 +140,5 @@ namespace DIYHIIT.ViewModels
         }
     }
 
-    
+
 }

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Reflection;
+using DIYHIIT.Utility;
 
 namespace DIYHIIT
 {
@@ -71,6 +72,8 @@ namespace DIYHIIT
 
             FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
 
+            AppContainer.RegisterDependancies();
+
             MainPage = new MainPage();
         }
 
@@ -82,12 +85,12 @@ namespace DIYHIIT
 
             var items = new List<Exercise>();
 
-            items.AddRange(GetJsonData("calisthenics.json"));
-            items.AddRange(GetJsonData("hiit.json"));
-            items.AddRange(GetJsonData("pilates.json"));
-            items.AddRange(GetJsonData("rest.json"));
-            items.AddRange(GetJsonData("stretches.json"));
-            items.AddRange(GetJsonData("yoga.json"));
+            //items.AddRange(GetJsonData("calisthenics.json"));
+            //items.AddRange(GetJsonData("hiit.json"));
+            //items.AddRange(GetJsonData("pilates.json"));
+            //items.AddRange(GetJsonData("rest.json"));
+            //items.AddRange(GetJsonData("stretches.json"));
+            //items.AddRange(GetJsonData("yoga.json"));
 
             if (items.Count != await ExerciseDatabase.GetItemCount())
             {

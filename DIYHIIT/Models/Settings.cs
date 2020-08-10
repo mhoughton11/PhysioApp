@@ -8,6 +8,8 @@ namespace DIYHIIT.Models
         HIIT,
         Pilates,
         Yoga,
+        Stretches,
+        Mobility,
         All
     };
 }
