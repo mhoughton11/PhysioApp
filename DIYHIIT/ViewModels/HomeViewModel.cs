@@ -10,6 +10,14 @@ namespace DIYHIIT.ViewModels
 {
     public class HomeViewModel: BaseViewModel
     {
+        public HomeViewModel(INavigationService navigationService, IDialogService dialogService)
+            : base(navigationService, dialogService)
+        {
+            RecentWorkoutsLabel = "False";
+
+            WorkoutList = new List<Workout>();
+        }
+
         private List<Workout> _workoutList;
         public List<Workout> WorkoutList
         {
@@ -30,14 +38,6 @@ namespace DIYHIIT.ViewModels
                 _recentWorkoutsLabel = value;
                 RaisePropertyChanged(() => RecentWorkoutsLabel);
             }
-        }
-
-        public HomeViewModel(INavigationService navigationService, IDialogService dialogService)
-            : base(navigationService, dialogService)
-        {
-            RecentWorkoutsLabel = "False";
-
-            WorkoutList = new List<Workout>();
         }
 
         public async void OnAppearing()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Models.Workout;
 using DIYHIIT.Views;
@@ -10,6 +11,13 @@ namespace DIYHIIT.ViewModels
 {
     public class WorkoutListViewModel : BaseViewModel
     {
+        public WorkoutListViewModel(INavigationService navigationService,
+                                    IDialogService dialogService)
+            : base(navigationService, dialogService)
+        {
+            WorkoutList = new List<Workout>();
+        }
+
         private List<Workout> _workoutList;
         public List<Workout> WorkoutList
         {
@@ -21,40 +29,10 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public Command AddWorkoutCommand { get; set; }
+        public Command AddWorkoutCommand => new Command(OnAddWorkoutCommand);
+        
 
-        private readonly INavigationService navigation;
-
-        public WorkoutListViewModel(INavigationService navigationService, IDialogService dialogService)
-            : base(navigationService, dialogService)
-        {
-            WorkoutList = new List<Workout>();
-
-            AddWorkoutCommand = new Command(() => ExecuteAddWorkoutCommand());
-        }
-
-        public async void OnAppearing()
-        {
-            try
-            {
-                // Get workouts
-                var workoutList = await App.WorkoutDatabase.GetItemsAsync();
-
-                foreach (var workout in workoutList)
-                {
-                    await workout.GetExercises(workout.ExercisesString);
-                }
-                
-                WorkoutList = workoutList;
-            }
-            catch (Exception ex)
-            {
-                _dialogService.Popup("Loading workouts failed.");
-                Debug.WriteLine(ex);
-            }
-        }
-
-        public async void WorkoutSelected(Workout workout)
+        public void WorkoutSelected(Workout workout)
         {
             try
             {
@@ -69,9 +47,30 @@ namespace DIYHIIT.ViewModels
             }          
         }
 
-        private async void ExecuteAddWorkoutCommand()
+        public override async Task InitializeAsync(object data)
         {
-            await _navigationService.NavigateToAsync<CreateWorkoutViewModel>();
+            try
+            {
+                // Get workouts
+                var workoutList = await App.WorkoutDatabase.GetItemsAsync();
+
+                foreach (var workout in workoutList)
+                {
+                    await workout.GetExercises(workout.ExercisesString);
+                }
+
+                WorkoutList = workoutList;
+            }
+            catch (Exception ex)
+            {
+                _dialogService.Popup("Loading workouts failed.");
+                Debug.WriteLine(ex);
+            }
+        }
+
+        private async void OnAddWorkoutCommand()
+        {
+            await _navigationService.NavigateToAsync<CreateWorkoutViewModel>("Test");
         }
     }
 }

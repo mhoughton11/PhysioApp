@@ -18,6 +18,13 @@ namespace DIYHIIT.Repository
             await httpClient.DeleteAsync(uri);
         }
 
+        /// <summary>
+        /// Send a request to API for object of type T using URL.
+        /// </summary>
+        /// <typeparam name="T">Desired type of object to be retrieved from Database.</typeparam>
+        /// <param name="uri">Endpoint URI to retrieve data from.</param>
+        /// <param name="authToken">Authentication token.</param>
+        /// <returns></returns>
         public async Task<T> GetAsync<T>(string uri, string authToken = "")
         {
             try

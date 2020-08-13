@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
@@ -21,11 +22,6 @@ namespace DIYHIIT.Data.Controllers
         }
 
         private readonly AppDbContext _appDbContext;
-
-        public ExerciseController()
-        {
-            
-        }
 
         [HttpGet]
         [Route("exercises")]

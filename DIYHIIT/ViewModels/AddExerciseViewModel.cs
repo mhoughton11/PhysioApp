@@ -24,6 +24,8 @@ namespace DIYHIIT.ViewModels
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
 
             SelectedFilter = ExerciseTypes[0];
+
+            OnAppearing();
         }
 
         private readonly IExerciseDataService _exeriseDataService;

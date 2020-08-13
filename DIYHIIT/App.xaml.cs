@@ -71,11 +71,13 @@ namespace DIYHIIT
             InitializeComponent();
             FlowListView.Init();
 
-            FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
+            FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));            
 
-            AppContainer.RegisterDependancies();
+            InitializeApp();
 
             InitalizeNavigation();
+
+            MainPage = new MainPage();
         }
 
         private async void InitalizeNavigation()
@@ -84,7 +86,14 @@ namespace DIYHIIT
             await navigationService.InitializeAsync();
         }
 
-        protected async override void OnStart()
+        private void InitializeApp()
+        {
+            
+
+            AppContainer.RegisterDependancies();
+        }
+
+        protected override void OnStart()
         {
  
         }

@@ -20,19 +20,19 @@
     "DIYHIIT.API": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "http://localhost:45283",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:45283"
+      }
     },
     "DIYHIIT.Data": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
+      "applicationUrl": "https://localhost:44143;http://localhost:5982",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:44143;http://localhost:5982"
+      }
     }
   }
 }

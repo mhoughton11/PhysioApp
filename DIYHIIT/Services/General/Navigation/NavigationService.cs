@@ -85,26 +85,25 @@ namespace DIYHIIT.Services.General.Navigation
         {
             var page = CreatePage(viewModelType, parameter);
 
-            if (page is MainPage || page is RegistrationView)
+            if (page is LoginView || page is RegistrationView)
             {
                 CurrentApplication.MainPage = page;
             }
-            else if (page is LoginView)
+            else
             {
-                CurrentApplication.MainPage = page;
+                var navigationPage = CurrentApplication.MainPage as DIYHIITNavigationPage;
+
+                if (navigationPage != null)
+                {
+                    await navigationPage.PushAsync(page);
+                }
+                else
+                {
+                    CurrentApplication.MainPage = new DIYHIITNavigationPage(page);
+                }
             }
 
             await (page.BindingContext as BaseViewModel).InitializeAsync(parameter);
-        }
-
-        protected Type GetPageTypeForViewModel(Type viewModelType)
-        {
-            if (!_mappings.ContainsKey(viewModelType))
-            {
-                throw new KeyNotFoundException($"No map for ${viewModelType} was found on navigation mappings");
-            }
-
-            return _mappings[viewModelType];
         }
 
         protected Page CreatePage(Type viewModelType, object parameter)
@@ -119,6 +118,16 @@ namespace DIYHIIT.Services.General.Navigation
             Page page = Activator.CreateInstance(pageType) as Page;
 
             return page;
+        }
+
+        protected Type GetPageTypeForViewModel(Type viewModelType)
+        {
+            if (!_mappings.ContainsKey(viewModelType))
+            {
+                throw new KeyNotFoundException($"No map for ${viewModelType} was found on navigation mappings");
+            }
+
+            return _mappings[viewModelType];
         }
 
         private void CreatePageViewModelMappings()

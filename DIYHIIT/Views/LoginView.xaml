@@ -6,6 +6,8 @@
              x:Class="DIYHIIT.Views.LoginView">
 
     <ContentPage.Content>
-        <Label Text="Login"/>
+        <Label Text="{Binding LabelText}"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"/>
     </ContentPage.Content>
 </ContentPage>

@@ -6,6 +6,7 @@ using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Repository;
 using DIYHIIT.Services.Data;
+using DIYHIIT.Services.General.Authentication;
 using DIYHIIT.Services.General.Dialog;
 using DIYHIIT.Services.General.Navigation;
 using DIYHIIT.ViewModels;
@@ -34,13 +35,11 @@ namespace DIYHIIT.Utility
 
             // Services - Data
             builder.RegisterType<ExerciseDataService>().As<IExerciseDataService>();
-            //builder.RegisterType<>().As<>();
-            //builder.RegisterType<>().As<>();
 
             // Services - General
             builder.RegisterType<NavigationService>().As<INavigationService>();
+            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<DialogService>().As<IDialogService>();
-
 
             // General
             builder.RegisterType<GenericRepository>().As<IGenericRepository>();
@@ -55,7 +54,6 @@ namespace DIYHIIT.Utility
             return _container.Resolve(typeName);
         }
         
-
         public static T Resolve<T>()
         {
             return _container.Resolve<T>();
