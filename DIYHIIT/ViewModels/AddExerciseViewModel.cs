@@ -1,21 +1,31 @@
-﻿using MvvmCross.ViewModels;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using DIYHIIT.Models.Exercise;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System;
 using System.Linq;
-using MvvmCross.Binding.Extensions;
 using DIYHIIT.Models;
-using DIYHIIT.Services.Data;
-using DIYHIIT.Contracts.Data;
+using DIYHIIT.Contracts.Services.Data;
+using DIYHIIT.Contracts.Services.General;
 
 namespace DIYHIIT.ViewModels
 {
-    public class AddExerciseViewModel : MvxViewModel
+    public class AddExerciseViewModel : BaseViewModel
     {
+        public AddExerciseViewModel(INavigationService navigationService,
+            IDialogService dialogService,
+            IExerciseDataService exerciseDataService)
+            : base(navigationService, dialogService)
+        {
+            _exeriseDataService = exerciseDataService;
+
+            FlowExercises = new ObservableCollection<Exercise>();
+            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
+
+            SelectedFilter = ExerciseTypes[0];
+        }
+
         private readonly IExerciseDataService _exeriseDataService;
 
         private ObservableCollection<Exercise> _flowExercises;
@@ -65,16 +75,6 @@ namespace DIYHIIT.ViewModels
 
                 GetExercises();
             }
-        }
-
-        public AddExerciseViewModel(IExerciseDataService exerciseDataService)
-        {
-            _exeriseDataService = exerciseDataService;
-
-            FlowExercises = new ObservableCollection<Exercise>();
-            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
-
-            SelectedFilter = ExerciseTypes[0];
         }
 
         public void OnAppearing()

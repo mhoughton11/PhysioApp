@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Akavache;
 using DIYHIIT.Constants;
 using DIYHIIT.Contracts;
-using DIYHIIT.Contracts.Data;
+using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Models;
 using DIYHIIT.Models.Exercise;
 

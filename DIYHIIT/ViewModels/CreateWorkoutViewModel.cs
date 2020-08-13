@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Models;
 using DIYHIIT.Models.Exercise;
 using DIYHIIT.Models.Workout;
-using DIYHIIT.Services.Dialog;
 using DIYHIIT.Views;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
-    public class CreateWorkoutViewModel : MvxViewModel
+    public class CreateWorkoutViewModel : BaseViewModel
     {
         public string ActiveEntry { get; set; }
         public string RestEntry { get; set; }
@@ -31,13 +31,12 @@ namespace DIYHIIT.ViewModels
         public Command DoneCommand { get; set; }
         public Command AddExerciseCommand { get; set; }
 
-        private readonly IDialogService dialogService;
         readonly Random rand;
 
-        public CreateWorkoutViewModel()
+        public CreateWorkoutViewModel(INavigationService navigationService, IDialogService dialogService)
+            : base(navigationService, dialogService)
         {
             Exercises = new ObservableCollection<Exercise>();
-            dialogService = new DialogService();
             rand = new Random();
 
             DoneCommand = new Command(() => ExecuteDoneCommand());
@@ -45,7 +44,7 @@ namespace DIYHIIT.ViewModels
 
             MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, "ExerciseAdded", (sender, arg) =>
             {
-                dialogService.Popup($"Adding {arg.DisplayName} to the workout");
+                _dialogService.Popup($"Adding {arg.DisplayName} to the workout");
                 arg.Index = rand.Next(0, 0xFFFF);
                 Exercises.Add(arg);
             });
@@ -76,7 +75,7 @@ namespace DIYHIIT.ViewModels
             }
             catch (Exception)
             {
-                await dialogService.ShowAlertAsync("Empty field.", "Please enter a value for the active interval.", "OK");
+                await _dialogService.ShowAlertAsync("Empty field.", "Please enter a value for the active interval.", "OK");
                 return;
             }
 
@@ -86,7 +85,7 @@ namespace DIYHIIT.ViewModels
             }
             catch (Exception)
             {
-                await dialogService.ShowAlertAsync("Empty field.", "Please enter a value for the rest interval.", "OK");
+                await _dialogService.ShowAlertAsync("Empty field.", "Please enter a value for the rest interval.", "OK");
                 return;
             }
 
@@ -105,7 +104,7 @@ namespace DIYHIIT.ViewModels
 
             if (name)
             {
-                string input = await dialogService.ShowPromptAsync("Workout Name", "Enter workout name below", "OK", "Cancel");
+                string input = await _dialogService.ShowPromptAsync("Workout Name", "Enter workout name below", "OK", "Cancel");
 
                 if (!string.IsNullOrWhiteSpace(input) || !string.IsNullOrEmpty(input))
                 {
@@ -113,32 +112,18 @@ namespace DIYHIIT.ViewModels
                 }
                 else
                 {
-                    dialogService.Popup("Please type a workout name when prompted.");
+                    _dialogService.Popup("Please type a workout name when prompted.");
                     return;
                 }
             }
 
             await App.WorkoutDatabase.SaveItemAsync(workout);
-            await Navigation.PopAsync();
+            await _navigationService.NavigateBackAsync();
         }
 
         private async void ExecuteAddExerciseCommand()
         {
-            await Navigation.PushAsync(new AddExerciseView());
-        }
-
-        internal void ShiftItemUp(int commandParameter)
-        {
-            // get the index of the selected object
-        }
-
-        public INavigation Navigation { get; set; }
-
-        internal void ShiftItemDown(int commandParameter)
-        {
-            // get the index of the selected object
+            await _navigationService.NavigateToAsync<AddExerciseViewModel>();
         }
     }
-
-
 }

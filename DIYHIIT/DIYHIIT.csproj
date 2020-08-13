@@ -43,9 +43,14 @@
     <Folder Include="Converters\" />
     <Folder Include="Data\Json\" />
     <Folder Include="Services\Data\" />
-    <Folder Include="Contracts\Data\" />
     <Folder Include="Constants\" />
     <Folder Include="Utility\" />
+    <Folder Include="Contracts\Services\" />
+    <Folder Include="Contracts\Services\Data\" />
+    <Folder Include="Contracts\Services\General\" />
+    <Folder Include="Services\General\" />
+    <Folder Include="Services\General\Dialog\" />
+    <Folder Include="Services\General\Navigation\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\Json\calisthenics.json">

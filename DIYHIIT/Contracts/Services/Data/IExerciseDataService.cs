@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using DIYHIIT.Models;
 using DIYHIIT.Models.Exercise;
 
-namespace DIYHIIT.Contracts.Data
+namespace DIYHIIT.Contracts.Services.Data
 {
     public interface IExerciseDataService
     {

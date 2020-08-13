@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using DIYHIIT.Models;
+using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Models.Workout;
-using DIYHIIT.Services.Dialog;
 using DIYHIIT.Views;
-using MvvmCross.Commands;
-using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
@@ -29,13 +23,11 @@ namespace DIYHIIT.ViewModels
 
         public Command AddWorkoutCommand { get; set; }
 
-        private readonly INavigation navigation;
+        private readonly INavigationService navigation;
 
-        public WorkoutListViewModel(INavigation navigation, IDialogService dialogService)
-            : base(dialogService)
+        public WorkoutListViewModel(INavigationService navigationService, IDialogService dialogService)
+            : base(navigationService, dialogService)
         {
-            this.navigation = navigation;
-
             WorkoutList = new List<Workout>();
 
             AddWorkoutCommand = new Command(() => ExecuteAddWorkoutCommand());
@@ -57,7 +49,7 @@ namespace DIYHIIT.ViewModels
             }
             catch (Exception ex)
             {
-                dialogService.Popup("Loading workouts failed.");
+                _dialogService.Popup("Loading workouts failed.");
                 Debug.WriteLine(ex);
             }
         }
@@ -70,7 +62,7 @@ namespace DIYHIIT.ViewModels
             }
             catch (Exception ex)
             {
-                dialogService.Popup("Failed to load workout.");
+                _dialogService.Popup("Failed to load workout.");
                 Debug.WriteLine(ex);
                 Debug.WriteLine("Workout:");
                 workout.DebugObject();
@@ -79,7 +71,7 @@ namespace DIYHIIT.ViewModels
 
         private async void ExecuteAddWorkoutCommand()
         {
-            await Navigation.PushAsync(new CreateWorkoutView());
+            await _navigationService.NavigateToAsync<CreateWorkoutViewModel>();
         }
     }
 }

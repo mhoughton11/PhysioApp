@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Models.Workout;
-using MvvmCross.ViewModels;
 
 namespace DIYHIIT.ViewModels
 {
-    public class HomeViewModel: MvxViewModel
+    public class HomeViewModel: BaseViewModel
     {
         private List<Workout> _workoutList;
         public List<Workout> WorkoutList
@@ -32,7 +32,8 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public HomeViewModel()
+        public HomeViewModel(INavigationService navigationService, IDialogService dialogService)
+            : base(navigationService, dialogService)
         {
             RecentWorkoutsLabel = "False";
 

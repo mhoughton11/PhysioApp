@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace DIYHIIT.Services.Dialog
+namespace DIYHIIT.Contracts.Services.General
 {
     public interface IDialogService
     {

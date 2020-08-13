@@ -1,12 +1,13 @@
-﻿using System;
-using DIYHIIT.Services.Dialog;
+﻿using System.Threading.Tasks;
+using DIYHIIT.Contracts.Services.General;
 using MvvmCross.ViewModels;
 
 namespace DIYHIIT.ViewModels
 {
     public class BaseViewModel : MvxViewModel
     {
-        private readonly IDialogService dialogService;
+        protected readonly IDialogService _dialogService;
+        protected readonly INavigationService _navigationService;
 
         private bool _isBusy;
         public bool IsBusy
@@ -19,9 +20,15 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public BaseViewModel(IDialogService dialogService)
+        public BaseViewModel(INavigationService navigationService, IDialogService dialogService)
         {
-            this.dialogService = dialogService;
+            _dialogService = dialogService;
+            _navigationService = navigationService;
+        }
+
+        public virtual Task InitializeAsync(object data)
+        {
+            return Task.FromResult(false);
         }
     }
 }

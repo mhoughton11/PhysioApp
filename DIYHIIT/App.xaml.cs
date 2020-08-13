@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Reflection;
 using DIYHIIT.Utility;
+using DIYHIIT.Contracts.Services.General;
 
 namespace DIYHIIT
 {
@@ -74,58 +75,18 @@ namespace DIYHIIT
 
             AppContainer.RegisterDependancies();
 
-            MainPage = new MainPage();
+            InitalizeNavigation();
+        }
+
+        private async void InitalizeNavigation()
+        {
+            var navigationService = AppContainer.Resolve<INavigationService>();
+            await navigationService.InitializeAsync();
         }
 
         protected async override void OnStart()
         {
-            // await ExerciseDatabase.ClearItemsAsync();
-            // await RecentWorkouts.ClearItemsAsync();
-            // await WorkoutDatabase.ClearItemsAsync();
-
-            var items = new List<Exercise>();
-
-            //items.AddRange(GetJsonData("calisthenics.json"));
-            //items.AddRange(GetJsonData("hiit.json"));
-            //items.AddRange(GetJsonData("pilates.json"));
-            //items.AddRange(GetJsonData("rest.json"));
-            //items.AddRange(GetJsonData("stretches.json"));
-            //items.AddRange(GetJsonData("yoga.json"));
-
-            if (items.Count != await ExerciseDatabase.GetItemCount())
-            {
-                await ExerciseDatabase.SaveItemsAsync(items);
-            }
-
-            /*
-
-            var exs = await BlobStorageService.GetBlobs<CloudBlockBlob>("images");
-
-            Debug.WriteLine($"Online exercises: {exs.Count}, " +
-                    $"downloaded exericses: {await ExerciseDatabase.GetItemCount()}");
-
-            if (await ExerciseDatabase.GetItemCount() != exs.Count)
-            {
-                Debug.WriteLine("Online database has been updated: pulling exercises.");
-
-                // Clear items before adding all exercises.
-                await ExerciseDatabase.ClearItemsAsync();
-
-                // Download blob files
-                var blobs = await BlobStorageService.GetBlobs<CloudBlockBlob>("exercises");
-
-                // Parse exericses from download json (blob) files.
-                var exercises = await BlobStorageService.GetExerciseData(blobs);
-
-                // Add them all to the database
-                await ExerciseDatabase.SaveItemsAsync(exercises);
-            }
-            else
-            {
-                Debug.WriteLine("No updates to online database found.");
-            }
-
-            */
+ 
         }
 
         protected override void OnSleep()

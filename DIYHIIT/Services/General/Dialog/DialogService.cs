@@ -1,11 +1,9 @@
 ﻿using Acr.UserDialogs;
+using DIYHIIT.Contracts.Services.General;
 using Plugin.Toast;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace DIYHIIT.Services.Dialog
+namespace DIYHIIT.Services.General.Dialog
 {
     public class DialogService : IDialogService
     {

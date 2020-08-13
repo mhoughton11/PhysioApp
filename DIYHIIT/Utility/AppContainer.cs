@@ -2,9 +2,12 @@
 using System.Diagnostics;
 using Autofac;
 using DIYHIIT.Contracts;
-using DIYHIIT.Contracts.Data;
+using DIYHIIT.Contracts.Services.Data;
+using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Repository;
 using DIYHIIT.Services.Data;
+using DIYHIIT.Services.General.Dialog;
+using DIYHIIT.Services.General.Navigation;
 using DIYHIIT.ViewModels;
 using Xamarin.Forms;
 
@@ -26,14 +29,17 @@ namespace DIYHIIT.Utility
             builder.RegisterType<PreviewWorkoutViewModel>();
             builder.RegisterType<ProfileViewModel>();
             builder.RegisterType<WorkoutListViewModel>();
+            builder.RegisterType<LoginViewModel>();
+            builder.RegisterType<RegistrationViewModel>();
 
             // Services - Data
             builder.RegisterType<ExerciseDataService>().As<IExerciseDataService>();
-            //builder.RegisterType<Navigation>().As<INavigation>();
             //builder.RegisterType<>().As<>();
             //builder.RegisterType<>().As<>();
 
             // Services - General
+            builder.RegisterType<NavigationService>().As<INavigationService>();
+            builder.RegisterType<DialogService>().As<IDialogService>();
 
 
             // General
