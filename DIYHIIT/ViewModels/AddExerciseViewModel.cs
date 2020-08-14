@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-using DIYHIIT.Models.Exercise;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
@@ -8,6 +7,8 @@ using System.Linq;
 using DIYHIIT.Models;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Library.Models;
+using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.ViewModels
 {
@@ -20,7 +21,7 @@ namespace DIYHIIT.ViewModels
         {
             _exeriseDataService = exerciseDataService;
 
-            FlowExercises = new ObservableCollection<Exercise>();
+            FlowExercises = new ObservableCollection<IExercise>();
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
 
             SelectedFilter = ExerciseTypes[0];
@@ -30,8 +31,8 @@ namespace DIYHIIT.ViewModels
 
         private readonly IExerciseDataService _exeriseDataService;
 
-        private ObservableCollection<Exercise> _flowExercises;
-        public ObservableCollection<Exercise> FlowExercises 
+        private ObservableCollection<IExercise> _flowExercises;
+        public ObservableCollection<IExercise> FlowExercises 
         {
             get => _flowExercises; 
             set
@@ -103,7 +104,7 @@ namespace DIYHIIT.ViewModels
 
             var items = await _exeriseDataService.GetAllExercisesAsync();
 
-            FlowExercises = new ObservableCollection<Exercise>(items);
+            FlowExercises = new ObservableCollection<IExercise>(items);
         }
     }
 }

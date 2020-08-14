@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using DIYHIIT.Library.Models;
 using DIYHIIT.Models;
-using DIYHIIT.Models.Exercise;
 using Microsoft.Data.SqlClient;
 
 namespace DIYHIIT.API.Models

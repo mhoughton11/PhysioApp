@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using DIYHIIT.Library.Models.Contracts;
+using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.Library.Models
 {

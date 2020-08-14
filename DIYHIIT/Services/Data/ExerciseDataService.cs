@@ -7,8 +7,9 @@ using Akavache;
 using DIYHIIT.Constants;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
+using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
 using DIYHIIT.Models;
-using DIYHIIT.Models.Exercise;
 
 namespace DIYHIIT.Services.Data
 {
@@ -22,13 +23,13 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<Exercise>> GetAllExercisesAsync(WorkoutType? t = null)
+        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(WorkoutType? t = null)
         {
-            var cacheExercises = new List<Exercise>();
+            var cacheExercises = new List<IExercise>();
 
             if (t == null)
             {
-                cacheExercises = await GetFromCache<List<Exercise>>("AllExercises");
+                cacheExercises = await GetFromCache<List<IExercise>>("AllExercises");
             }
 
             if (cacheExercises != null)
@@ -42,7 +43,7 @@ namespace DIYHIIT.Services.Data
                     Path = ApiConstants.ExercisesEndpoint
                 };
 
-                var ex = await _genericRepository.GetAsync<List<Exercise>>(builder.ToString());
+                var ex = await _genericRepository.GetAsync<List<IExercise>>(builder.ToString());
                 
                 if (t != null)
                 {
@@ -61,7 +62,7 @@ namespace DIYHIIT.Services.Data
             }
         }
 
-        public async Task<Exercise> GetExerciseById(int id)
+        public async Task<IExercise> GetExerciseById(int id)
         {
             var cacheExercise = await GetFromCache<Exercise>(id.ToString());
             if (cacheExercise != null)

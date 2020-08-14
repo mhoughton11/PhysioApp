@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using DIYHIIT.Models.Exercise;
+using DIYHIIT.Library.Contracts;
 using DIYHIIT.ViewModels;
 
 using Xamarin.Forms;
@@ -17,7 +17,7 @@ namespace DIYHIIT.Views
 
         private void FlowListView_FlowItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var item = e.Item as Exercise;
+            var item = e.Item as IExercise;
         }
     }
 }

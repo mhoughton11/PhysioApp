@@ -1,5 +1,4 @@
-﻿using DIYHIIT.Models.Workout;
-using DIYHIIT.ViewModels;
+﻿using DIYHIIT.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

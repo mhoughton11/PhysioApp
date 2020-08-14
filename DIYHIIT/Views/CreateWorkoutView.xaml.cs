@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using DIYHIIT.Models.Exercise;
 using DIYHIIT.ViewModels;
 using Xamarin.Forms;
 

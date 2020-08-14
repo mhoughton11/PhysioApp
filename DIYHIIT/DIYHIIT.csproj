@@ -8,17 +8,12 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Data\calisthenics.json" />
-    <None Remove="Data\hiit.json" />
-    <None Remove="Data\pilates.json" />
-    <None Remove="Data\yoga.json" />
+    <Compile Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="mono_crash.1cfb5decbf.0.json" />
-    <None Remove="Data\Json\calisthenics.json" />
-    <None Remove="Data\Json\hiit.json" />
-    <None Remove="Data\Json\pilates.json" />
-    <None Remove="Data\Json\rest.json" />
-    <None Remove="Data\Json\stretches.json" />
-    <None Remove="Data\Json\yoga.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.446" />
@@ -28,10 +23,6 @@
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="MvvmCross" Version="6.4.2" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-    <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4" />
-    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
     <PackageReference Include="Polly" Version="7.2.1" />
@@ -40,8 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Data\Json\" />
-    <Folder Include="Services\Data\" />
     <Folder Include="Constants\" />
     <Folder Include="Utility\" />
     <Folder Include="Contracts\Services\" />
@@ -51,26 +40,6 @@
     <Folder Include="Services\General\Dialog\" />
     <Folder Include="Services\General\Navigation\" />
     <Folder Include="Services\General\Authentication\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Data\Json\calisthenics.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\Json\hiit.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\Json\pilates.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\Json\rest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\Json\stretches.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\Json\yoga.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIYHIIT.Library\DIYHIIT.Library.csproj" />

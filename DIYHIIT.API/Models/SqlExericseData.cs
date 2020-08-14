@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DIYHIIT.Models.Exercise;
+using DIYHIIT.Library.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace DIYHIIT.API.Models
@@ -14,7 +14,7 @@ namespace DIYHIIT.API.Models
             this.context = context;
         }
 
-        public Exercise Add(Exercise newExercise)
+        public IExercise Add(IExercise newExercise)
         {
             context.Add(newExercise);
             return newExercise;
@@ -25,7 +25,7 @@ namespace DIYHIIT.API.Models
             return context.SaveChanges();
         }
 
-        public Exercise Delete(int id)
+        public IExercise Delete(int id)
         {
             var ex = context.Exercises.SingleOrDefault(e => e.ID == id);
             if (ex != null)
@@ -35,12 +35,12 @@ namespace DIYHIIT.API.Models
             return ex;
         }
 
-        public Exercise GetById(int id)
+        public IExercise GetById(int id)
         {
             return context.Exercises.Find(id);
         }
 
-        public IEnumerable<Exercise> GetExercises(string name = null)
+        public IEnumerable<IExercise> GetExercises(string name = null)
         {
             var query = from e in context.Exercises
                         where e.Name.StartsWith(name) || string.IsNullOrEmpty(name)
@@ -50,7 +50,7 @@ namespace DIYHIIT.API.Models
             return query;
         }
 
-        public Exercise Update(Exercise updatedExercise)
+        public IExercise Update(IExercise updatedExercise)
         {
             var entity = context.Exercises.Attach(updatedExercise);
             entity.State = EntityState.Modified;

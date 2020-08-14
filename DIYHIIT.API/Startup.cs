@@ -1,5 +1,6 @@
+using DIYHIIT.API.Auth;
 using DIYHIIT.API.Models;
-using DIYHIIT.Library.Auth;
+using DIYHIIT.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

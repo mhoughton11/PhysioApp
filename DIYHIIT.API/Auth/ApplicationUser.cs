@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace DIYHIIT.Library.Auth
+namespace DIYHIIT.API.Auth
 {
     public class ApplicationUser : IdentityUser
     {

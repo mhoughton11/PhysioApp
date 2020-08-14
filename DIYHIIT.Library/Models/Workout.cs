@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using DIYHIIT.Library.Models.Contracts;
+using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.Library.Models
 {
@@ -16,7 +16,6 @@ namespace DIYHIIT.Library.Models
 
         public string Name { get; set; }
         public string ExercisesString { get; set; }
-        public string CellBackgroundColour { get => GetBackgroundColour(Type); }
         public string Focus { get => GetBodyFocus(Exercises); }
 
         public double RestInterval { get; set; }
@@ -176,11 +175,6 @@ namespace DIYHIIT.Library.Models
             }
 
             return focus;
-        }
-
-        public string GetBackgroundColour(string workoutType)
-        {
-            throw new NotImplementedException();
         }
     }
 }

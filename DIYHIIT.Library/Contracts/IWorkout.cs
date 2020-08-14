@@ -9,7 +9,6 @@ namespace DIYHIIT.Library.Contracts
         double RestInterval { get; set; }
         double ActiveInterval { get; set; }
         string ExercisesString { get; set; }
-        string CellBackgroundColour { get; }
         int ExerciseCount { get; }
         DateTime DateAdded { get; set; }
         DateTime DateUsed { get; set; }
@@ -18,8 +17,6 @@ namespace DIYHIIT.Library.Contracts
         List<IExercise> Exercises { get; set; }
 
         double GetDuration();
-
-        string GetBackgroundColour(string workoutType);
 
         Task GetExercises(string value);
     }

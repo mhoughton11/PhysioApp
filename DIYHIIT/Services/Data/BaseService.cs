@@ -1,11 +1,11 @@
 ﻿using Akavache;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DIYHIIT.Models.Exercise;
 using System.Reactive.Linq;
 using System.Linq;
 using DIYHIIT.Models;
 using System;
+using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.Services.Data
 {
