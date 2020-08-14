@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DIYHIIT.Models.Workout
+namespace DIYHIIT.Library.Contracts
 {
     public interface IWorkout : IBaseModel
     {
@@ -15,7 +15,7 @@ namespace DIYHIIT.Models.Workout
         DateTime DateUsed { get; set; }
         double Effort { get; set; }
         double Duration { get; }
-        List<Exercise.Exercise> Exercises { get; set; }
+        List<IExercise> Exercises { get; set; }
 
         double GetDuration();
 

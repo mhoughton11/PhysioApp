@@ -39,7 +39,6 @@
     <PackageReference Include="Autofac" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Workout\" />
     <Folder Include="Converters\" />
     <Folder Include="Data\Json\" />
     <Folder Include="Services\Data\" />
@@ -72,6 +71,9 @@
     <EmbeddedResource Include="Data\Json\yoga.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DIYHIIT.Library\DIYHIIT.Library.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\ExecuteWorkoutPage.xaml">

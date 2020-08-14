@@ -1,6 +1,8 @@
 using DIYHIIT.API.Models;
+using DIYHIIT.Library.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,13 @@ namespace DIYHIIT.Data
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultString"));
             });
 
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = true;
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<AppDbContext>();
+
             services.AddScoped<IExerciseData, SqlExericseData>();
 
             services.AddControllers();
@@ -43,6 +52,7 @@ namespace DIYHIIT.Data
 
             app.UseRouting();
 
+            app.UseAuthorization();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

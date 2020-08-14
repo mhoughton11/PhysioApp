@@ -1,20 +1,30 @@
-﻿using DIYHIIT.Data;
-using DIYHIIT.Models.Exercise;
-using DIYHIIT.Models.Workout;
-using MvvmCross.ViewModels;
+﻿using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
-    class ExecuteWorkoutViewModel : MvxViewModel
+    class ExecuteWorkoutViewModel : BaseViewModel
     {
+        public ExecuteWorkoutViewModel(INavigationService navigationService, IDialogService dialogService)
+            : base(navigationService, dialogService)
+        {
+            timer = new System.Timers.Timer(1000);
+
+            EffortDetailEnabled = "False";
+            TimeLabelEnabled = "True";
+
+            exercises = new List<IExercise>();
+
+            DoneCommand = new Command(() => ExecuteDoneCommand());
+        }
+
         private string _currentExercise;
         public string CurrentExercise 
         {
@@ -127,40 +137,26 @@ namespace DIYHIIT.ViewModels
         double totalTime = 0;
         double duration;
 
-        Workout workout;
+        private IWorkout _workout;
         int counter = 0;
 
         System.Timers.Timer timer;
 
-        List<Exercise> exercises;
+        List<IExercise> exercises;
 
-        public ExecuteWorkoutViewModel(Workout workout)
+        public override Task InitializeAsync(object workout)
         {
-            this.workout = workout;
-            timer = new System.Timers.Timer(1000);
+            _workout = (IWorkout)workout;
 
-            EffortDetailEnabled = "False";
-            TimeLabelEnabled = "True";
+            duration = _workout.ActiveInterval * _workout.Exercises.Count + _workout.RestInterval * _workout.Exercises.Count;
 
-            exercises = new List<Exercise>();
+            //var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
+            //rest.Duration = workout.RestInterval;
 
-            DoneCommand = new Command(() => ExecuteDoneCommand());
-
-            Init();
-            BeginWorkoutAsync();
-        }
-
-        private async void Init()
-        {
-            duration = workout.ActiveInterval * workout.Exercises.Count + workout.RestInterval * workout.Exercises.Count;
-
-            var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
-            rest.Duration = workout.RestInterval;
-
-            foreach (var ex in workout.Exercises)
+            foreach (var ex in _workout.Exercises)
             {
                 exercises.Add(ex);
-                exercises.Add(rest);
+                //exercises.Add(rest);
             }
 
             CurrentExercise = exercises[0].DisplayName;
@@ -175,6 +171,10 @@ namespace DIYHIIT.ViewModels
             {
                 NextExercise = "Finished!";
             }
+
+            BeginWorkoutAsync();
+
+            return Task.Run(() => 0);
         }
 
         private async void BeginWorkoutAsync()
@@ -280,18 +280,18 @@ namespace DIYHIIT.ViewModels
             // Make a copy and the recently used date and effort of the workout.
             var newWorkout = new Workout()
             {
-                Name = workout.Name,
-                ActiveInterval = workout.ActiveInterval,
-                RestInterval = workout.RestInterval,
-                ExercisesString = workout.ExercisesString,
-                Type = workout.Type,
-                BodyFocus = workout.BodyFocus,
+                Name = _workout.Name,
+                ActiveInterval = _workout.ActiveInterval,
+                RestInterval = _workout.RestInterval,
+                ExercisesString = _workout.ExercisesString,
+                Type = _workout.Type,
+                BodyFocus = _workout.BodyFocus,
                 Effort = EffortSliderValue,
-                DateAdded = workout.DateAdded,
+                DateAdded = _workout.DateAdded,
                 DateUsed = DateTime.Now,
             };           
 
-            await App.RecentWorkouts.SaveItemAsync(newWorkout);
+            //await App.RecentWorkouts.SaveItemAsync(newWorkout);
             await Navigation.PopAsync();
         }
     }

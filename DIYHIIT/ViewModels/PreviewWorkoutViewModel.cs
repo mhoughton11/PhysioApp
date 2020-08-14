@@ -1,60 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Library.Contracts;
 using DIYHIIT.Models;
-using DIYHIIT.Models.Exercise;
-using DIYHIIT.Models.Workout;
 using DIYHIIT.Views;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
-    public class PreviewWorkoutViewModel
+    public class PreviewWorkoutViewModel : BaseViewModel
     {
         public string BodyFocus { get; set; }
         public int WorkoutMoves { get; set; }
         public double WorkoutLength { get; set; }
         public string Name { get; set; }
 
-        public List<Exercise> Exercises { get; set; }
+        public List<IExercise> Exercises { get; set; }
 
         public Command BeginWorkoutCommand { get; set; }
 
         public INavigation Navigation;
 
-        Workout workout;
+        private IWorkout _workout;
 
-        public PreviewWorkoutViewModel(Workout _workout)
+        public PreviewWorkoutViewModel(INavigationService navigationService, IDialogService dialogService)
+            : base(navigationService, dialogService)
         {
-            workout = _workout;
-            Name = _workout.Name;
-            BodyFocus = workout.Focus;
-            WorkoutMoves = workout.ExerciseCount;
-            WorkoutLength = workout.Duration;
+            Exercises = new List<IExercise>();
 
-            Exercises = new List<Exercise>();
-
-            BeginWorkoutCommand = new Command(() => ExecuteBeginWorkoutCommand());
+            BeginWorkoutCommand = new Command(async() => await ExecuteBeginWorkoutCommand());
 
             Init();
         }
 
-        private async void Init()
+        private void Init()
         {
-            var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
-            rest.Duration = workout.RestInterval;
+            //var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
+            //rest.Duration = _workout.RestInterval;
 
             // Add exercises
-            foreach (var exercise in workout.Exercises)
+            foreach (var exercise in _workout.Exercises)
             {
-                exercise.Duration = workout.ActiveInterval;
+                exercise.Duration = _workout.ActiveInterval;
                 Exercises.Add(exercise);
-                Exercises.Add(rest);
+                //Exercises.Add(rest);
             }
         }
 
-        private async void ExecuteBeginWorkoutCommand()
+        public override Task InitializeAsync(object workout)
         {
-            //await Navigation.PushAsync(new ExecuteWorkoutView(workout));
+            _workout = (IWorkout)workout;
+
+            Name = _workout.Name;
+            BodyFocus = _workout.BodyFocus;
+            WorkoutMoves = _workout.ExerciseCount;
+            WorkoutLength = _workout.Duration;
+
+            return Task.Run(() => 0);
+        }
+
+        private async Task ExecuteBeginWorkoutCommand()
+        {
+            await _navigationService.NavigateToAsync<ExecuteWorkoutViewModel>(_workout);
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using DIYHIIT.Library.Models;
+using System;
 
-namespace DIYHIIT.Models
+namespace DIYHIIT.Library.Contracts
 {
     public interface IBaseModel
     {

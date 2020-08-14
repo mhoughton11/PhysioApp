@@ -4,9 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Models;
-using DIYHIIT.Models.Exercise;
-using DIYHIIT.Models.Workout;
+using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
@@ -19,10 +18,10 @@ namespace DIYHIIT.ViewModels
                                       IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            Exercises = new ObservableCollection<Exercise>();
+            Exercises = new ObservableCollection<IExercise>();
             rand = new Random();
 
-            MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, "ExerciseAdded", (sender, arg) =>
+            MessagingCenter.Subscribe<AddExerciseViewModel, IExercise>(this, "ExerciseAdded", (sender, arg) =>
             {
                 _dialogService.Popup($"Adding {arg.DisplayName} to the workout");
                 arg.Index = rand.Next(0, 0xFFFF);
@@ -34,8 +33,8 @@ namespace DIYHIIT.ViewModels
         public string RestEntry { get; set; }
         public string SelectedWorkoutType { get; set; }
 
-        private ObservableCollection<Exercise> _exercises;
-        public ObservableCollection<Exercise> Exercises
+        private ObservableCollection<IExercise> _exercises;
+        public ObservableCollection<IExercise> Exercises
         {
             get => _exercises;
             set
@@ -52,7 +51,7 @@ namespace DIYHIIT.ViewModels
 
         public void RemoveObject(int index)
         {
-            Exercise ex = Exercises.Where(e => e.Index == index) as Exercise;
+            IExercise ex = Exercises.Where(e => e.Index == index) as IExercise;
             Exercises.Remove(ex);
         }
 
@@ -113,7 +112,7 @@ namespace DIYHIIT.ViewModels
                 }
             }
 
-            await App.WorkoutDatabase.SaveItemAsync(workout);
+            //await App.WorkoutDatabase.SaveItemAsync(workout);
             await _navigationService.NavigateBackAsync();
         }
 

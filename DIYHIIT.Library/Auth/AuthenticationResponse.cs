@@ -1,9 +1,9 @@
 ﻿using System;
-namespace DIYHIIT.Models
+namespace DIYHIIT.Library.Auth
 {
     public class AuthenticationResponse
     {
         public bool IsAuthenticated { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

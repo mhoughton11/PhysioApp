@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Models.Workout;
+using DIYHIIT.Library.Contracts;
 using DIYHIIT.Views;
 using Xamarin.Forms;
 
@@ -15,11 +15,11 @@ namespace DIYHIIT.ViewModels
                                     IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            WorkoutList = new List<Workout>();
+            
         }
 
-        private List<Workout> _workoutList;
-        public List<Workout> WorkoutList
+        private List<IWorkout> _workoutList;
+        public List<IWorkout> WorkoutList
         {
             get => _workoutList;
             set
@@ -32,7 +32,7 @@ namespace DIYHIIT.ViewModels
         public Command AddWorkoutCommand => new Command(OnAddWorkoutCommand);
         
 
-        public void WorkoutSelected(Workout workout)
+        public void WorkoutSelected(IWorkout workout)
         {
             try
             {
@@ -49,17 +49,19 @@ namespace DIYHIIT.ViewModels
 
         public override async Task InitializeAsync(object data)
         {
+            WorkoutList = new List<IWorkout>();
+
             try
             {
                 // Get workouts
-                var workoutList = await App.WorkoutDatabase.GetItemsAsync();
+                //var workoutList = await App.WorkoutDatabase.GetItemsAsync();
 
-                foreach (var workout in workoutList)
-                {
-                    await workout.GetExercises(workout.ExercisesString);
-                }
+                //foreach (var workout in workoutList)
+                //{
+                //    await workout.GetExercises(workout.ExercisesString);
+                //}
 
-                WorkoutList = workoutList;
+                //WorkoutList = workoutList;
             }
             catch (Exception ex)
             {

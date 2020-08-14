@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DIYHIIT.Models
+namespace DIYHIIT.Library.Models
 {
     public enum WorkoutType
     {

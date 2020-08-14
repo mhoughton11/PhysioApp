@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using DIYHIIT.Library.Models.Contracts;
 
-namespace DIYHIIT.Models.Exercise
+namespace DIYHIIT.Library.Models
 {
     public class Exercise : IExercise
     {

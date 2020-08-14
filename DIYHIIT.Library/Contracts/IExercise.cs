@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DIYHIIT.Models.Exercise
+namespace DIYHIIT.Library.Contracts
 {
     public interface IExercise : IBaseModel
     {
@@ -8,10 +8,10 @@ namespace DIYHIIT.Models.Exercise
 
         string DisplayName { get; set; }
         string ImageURL { get; }
-        string BackgroundColour { get; set; }
         string Description { get; set; }
-
         double Duration { get; set; }
+
+
 
     }
 }
