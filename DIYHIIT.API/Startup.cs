@@ -1,6 +1,5 @@
 using DIYHIIT.API.Auth;
 using DIYHIIT.API.Models;
-using DIYHIIT.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace DIYHIIT.Data
 {
@@ -24,19 +22,10 @@ namespace DIYHIIT.Data
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<AppDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultString"));
             });
-
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
-                options.Password.RequiredLength = 6;
-                options.Password.RequireDigit = true;
-                options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<AppDbContext>();
-
-            services.AddScoped<IExerciseData, SqlExericseData>();
 
             services.AddControllers();
         }
@@ -52,9 +41,6 @@ namespace DIYHIIT.Data
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -30,7 +30,6 @@ namespace DIYHIIT
         private void InitializeApp()
         {
             FlowListView.Init();
-
             AppContainer.RegisterDependancies();
         }
 

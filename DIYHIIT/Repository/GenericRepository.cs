@@ -29,6 +29,8 @@ namespace DIYHIIT.Repository
         {
             try
             {
+                Debug.WriteLine($"Retrieving data from URI: {uri}");
+
                 HttpClient client = CreateHttpClient(uri);
                 HttpResponseMessage responseMessage = await client.GetAsync(uri);
 

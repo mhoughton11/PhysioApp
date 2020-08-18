@@ -5,6 +5,8 @@
              utility:ViewModelLocator.AutoWireViewModel="True"
              x:Class="DIYHIIT.Views.RegistrationView">
     <ContentPage.Content>
-        <Label Text="Registration"/>
+        <Label Text="{Binding DemoLabel}"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"/>
     </ContentPage.Content>
 </ContentPage>

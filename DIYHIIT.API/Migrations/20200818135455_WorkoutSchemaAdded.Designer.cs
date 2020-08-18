@@ -4,14 +4,16 @@ using DIYHIIT.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200818135455_WorkoutSchemaAdded")]
+    partial class WorkoutSchemaAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,13 +39,13 @@ namespace DIYHIIT.API.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<double?>("Duration")
+                    b.Property<double>("Duration")
                         .HasColumnType("float");
 
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Index")
+                    b.Property<int>("Index")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -71,7 +73,7 @@ namespace DIYHIIT.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double?>("ActiveInterval")
+                    b.Property<double>("ActiveInterval")
                         .HasColumnType("float");
 
                     b.Property<string>("BodyFocus")
@@ -83,7 +85,7 @@ namespace DIYHIIT.API.Migrations
                     b.Property<DateTime>("DateUsed")
                         .HasColumnType("datetime2");
 
-                    b.Property<double?>("Effort")
+                    b.Property<double>("Effort")
                         .HasColumnType("float");
 
                     b.Property<string>("ExercisesString")
@@ -92,7 +94,7 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("RestInterval")
+                    b.Property<double>("RestInterval")
                         .HasColumnType("float");
 
                     b.Property<int>("Type")

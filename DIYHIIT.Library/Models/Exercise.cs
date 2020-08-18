@@ -10,7 +10,7 @@ namespace DIYHIIT.Library.Models
         [Key]
         public int ID { get; set; }
 
-        public int Index { get; set; }
+        public int? Index { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -22,13 +22,11 @@ namespace DIYHIIT.Library.Models
         [StringLength(500)]
         public string Description { get; set; }
 
-        public string BackgroundColour { get; set; }
-
         public string BodyFocus { get; set; }
 
-        public double Duration { get; set; }
-
         public string ImageURL { get; set; }
+
+        public double? Duration { get; set; }
 
         [Required]
         public WorkoutType Type { get; set; }

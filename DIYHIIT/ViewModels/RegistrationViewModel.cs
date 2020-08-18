@@ -9,6 +9,18 @@ namespace DIYHIIT.ViewModels
             IDialogService dialogService)
             : base (navigationService, dialogService)
         {
+
+        }
+
+        private string _demoLabel;
+        public string DemoLabel
+        {
+            get => _demoLabel;
+            set
+            {
+                _demoLabel = value;
+                RaisePropertyChanged(() => DemoLabel);
+            }
         }
     }
 }

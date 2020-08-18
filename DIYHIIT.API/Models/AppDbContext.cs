@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using DIYHIIT.Library.Contracts;
+﻿using DIYHIIT.Library.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DIYHIIT.API.Models
 {
@@ -13,6 +10,7 @@ namespace DIYHIIT.API.Models
         {
         }
 
-        public DbSet<IExercise> Exercises { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<Workout> Workouts { get; set; }
     }
 }

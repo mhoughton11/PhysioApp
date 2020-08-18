@@ -148,7 +148,11 @@ namespace DIYHIIT.ViewModels
         {
             _workout = (IWorkout)workout;
 
-            duration = _workout.ActiveInterval * _workout.Exercises.Count + _workout.RestInterval * _workout.Exercises.Count;
+            var active = _workout.ActiveInterval ?? 0;
+            var count = _workout.Exercises.Count;
+            var rest = _workout.RestInterval ?? 0;
+
+            duration = active * count + rest * count;
 
             //var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
             //rest.Duration = workout.RestInterval;
@@ -160,7 +164,7 @@ namespace DIYHIIT.ViewModels
             }
 
             CurrentExercise = exercises[0].DisplayName;
-            TimeLeft = exercises[0].Duration;
+            TimeLeft = exercises[0].Duration ?? 0;
             ImageName = exercises[0].ImageURL;
 
             try
@@ -219,7 +223,7 @@ namespace DIYHIIT.ViewModels
             ImageName = exercises[count].ImageURL;
 
             // Update timer
-            TimeLeft = exercises[count].Duration - timerValue + 1;
+            TimeLeft = (exercises[count].Duration ?? 0) - timerValue + 1;
 
             WorkoutProgress = totalTime / duration;
             ProgressLabel = string.Format("{0:0}%", WorkoutProgress * 100);

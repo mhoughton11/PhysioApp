@@ -55,7 +55,7 @@ namespace DIYHIIT.ViewModels
             Name = _workout.Name;
             BodyFocus = _workout.BodyFocus;
             WorkoutMoves = _workout.ExerciseCount;
-            WorkoutLength = _workout.Duration;
+            WorkoutLength = _workout.Duration ?? 0;
 
             return Task.Run(() => 0);
         }

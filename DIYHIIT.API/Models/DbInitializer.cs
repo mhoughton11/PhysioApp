@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using DIYHIIT.Library.Models;
-using DIYHIIT.Models;
-using Microsoft.Data.SqlClient;
 
 namespace DIYHIIT.API.Models
 {

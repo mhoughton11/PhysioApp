@@ -23,13 +23,13 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(WorkoutType? t = null)
+        public async Task<IEnumerable<Exercise>> GetAllExercisesAsync(WorkoutType? t = null)
         {
-            var cacheExercises = new List<IExercise>();
+            var cacheExercises = new List<Exercise>();
 
             if (t == null)
             {
-                cacheExercises = await GetFromCache<List<IExercise>>("AllExercises");
+                cacheExercises = await GetFromCache<List<Exercise>>("AllExercises");
             }
 
             if (cacheExercises != null)
@@ -43,7 +43,7 @@ namespace DIYHIIT.Services.Data
                     Path = ApiConstants.ExercisesEndpoint
                 };
 
-                var ex = await _genericRepository.GetAsync<List<IExercise>>(builder.ToString());
+                var ex = await _genericRepository.GetAsync<List<Exercise>>(builder.ToString());
                 
                 if (t != null)
                 {

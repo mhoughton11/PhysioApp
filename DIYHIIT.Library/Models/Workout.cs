@@ -18,24 +18,25 @@ namespace DIYHIIT.Library.Models
         public string ExercisesString { get; set; }
         public string Focus { get => GetBodyFocus(Exercises); }
 
-        public double RestInterval { get; set; }
-        public double ActiveInterval { get; set; }
-        public double Effort { get; set; }
-        public double Duration { get => GetDuration(); }
+        public double? RestInterval { get; set; }
+        public double? ActiveInterval { get; set; }
+        public double? Effort { get; set; }
+        public double? Duration { get => GetDuration(); }
 
         public string BodyFocus { get; set; }
 
         public DateTime DateAdded { get; set; }
         public DateTime DateUsed { get; set; }
 
+        [Required]
         public WorkoutType Type { get; set; }
 
-        public List<IExercise> Exercises { get; set; }
+        public List<Exercise> Exercises { get; set; }
 
 
         public Workout()
         {
-            Exercises = new List<IExercise>();
+            Exercises = new List<Exercise>();
         }
 
         /// <summary>
@@ -96,7 +97,7 @@ namespace DIYHIIT.Library.Models
             if (Exercises.Count == 0)
                 return 0;
 
-            double seconds = (ActiveInterval * Exercises.Count) + (RestInterval * Exercises.Count - 1);
+            double seconds = (ActiveInterval * Exercises.Count) + (RestInterval * Exercises.Count - 1) ?? 0;
 
             TimeSpan t = TimeSpan.FromSeconds(seconds);
             return t.Minutes;
@@ -107,7 +108,7 @@ namespace DIYHIIT.Library.Models
         /// </summary>
         /// <param name="value">String encoded with the exercises to retrieve from the DB.</param>
         /// <returns>The number of exercises added to the workout object.</returns>
-        public async Task GetExercises(string value)
+        public void GetExercises(string value)
         {
             // Split workout string
             string[] exercises = value.Split(',');
@@ -128,7 +129,7 @@ namespace DIYHIIT.Library.Models
         /// </summary>
         /// <param name="exercises">Exercises containing focus areas.</param>
         /// <returns>Name of the area of focus.</returns>
-        private string GetBodyFocus(List<IExercise> exercises)
+        private string GetBodyFocus(List<Exercise> exercises)
         {
             string focus = "";
 

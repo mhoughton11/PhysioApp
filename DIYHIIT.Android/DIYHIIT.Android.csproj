@@ -63,9 +63,9 @@
     <PackageReference Include="Plugin.Toast">
       <Version>2.1.2</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1239" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
     <PackageReference Include="MvvmCross">
-      <Version>6.4.2</Version>
+      <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
