@@ -90,7 +90,6 @@ namespace DIYHIIT.ViewModels
                 Name = SelectedWorkoutType + " Workout",
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
-                ExercisesString = exstring,
                 Type = WorkoutType.HIIT,
                 DateAdded = DateTime.Now
             };

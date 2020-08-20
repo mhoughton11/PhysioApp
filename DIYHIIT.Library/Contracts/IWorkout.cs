@@ -12,8 +12,6 @@ namespace DIYHIIT.Library.Contracts
         double? Effort { get; set; }
         double? Duration { get; }
 
-        string ExercisesString { get; set; }
-
         int ExerciseCount { get; }
 
         DateTime DateAdded { get; set; }

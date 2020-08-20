@@ -287,7 +287,6 @@ namespace DIYHIIT.ViewModels
                 Name = _workout.Name,
                 ActiveInterval = _workout.ActiveInterval,
                 RestInterval = _workout.RestInterval,
-                ExercisesString = _workout.ExercisesString,
                 Type = _workout.Type,
                 BodyFocus = _workout.BodyFocus,
                 Effort = EffortSliderValue,

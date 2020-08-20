@@ -4,7 +4,8 @@ namespace DIYHIIT.Library.Models
 {
     public enum WorkoutType
     {
-        Calisthenics = 1,
+        All = 0,
+        Calisthenics,
         HIIT,
         Pilates,
         Yoga,

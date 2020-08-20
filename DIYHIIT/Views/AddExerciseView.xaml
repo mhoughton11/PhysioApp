@@ -19,14 +19,15 @@
                     HorizontalOptions="FillAndExpand"/>
             
             <flv:FlowListView SeparatorVisibility="None"
+                              IsVisible="{Binding IsFlowEnabled}"
                               BackgroundColor="WhiteSmoke"
                               FlowColumnCount="3"
                               FlowItemsSource="{Binding FlowExercises}"
                               FlowItemTapped="FlowListView_FlowItemTapped"
                               HasUnevenRows="True"
-                              FlowTappedBackgroundColor="Blue"
-                              FlowIsLoadingInfiniteEnabled="True"
-                              FlowIsLoadingInfinite="{Binding IsBusy}">
+                              IsPullToRefreshEnabled="True"
+                              RefreshCommand="{Binding RefreshCommand}"
+                              IsRefreshing="{Binding IndicatorEnabled}">
 
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -23,48 +24,44 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(string t = null)
+        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(int? t = null)
         {
-            var cacheExercises = new List<Exercise>();
-
             // If cache not empty, fetch from cache and return items.
-            if (t == null)
-            {
-                cacheExercises = await GetFromCache<List<Exercise>>("AllExercises");
-            }
-
+            var cacheExercises = await GetFromCache<List<Exercise>>("Exercises");
+        
             if (cacheExercises != null)
             {
-                return cacheExercises;
+                if (t == null || t == 0)
+                {
+                    return cacheExercises;
+                }
+                else
+                {
+                    Debug.WriteLine($"retrieving data from cache for type: {Enum.GetName(typeof(WorkoutType), t)}");
+                    return cacheExercises.Where(e => (int)e.Type == t);
+                }
             }
             else
             {
                 // Cache empty so get exercises from API as List<Ex.>
-                UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
-                {
-                    Path = ApiConstants.ExercisesEndpoint
-                };
-
                 var path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesEndpoint;
 
                 var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
 
                 // If exercises null, return. If not, save to cache and return them.
                 if (ex == null) { return null; }
-                
-                if (t != null)
-                {
-                    var cacheName = $"All{t}Exercises";
 
-                    ex = ex.Where(e => e.Type.ToString() == t).ToList();
-                    await Cache.InsertObject(cacheName, ex, DateTime.Now.AddMinutes(2));
+                await Cache.InsertObject("Exercises", ex, DateTime.Now.AddMinutes(2));
+
+
+                if (t == null || t == 0)
+                {
+                    return ex;
                 }
                 else
                 {
-                    await Cache.InsertObject("AllExercicses", ex, DateTime.Now.AddMinutes(2));
+                    return ex.Where(e => (int)e.Type == t);
                 }
-
-                return ex;
             }
         }
 

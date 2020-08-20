@@ -14,30 +14,22 @@ namespace DIYHIIT.Library.Models
         public int ID { get; set; }
         public int ExerciseCount { get => Exercises.Count; }
 
+        [Required]
+        public WorkoutType Type { get; set; }
+
         public string Name { get; set; }
-        public string ExercisesString { get; set; }
         public string Focus { get => GetBodyFocus(Exercises); }
+        public string BodyFocus { get; set; }
 
         public double? RestInterval { get; set; }
         public double? ActiveInterval { get; set; }
         public double? Effort { get; set; }
         public double? Duration { get => GetDuration(); }
 
-        public string BodyFocus { get; set; }
-
         public DateTime DateAdded { get; set; }
         public DateTime DateUsed { get; set; }
 
-        [Required]
-        public WorkoutType Type { get; set; }
-
         public List<Exercise> Exercises { get; set; }
-
-
-        public Workout()
-        {
-            Exercises = new List<Exercise>();
-        }
 
         /// <summary>
         /// Print out a summary of the workout instantiation.
@@ -64,7 +56,6 @@ namespace DIYHIIT.Library.Models
             {
                 Debug.WriteLine($"Rest Interval workout: {RestInterval}");
                 Debug.WriteLine($"Active Interval workout: {ActiveInterval}");
-                Debug.WriteLine($"Exercise string: {ExercisesString}");
                 Debug.WriteLine($"Workout contains {Exercises.Count} exercises:");
 
                 if (Exercises.Count > 0)

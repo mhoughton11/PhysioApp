@@ -28,6 +28,21 @@ namespace DIYHIIT.ViewModels
 
         private readonly IExerciseDataService _exeriseDataService;
 
+        private bool _indicatorEnabled;
+        public bool IndicatorEnabled
+        {
+            get => _indicatorEnabled;
+            set
+            {
+                _indicatorEnabled = value;
+                RaisePropertyChanged(() => IndicatorEnabled);
+            }
+        }
+
+        private ObservableCollection<IExercise> _exercises;
+
+        public Command RefreshCommand => new Command(OnRefreshCommand);
+
         private ObservableCollection<IExercise> _flowExercises;
         public ObservableCollection<IExercise> FlowExercises 
         {
@@ -50,7 +65,7 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private int _selectedIndex = 0;
+        private int _selectedIndex;
         public int SelectedIndex
         {
             get => _selectedIndex;
@@ -59,21 +74,16 @@ namespace DIYHIIT.ViewModels
                 _selectedIndex = value;
                 RaisePropertyChanged(() => SelectedIndex);
 
-                var ex = Enum.GetName(typeof(WorkoutType), value);
-                GetExercises(ex);
+                GetExercises(value);
             }
         }
 
-        public override Task InitializeAsync(object data)
+        public override async Task InitializeAsync(object data)
         {
-            IsBusy = true;
-            // Calls GetExercises() when property changes.
+            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
             SelectedIndex = 0;
 
-            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
-            IsBusy = false;
-
-            return base.InitializeAsync(data);
+            await base.InitializeAsync(data);
         }
 
         public void ItemTapped(Exercise item)
@@ -89,9 +99,9 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private async void GetExercises(string type = null)
+        private async void GetExercises(int? type = null)
         {
-            var items = await _exeriseDataService.GetAllExercisesAsync();
+            var items = await _exeriseDataService.GetAllExercisesAsync(type);
 
             if (items == null)
             {
@@ -100,6 +110,15 @@ namespace DIYHIIT.ViewModels
             }
 
             FlowExercises = new ObservableCollection<IExercise>(items);
+        }
+
+        private void OnRefreshCommand()
+        {
+            IndicatorEnabled = true;
+
+            GetExercises(SelectedIndex);
+
+            IndicatorEnabled = false;
         }
     }
 }
