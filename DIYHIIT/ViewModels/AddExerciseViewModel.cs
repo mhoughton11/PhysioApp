@@ -9,6 +9,7 @@ using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Library.Contracts;
+using System.Threading.Tasks;
 
 namespace DIYHIIT.ViewModels
 {
@@ -23,10 +24,6 @@ namespace DIYHIIT.ViewModels
 
             FlowExercises = new ObservableCollection<IExercise>();
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
-
-            SelectedFilter = ExerciseTypes[0];
-
-            OnAppearing();
         }
 
         private readonly IExerciseDataService _exeriseDataService;
@@ -67,22 +64,16 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private string _selectedFilter = "All";
-        public string SelectedFilter
+        public override Task InitializeAsync(object data)
         {
-            get => _selectedFilter;
-            set 
-            {
-                _selectedFilter = value;
-                RaisePropertyChanged(() => SelectedFilter);
+            IsBusy = true;
+            // Calls GetExercises() when property changes.
+            SelectedIndex = 0;
 
-                GetExercises();
-            }
-        }
+            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
+            IsBusy = false;
 
-        public void OnAppearing()
-        {
-            GetExercises();
+            return base.InitializeAsync(data);
         }
 
         public void ItemTapped(Exercise item)
@@ -98,11 +89,15 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private async void GetExercises(string t = null)
+        private async void GetExercises(string type = null)
         {
-            if (t == null) { return; }
+            var items = await _exeriseDataService.GetAllExercisesAsync(type);
 
-            var items = await _exeriseDataService.GetAllExercisesAsync();
+            if (items == null)
+            {
+                await _dialogService.ShowAlertAsync("Unable to fetch exercises from database.", "Connection error.", "OK");
+                return;
+            }
 
             FlowExercises = new ObservableCollection<IExercise>(items);
         }

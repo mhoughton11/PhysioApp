@@ -25,11 +25,11 @@ namespace DIYHIIT.Repository
         /// <param name="uri">Endpoint URI to retrieve data from.</param>
         /// <param name="authToken">Authentication token.</param>
         /// <returns></returns>
-        public async Task<T> GetAsync<T>(string uri, string authToken = "")
+        public async Task<T> GetAsync<T>(string uri, string authToken = "") where T : new()
         {
             try
             {
-                Debug.WriteLine($"Retrieving data from URI: {uri}");
+                Debug.WriteLine($"Retrieving data from uri: {uri}");
 
                 HttpClient client = CreateHttpClient(uri);
                 HttpResponseMessage responseMessage = await client.GetAsync(uri);
@@ -48,15 +48,18 @@ namespace DIYHIIT.Repository
                 if (responseMessage.StatusCode == HttpStatusCode.Forbidden ||
                     responseMessage.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    throw new ServiceAuthenticationException(content);
-                } 
+                    //throw new ServiceAuthenticationException(content);
+                    Debug.WriteLine($"Error retrieving data: {content}");
+                }
 
-                throw new HttpRequestExceptionEx(responseMessage.StatusCode, content);
+                return new T();
+                //throw new HttpRequestExceptionEx(responseMessage.StatusCode, content);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw;   
+
+                return new T();
             }
         }
 

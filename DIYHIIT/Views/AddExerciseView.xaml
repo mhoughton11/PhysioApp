@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
-             xmlns:local="clr-namespace:DIYHIIT.Converters"
              xmlns:utility="clr-namespace:DIYHIIT.Utility"
              utility:ViewModelLocator.AutoWireViewModel="True"
              x:Class="DIYHIIT.Views.AddExerciseView"
@@ -15,7 +14,6 @@
             <Picker FontSize="20"
                     Margin="6"
                     ItemsSource="{Binding ExerciseTypes}"
-                    SelectedItem="{Binding SelectedFilter}"
                     SelectedIndex="{Binding SelectedIndex}"
                     VerticalOptions="Center"
                     HorizontalOptions="FillAndExpand"/>
@@ -26,7 +24,9 @@
                               FlowItemsSource="{Binding FlowExercises}"
                               FlowItemTapped="FlowListView_FlowItemTapped"
                               HasUnevenRows="True"
-                              FlowTappedBackgroundColor="Blue">
+                              FlowTappedBackgroundColor="Blue"
+                              FlowIsLoadingInfiniteEnabled="True"
+                              FlowIsLoadingInfinite="{Binding IsBusy}">
 
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>

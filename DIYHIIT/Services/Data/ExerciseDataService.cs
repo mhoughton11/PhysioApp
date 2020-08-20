@@ -23,7 +23,7 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<Exercise>> GetAllExercisesAsync(WorkoutType? t = null)
+        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(string t = null)
         {
             var cacheExercises = new List<Exercise>();
 
@@ -43,14 +43,17 @@ namespace DIYHIIT.Services.Data
                     Path = ApiConstants.ExercisesEndpoint
                 };
 
-                var ex = await _genericRepository.GetAsync<List<Exercise>>(builder.ToString());
+                var path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesEndpoint;
+
+                var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
+
+                if (ex == null) { return null; }
                 
                 if (t != null)
                 {
-                    var typeName = Enum.GetName(typeof(WorkoutType), t);
-                    var cacheName = $"All{typeName}Exercises";
+                    var cacheName = $"All{t}Exercises";
 
-                    ex = ex.Where(e => e.Type == t).ToList();
+                    ex = ex.Where(e => e.Type.ToString() == t).ToList();
                     await Cache.InsertObject(cacheName, ex, DateTime.Now.AddMinutes(2));
                 }
                 else
@@ -73,7 +76,7 @@ namespace DIYHIIT.Services.Data
             {
                 UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
                 {
-                    Path = ApiConstants.ExerciseByIdEndpoint + $"{id}"
+                    Path = ApiConstants.ExerciseByIdEndpoint + $"/{id}"
                 };
 
                 var ex = await _genericRepository.GetAsync<Exercise>(builder.ToString());

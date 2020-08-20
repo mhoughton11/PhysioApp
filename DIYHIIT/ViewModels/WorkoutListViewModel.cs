@@ -72,7 +72,7 @@ namespace DIYHIIT.ViewModels
 
         private async void OnAddWorkoutCommand()
         {
-            await _navigationService.NavigateToAsync<CreateWorkoutViewModel>("Test");
+            await _navigationService.NavigateToAsync<CreateWorkoutViewModel>();
         }
     }
 }
