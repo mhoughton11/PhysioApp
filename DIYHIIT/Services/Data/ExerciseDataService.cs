@@ -27,6 +27,7 @@ namespace DIYHIIT.Services.Data
         {
             var cacheExercises = new List<Exercise>();
 
+            // If cache not empty, fetch from cache and return items.
             if (t == null)
             {
                 cacheExercises = await GetFromCache<List<Exercise>>("AllExercises");
@@ -38,6 +39,7 @@ namespace DIYHIIT.Services.Data
             }
             else
             {
+                // Cache empty so get exercises from API as List<Ex.>
                 UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
                 {
                     Path = ApiConstants.ExercisesEndpoint
@@ -47,6 +49,7 @@ namespace DIYHIIT.Services.Data
 
                 var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
 
+                // If exercises null, return. If not, save to cache and return them.
                 if (ex == null) { return null; }
                 
                 if (t != null)

@@ -91,7 +91,7 @@ namespace DIYHIIT.ViewModels
 
         private async void GetExercises(string type = null)
         {
-            var items = await _exeriseDataService.GetAllExercisesAsync(type);
+            var items = await _exeriseDataService.GetAllExercisesAsync();
 
             if (items == null)
             {

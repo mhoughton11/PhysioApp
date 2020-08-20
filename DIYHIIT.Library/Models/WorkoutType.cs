@@ -9,7 +9,6 @@ namespace DIYHIIT.Library.Models
         Pilates,
         Yoga,
         Stretches,
-        Mobility,
-        All
+        Mobility
     };
 }

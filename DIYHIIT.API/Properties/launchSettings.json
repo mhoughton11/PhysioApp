@@ -27,7 +27,7 @@
     },
     "DIYHIIT.API": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "applicationUrl": "http://localhost:45283",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
