@@ -37,7 +37,6 @@ namespace DIYHIIT.Services.Data
                 }
                 else
                 {
-                    Debug.WriteLine($"retrieving data from cache for type: {Enum.GetName(typeof(WorkoutType), t)}");
                     return cacheExercises.Where(e => (int)e.Type == t);
                 }
             }

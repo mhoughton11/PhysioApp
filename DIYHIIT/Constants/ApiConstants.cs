@@ -7,5 +7,6 @@ namespace DIYHIIT.Constants
         public const string BaseApiUrl = "https://diyhiit-api.azurewebsites.net/api/";
         public const string ExercisesEndpoint = "exercise/exercises";
         public const string ExerciseByIdEndpoint = "exercise/exercises";
+        public const string WorkoutsEndpoint = "workout/add";
     }
 }

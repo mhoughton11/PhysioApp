@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
+using DIYHIIT.Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,16 @@ namespace DIYHIIT.API.Controllers
                                            .ToListAsync();
 
             return Ok(items);
+        }
+
+        [HttpPost]
+        // GET: /<controller>/
+        public IActionResult Add([FromBody]Workout workout)
+        {
+            _appDbContext.Workouts.Add(workout);
+            _appDbContext.SaveChanges();
+
+            return Ok();
         }
     }
 }

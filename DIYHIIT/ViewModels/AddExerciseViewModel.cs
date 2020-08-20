@@ -10,11 +10,13 @@ using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Library.Contracts;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DIYHIIT.ViewModels
 {
     public class AddExerciseViewModel : BaseViewModel
     {
+        #region Constructor
         public AddExerciseViewModel(INavigationService navigationService,
             IDialogService dialogService,
             IExerciseDataService exerciseDataService)
@@ -25,10 +27,24 @@ namespace DIYHIIT.ViewModels
             FlowExercises = new ObservableCollection<IExercise>();
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
         }
+        #endregion
+
+        #region Private fields
 
         private readonly IExerciseDataService _exeriseDataService;
 
         private bool _indicatorEnabled;
+        private ObservableCollection<IExercise> _flowExercises;
+        private List<string> _exerciseTypes;
+        private int _selectedIndex;
+
+        #endregion
+
+        #region Public Fields and Commands
+
+        public ICommand RefreshCommand => new Command(OnRefreshCommand);
+        public ICommand TappedCommand => new Command(OnExerciseTapped);
+        
         public bool IndicatorEnabled
         {
             get => _indicatorEnabled;
@@ -39,11 +55,6 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private ObservableCollection<IExercise> _exercises;
-
-        public Command RefreshCommand => new Command(OnRefreshCommand);
-
-        private ObservableCollection<IExercise> _flowExercises;
         public ObservableCollection<IExercise> FlowExercises 
         {
             get => _flowExercises; 
@@ -53,8 +64,7 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => FlowExercises);
             }
         }
-
-        private List<string> _exerciseTypes;
+ 
         public List<string> ExerciseTypes
         {
             get => _exerciseTypes;
@@ -65,7 +75,7 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private int _selectedIndex;
+        
         public int SelectedIndex
         {
             get => _selectedIndex;
@@ -78,6 +88,10 @@ namespace DIYHIIT.ViewModels
             }
         }
 
+        #endregion
+
+        #region Public Methods
+
         public override async Task InitializeAsync(object data)
         {
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
@@ -88,19 +102,17 @@ namespace DIYHIIT.ViewModels
 
         public void ItemTapped(Exercise item)
         {
-            try
-            {
-                MessagingCenter.Send(this, "ExerciseAdded", item);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Unable to send item using MC.");
-                Debug.WriteLine(ex.Message);
-            }
+            
         }
+
+        #endregion
+
+        #region Private Methods
 
         private async void GetExercises(int? type = null)
         {
+            IndicatorEnabled = true;
+
             var items = await _exeriseDataService.GetAllExercisesAsync(type);
 
             if (items == null)
@@ -110,15 +122,32 @@ namespace DIYHIIT.ViewModels
             }
 
             FlowExercises = new ObservableCollection<IExercise>(items);
+
+            IndicatorEnabled = false;
         }
 
         private void OnRefreshCommand()
         {
-            IndicatorEnabled = true;
-
-            GetExercises(SelectedIndex);
-
-            IndicatorEnabled = false;
+            GetExercises(SelectedIndex);   
         }
+
+        private void OnExerciseTapped()
+        {
+            /*
+            var ex = FlowExercises
+
+            try
+            {
+                MessagingCenter.Send(this, "ExerciseAdded", item);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Unable to send item using MC.");
+                Debug.WriteLine(ex.Message);
+            }
+            */
+        }
+
+        #endregion
     }
 }

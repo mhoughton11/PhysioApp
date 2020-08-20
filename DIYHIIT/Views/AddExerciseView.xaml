@@ -29,6 +29,10 @@
                               RefreshCommand="{Binding RefreshCommand}"
                               IsRefreshing="{Binding IndicatorEnabled}">
 
+                <flv:FlowListView.Behaviors>
+
+                </flv:FlowListView.Behaviors>
+
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
                         <Frame Margin="4"

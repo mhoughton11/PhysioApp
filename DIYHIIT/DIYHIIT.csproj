@@ -52,6 +52,7 @@
     <Folder Include="Services\General\Dialog\" />
     <Folder Include="Services\General\Navigation\" />
     <Folder Include="Services\General\Authentication\" />
+    <Folder Include="Behaviors\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIYHIIT.Library\DIYHIIT.Library.csproj" />
