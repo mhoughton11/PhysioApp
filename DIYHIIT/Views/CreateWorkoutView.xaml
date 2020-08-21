@@ -64,7 +64,7 @@
                             <Frame Padding="0"
                                    Margin="4"
                                    BackgroundColor="LightGray"
-                                   CornerRadius="8">
+                                   CornerRadius="16">
                                 <Grid HorizontalOptions="FillAndExpand"
                                           VerticalOptions="FillAndExpand">
                                     <Grid.RowDefinitions>
@@ -73,16 +73,17 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2.2*"/>
-                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="4*"/>
                                         <ColumnDefinition Width="1.2*"/>
                                         <ColumnDefinition Width="0.75*"/>
+                                        <ColumnDefinition Width="0.3*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Image Aspect="AspectFill"
                                            Grid.Column="0"
                                            Grid.RowSpan="2"
                                            HeightRequest="80"
-                                           Source="{Binding ImageName}"/>
+                                           Source="{Binding ImageURL}"/>
 
                                     <Label Text="{Binding DisplayName}"
                                            Margin="6, 0"

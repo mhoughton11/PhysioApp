@@ -43,7 +43,7 @@ namespace DIYHIIT.ViewModels
         #region Public Fields and Commands
 
         public ICommand RefreshCommand => new Command(OnRefreshCommand);
-        public ICommand TappedCommand => new Command(OnExerciseTapped);
+        public ICommand ExerciseTapped => new Command<Exercise>(OnExerciseTapped);
         
         public bool IndicatorEnabled
         {
@@ -95,14 +95,8 @@ namespace DIYHIIT.ViewModels
         public override async Task InitializeAsync(object data)
         {
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
-            SelectedIndex = 0;
 
             await base.InitializeAsync(data);
-        }
-
-        public void ItemTapped(Exercise item)
-        {
-            
         }
 
         #endregion
@@ -131,21 +125,17 @@ namespace DIYHIIT.ViewModels
             GetExercises(SelectedIndex);   
         }
 
-        private void OnExerciseTapped()
+        private void OnExerciseTapped(Exercise selectedExercise)
         {
-            /*
-            var ex = FlowExercises
-
             try
             {
-                MessagingCenter.Send(this, "ExerciseAdded", item);
+                MessagingCenter.Send(this, "ExerciseAdded", selectedExercise);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Unable to send item using MC.");
                 Debug.WriteLine(ex.Message);
             }
-            */
         }
 
         #endregion

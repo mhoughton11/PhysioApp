@@ -5,6 +5,7 @@ using Akavache;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
 
 namespace DIYHIIT.Services.Data
 {
@@ -20,17 +21,23 @@ namespace DIYHIIT.Services.Data
 
         public Task<IWorkout> AddWorkout(IWorkout workout)
         {
-            
+            IWorkout w = new Workout();
+
+            return Task.Run(() => w);
         }
 
         public Task<IWorkout> GetWorkoutById(int id)
         {
-            
+            IWorkout w = new Workout();
+
+            return Task.Run(() => w);
         }
 
         public Task<IEnumerable<IWorkout>> GetWorkoutsAsync()
         {
-            
+            IEnumerable<IWorkout> w = new List<Workout>();
+
+            return Task.Run(() => w);
         }
     }
 }

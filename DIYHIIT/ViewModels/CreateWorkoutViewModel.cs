@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
@@ -15,18 +17,11 @@ namespace DIYHIIT.ViewModels
     public class CreateWorkoutViewModel : BaseViewModel
     {
         public CreateWorkoutViewModel(INavigationService navigationService,
-                                      IDialogService dialogService)
+                                      IDialogService dialogService,
+                                      IWorkoutDataService workoutDataService)
             : base(navigationService, dialogService)
         {
-            Exercises = new ObservableCollection<IExercise>();
-            rand = new Random();
-
-            MessagingCenter.Subscribe<AddExerciseViewModel, IExercise>(this, "ExerciseAdded", (sender, arg) =>
-            {
-                _dialogService.Popup($"Adding {arg.DisplayName} to the workout");
-                arg.Index = rand.Next(0, 0xFFFF);
-                Exercises.Add(arg);
-            });
+            _workoutDataService = workoutDataService;
         }
 
         public string ActiveEntry { get; set; }
@@ -44,15 +39,30 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public Command DoneCommand => new Command(OnDoneCommand);
-        public Command AddExerciseCommand => new Command(OnAddExerciseCommand);
+        public ICommand DoneCommand => new Command(OnDoneCommand);
+        public ICommand AddExerciseCommand => new Command(OnAddExerciseCommand);
 
-        readonly Random rand;
+        private Random rand;
+        private readonly IWorkoutDataService _workoutDataService;
 
         public void RemoveObject(int index)
         {
             IExercise ex = Exercises.Where(e => e.Index == index) as IExercise;
             Exercises.Remove(ex);
+        }
+
+        public override Task InitializeAsync(object data)
+        {
+            Exercises = new ObservableCollection<IExercise>();
+            rand = new Random();
+
+            MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, "ExerciseAdded", (sender, arg) =>
+            {
+                arg.Index = rand.Next(0, 0xFFFF);
+                Exercises.Add(arg);
+            });
+
+            return base.InitializeAsync(data);
         }
 
         private async void OnDoneCommand()
@@ -94,7 +104,7 @@ namespace DIYHIIT.ViewModels
                 DateAdded = DateTime.Now
             };
 
-            var name = await Application.Current.MainPage.DisplayAlert("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
+            var name = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
 
             if (name)
             {
@@ -111,20 +121,13 @@ namespace DIYHIIT.ViewModels
                 }
             }
 
-            //await App.WorkoutDatabase.SaveItemAsync(workout);
-            await _navigationService.NavigateBackAsync();
+            await _workoutDataService.AddWorkout(workout);
+            await _navigationService.NavigateToAsync<WorkoutListViewModel>();
         }
 
         private async void OnAddExerciseCommand()
         {
             await _navigationService.NavigateToAsync<AddExerciseViewModel>();
-        }
-
-        public override Task InitializeAsync(object data)
-        {
-            Debug.WriteLine(data);
-
-            return Task.Run(() => 0);
         }
     }
 }
