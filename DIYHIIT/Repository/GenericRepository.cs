@@ -29,10 +29,14 @@ namespace DIYHIIT.Repository
         {
             try
             {
-                Debug.WriteLine($"Retrieving data from uri: {uri}");
+                Debug.WriteLine("Geting from client: " + uri);
 
                 HttpClient client = CreateHttpClient(uri);
                 HttpResponseMessage responseMessage = await client.GetAsync(uri);
+
+                var resp = await responseMessage.Content.ReadAsStringAsync();
+
+                Debug.WriteLine($"Client response: {resp}");
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -49,17 +53,18 @@ namespace DIYHIIT.Repository
                     responseMessage.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     //throw new ServiceAuthenticationException(content);
-                    Debug.WriteLine($"Error retrieving data: {content}");
                 }
 
-                return new T();
+                Debug.WriteLine($"Error sending data: {content}");
+
+                return default;
                 //throw new HttpRequestExceptionEx(responseMessage.StatusCode, content);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
 
-                return new T();
+                return default;
             }
         }
 
@@ -67,6 +72,8 @@ namespace DIYHIIT.Repository
         {
             try
             {
+                Debug.WriteLine("Posting to client: " + uri);
+
                 HttpClient client = CreateHttpClient(uri);
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
@@ -79,6 +86,7 @@ namespace DIYHIIT.Repository
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    Debug.WriteLine($"Post successful. Response: {responseMessage.StatusCode}");
                     var json = JsonConvert.DeserializeObject<T>(jsonResult);
                     return json;
                 }
@@ -86,10 +94,12 @@ namespace DIYHIIT.Repository
                 if (responseMessage.StatusCode == HttpStatusCode.Forbidden ||
                     responseMessage.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    throw new ServiceAuthenticationException(jsonResult);
+                    //throw new ServiceAuthenticationException(jsonResult);
                 }
 
-                throw new HttpRequestExceptionEx(responseMessage.StatusCode, jsonResult);
+                Debug.WriteLine($"Http Post failed. Response:");
+                Debug.WriteLine(responseMessage);
+                return default;
             }
             catch (Exception ex)
             {

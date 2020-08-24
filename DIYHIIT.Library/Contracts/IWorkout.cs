@@ -12,14 +12,11 @@ namespace DIYHIIT.Library.Contracts
         double? Effort { get; set; }
         double? Duration { get; }
 
-        int ExerciseCount { get; }
+        DateTime? DateAdded { get; set; }
+        DateTime? DateUsed { get; set; }
 
-        DateTime DateAdded { get; set; }
-        DateTime DateUsed { get; set; }
-        
+
         List<Exercise> Exercises { get; set; }
-
-        double GetDuration();
 
         void GetExercises(string value);
     }

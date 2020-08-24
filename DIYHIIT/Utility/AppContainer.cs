@@ -35,6 +35,8 @@ namespace DIYHIIT.Utility
 
             // Services - Data
             builder.RegisterType<ExerciseDataService>().As<IExerciseDataService>();
+            builder.RegisterType<WorkoutDataService>().As<IWorkoutDataService>();
+            builder.RegisterType<UserDataService>().As<IUserDataService>();
 
             // Services - General
             builder.RegisterType<NavigationService>().As<INavigationService>();

@@ -24,17 +24,13 @@
             </Grid.ColumnDefinitions>
 
             <Picker Title="Select a workout type"
+                    ItemsSource="{Binding WorkoutTypes}"
                     SelectedItem="{Binding SelectedWorkoutType}"
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
+                    FontSize="20"
                     Margin="4">
-                <Picker.Items>
-                    <x:String>Select a workout type</x:String>
-                    <x:String>Calisthenics</x:String>
-                    <x:String>HIIT</x:String>
-                    <x:String>Pilates</x:String>
-                    <x:String>Yoga</x:String>
-                </Picker.Items>
+                
             </Picker>
 
             <Entry Placeholder="Active Period"

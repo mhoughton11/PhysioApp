@@ -4,14 +4,16 @@ using DIYHIIT.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200823075412_UpdatedWorkoutSchema")]
+    partial class UpdatedWorkoutSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,28 +66,6 @@ namespace DIYHIIT.API.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("DIYHIIT.Library.Models.User", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
                 {
                     b.Property<int>("ID")
@@ -99,10 +79,10 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("BodyFocus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateAdded")
+                    b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateUsed")
+                    b.Property<DateTime>("DateUsed")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Duration")

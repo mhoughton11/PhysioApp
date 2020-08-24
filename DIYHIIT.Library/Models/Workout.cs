@@ -12,22 +12,20 @@ namespace DIYHIIT.Library.Models
     {
         [Key]
         public int ID { get; set; }
-        public int ExerciseCount { get => Exercises.Count; }
 
         [Required]
         public WorkoutType Type { get; set; }
 
         public string Name { get; set; }
-        public string Focus { get => GetBodyFocus(Exercises); }
         public string BodyFocus { get; set; }
 
         public double? RestInterval { get; set; }
         public double? ActiveInterval { get; set; }
         public double? Effort { get; set; }
-        public double? Duration { get => GetDuration(); }
+        public double? Duration { get; set; }
 
-        public DateTime DateAdded { get; set; }
-        public DateTime DateUsed { get; set; }
+        public DateTime? DateAdded { get; set; }
+        public DateTime? DateUsed { get; set; }
 
         public List<Exercise> Exercises { get; set; }
 
@@ -65,10 +63,10 @@ namespace DIYHIIT.Library.Models
                 }
 
                 if (DateAdded != null)
-                    Debug.WriteLine($"Date created: {DateAdded.Date.ToShortDateString()}");
+                    Debug.WriteLine($"Date created: {DateAdded?.Date.ToShortDateString()}");
 
                 if (DateUsed != null)
-                    Debug.WriteLine($"Date last used: {DateUsed.Date.ToShortDateString()}");
+                    Debug.WriteLine($"Date last used: {DateUsed?.Date.ToShortDateString()}");
             }
             catch (Exception ex)
             {
@@ -77,21 +75,6 @@ namespace DIYHIIT.Library.Models
             }
 
             Debug.WriteLine(" *** ");
-        }
-
-        /// <summary>
-        /// Get the duration of the workout in minutes according to the specific active/rest times and the number of moves.
-        /// </summary>
-        /// <returns>The duration of the workout.</returns>
-        public double GetDuration()
-        {
-            if (Exercises.Count == 0)
-                return 0;
-
-            double seconds = (ActiveInterval * Exercises.Count) + (RestInterval * Exercises.Count - 1) ?? 0;
-
-            TimeSpan t = TimeSpan.FromSeconds(seconds);
-            return t.Minutes;
         }
 
         /// <summary>
@@ -113,60 +96,6 @@ namespace DIYHIIT.Library.Models
                     //Exercises.Add(ex);
                 }
             }
-        }
-
-        /// <summary>
-        /// Get the focus of the workout on the body.
-        /// </summary>
-        /// <param name="exercises">Exercises containing focus areas.</param>
-        /// <returns>Name of the area of focus.</returns>
-        private string GetBodyFocus(List<Exercise> exercises)
-        {
-            string focus = "";
-
-            var areas = new byte[4];
-
-            /*
-            Workout focus codes:
-            [  0  |  1  |  2  |  3  ]
-            [upper|lower|core |full
-            */
-
-            try
-            {
-                byte maxValue = areas.Max();
-                int maxIndex = areas.ToList().IndexOf(maxValue);
-
-                switch (maxIndex)
-                {
-                    case 0:
-                        focus = "Upper Body";
-                        break;
-
-                    case 1:
-                        focus = "Lower Body";
-                        break;
-
-                    case 2:
-                        focus = "Core";
-                        break;
-
-                    case 3:
-                        focus = "Full Body";
-                        break;
-
-                    default:
-                        focus = "Default";
-                        throw new Exception();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Couldn't get body focus");
-                Debug.WriteLine(ex.Message);
-            }
-
-            return focus;
         }
     }
 }

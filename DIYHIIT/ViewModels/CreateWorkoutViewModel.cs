@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -12,6 +13,8 @@ using DIYHIIT.Views;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
+using static DIYHIIT.Library.Helpers.Helpers;
+
 namespace DIYHIIT.ViewModels
 {
     public class CreateWorkoutViewModel : BaseViewModel
@@ -24,12 +27,16 @@ namespace DIYHIIT.ViewModels
             _workoutDataService = workoutDataService;
         }
 
+        private Random rand;
+        private List<string> _workoutTypes;
+        private ObservableCollection<Exercise> _exercises;
+        private readonly IWorkoutDataService _workoutDataService;
+
         public string ActiveEntry { get; set; }
         public string RestEntry { get; set; }
-        public string SelectedWorkoutType { get; set; }
+        public int SelectedWorkoutType { get; set; }
 
-        private ObservableCollection<IExercise> _exercises;
-        public ObservableCollection<IExercise> Exercises
+        public ObservableCollection<Exercise> Exercises
         {
             get => _exercises;
             set
@@ -39,22 +46,31 @@ namespace DIYHIIT.ViewModels
             }
         }
 
+        public List<string> WorkoutTypes
+        {
+            get => _workoutTypes;
+            set
+            {
+                _workoutTypes = value;
+                RaisePropertyChanged(() => WorkoutTypes);
+            }
+        }
+
         public ICommand DoneCommand => new Command(OnDoneCommand);
         public ICommand AddExerciseCommand => new Command(OnAddExerciseCommand);
 
-        private Random rand;
-        private readonly IWorkoutDataService _workoutDataService;
-
         public void RemoveObject(int index)
         {
-            IExercise ex = Exercises.Where(e => e.Index == index) as IExercise;
+            Exercise ex = Exercises.Where(e => e.Index == index) as Exercise;
             Exercises.Remove(ex);
         }
 
         public override Task InitializeAsync(object data)
         {
-            Exercises = new ObservableCollection<IExercise>();
+            Exercises = new ObservableCollection<Exercise>();
             rand = new Random();
+
+            WorkoutTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
 
             MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, "ExerciseAdded", (sender, arg) =>
             {
@@ -67,13 +83,10 @@ namespace DIYHIIT.ViewModels
 
         private async void OnDoneCommand()
         {
-            string exstring = "";
-
-            foreach (var ex in Exercises)
-                exstring += $"{ex.Name},";
-
             double activeInterval, restInterval;
+            int workoutType;
 
+            // Check all required params aren't null.
             try
             {
                 activeInterval = double.Parse(ActiveEntry);
@@ -94,16 +107,41 @@ namespace DIYHIIT.ViewModels
                 return;
             }
 
+            try
+            {
+                workoutType = SelectedWorkoutType;
+            }
+            catch (Exception)
+            {
+                await _dialogService.ShowAlertAsync("Empty field.", "Please enter a value for the workout type.", "OK");
+                return;
+            }
+
             // Create workout with the specified parameters/exercises.
             var workout = new Workout
             {
                 Name = SelectedWorkoutType + " Workout",
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
+                Exercises = Exercises.ToList(),
                 Type = WorkoutType.HIIT,
                 DateAdded = DateTime.Now
             };
+            workout.Duration = GetWorkoutDuration(workout);
 
+            workout = await GetWorkoutName(workout);
+
+            await _workoutDataService.SaveWorkout(workout);
+            await _navigationService.NavigateBackAsync();
+        }
+
+        private async void OnAddExerciseCommand()
+        {
+            await _navigationService.NavigateToAsync<AddExerciseViewModel>();
+        }
+
+        private async Task<Workout> GetWorkoutName(Workout workout)
+        {
             var name = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
 
             if (name)
@@ -117,17 +155,11 @@ namespace DIYHIIT.ViewModels
                 else
                 {
                     _dialogService.Popup("Please type a workout name when prompted.");
-                    return;
+                    return null;
                 }
             }
 
-            await _workoutDataService.AddWorkout(workout);
-            await _navigationService.NavigateToAsync<WorkoutListViewModel>();
-        }
-
-        private async void OnAddExerciseCommand()
-        {
-            await _navigationService.NavigateToAsync<AddExerciseViewModel>();
+            return workout;
         }
     }
 }

@@ -127,15 +127,7 @@ namespace DIYHIIT.ViewModels
 
         private void OnExerciseTapped(Exercise selectedExercise)
         {
-            try
-            {
-                MessagingCenter.Send(this, "ExerciseAdded", selectedExercise);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Unable to send item using MC.");
-                Debug.WriteLine(ex.Message);
-            }
+            MessagingCenter.Send(this, "ExerciseAdded", selectedExercise);
         }
 
         #endregion

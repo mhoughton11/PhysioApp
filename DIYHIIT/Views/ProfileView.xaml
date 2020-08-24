@@ -10,6 +10,26 @@
                      VerticalOptions="CenterAndExpand">
 
             <Label Text="{Binding TextLabel}"/>
+            <Button Text="Test User API Post"
+                    Margin="20"
+                    Padding="20"
+                    Command="{Binding TestPostCommand}"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    FontSize="Large"
+                    BackgroundColor="LightSalmon"
+                    TextColor="Blue"
+                    CornerRadius="10"/>
+            <Button Text="Test User API Get"
+                    Margin="20"
+                    Padding="20"
+                    Command="{Binding TestGetCommand}"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    FontSize="Large"
+                    BackgroundColor="LightCyan"
+                    TextColor="Black"
+                    CornerRadius="10"/>
 
         </StackLayout>
     </ContentPage.Content>

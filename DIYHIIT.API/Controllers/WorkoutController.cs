@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
@@ -35,13 +36,13 @@ namespace DIYHIIT.API.Controllers
         }
 
         [HttpPost]
-        // GET: /<controller>/
-        public IActionResult Add([FromBody]Workout workout)
+        [Route("save")]
+        public async Task<ActionResult> SaveWorkout([FromBody]Workout workout)
         {
             _appDbContext.Workouts.Add(workout);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
 
-            return Ok();
+            return Ok(workout);
         }
     }
 }

@@ -42,9 +42,17 @@ namespace DIYHIIT.Services.General.Navigation
 
         public async Task NavigateBackAsync()
         {
+            await CurrentApplication.MainPage.Navigation.PopAsync();
+
             if (CurrentApplication.MainPage != null)
             {
                 await CurrentApplication.MainPage.Navigation.PopAsync();
+            }
+            else
+            {
+                var navigationPage = CurrentApplication.MainPage as DIYHIITNavigationPage;
+
+                await navigationPage.PopAsync();
             }
         }
 

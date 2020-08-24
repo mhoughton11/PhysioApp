@@ -53,11 +53,11 @@ namespace DIYHIIT.ViewModels
             _workout = (IWorkout)workout;
 
             Name = _workout.Name;
+            WorkoutMoves = _workout.Exercises.Count;
             BodyFocus = _workout.BodyFocus;
-            WorkoutMoves = _workout.ExerciseCount;
             WorkoutLength = _workout.Duration ?? 0;
 
-            return Task.Run(() => 0);
+            return base.InitializeAsync(workout);
         }
 
         private async Task ExecuteBeginWorkoutCommand()

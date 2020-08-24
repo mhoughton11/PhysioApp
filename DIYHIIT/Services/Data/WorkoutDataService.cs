@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Akavache;
+using DIYHIIT.Constants;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Contracts;
@@ -19,11 +21,13 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public Task<IWorkout> AddWorkout(IWorkout workout)
+        public async Task<IWorkout> SaveWorkout(IWorkout workout)
         {
-            IWorkout w = new Workout();
+            var path = ApiConstants.BaseApiUrl + ApiConstants.SaveWorkoutEndpoint;
 
-            return Task.Run(() => w);
+            await _genericRepository.PostAsync(path, workout);
+
+            return workout;
         }
 
         public Task<IWorkout> GetWorkoutById(int id)
