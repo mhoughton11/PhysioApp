@@ -5,7 +5,7 @@ namespace DIYHIIT.Library.Contracts
 {
     public interface IBaseModel
     {
-        int ID { get; set; }
+        int Id { get; set; }
 
         string Name { get; set; }
         string BodyFocus { get; set; }

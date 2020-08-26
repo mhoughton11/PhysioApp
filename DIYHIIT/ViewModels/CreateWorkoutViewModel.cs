@@ -14,6 +14,7 @@ using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
 using static DIYHIIT.Library.Helpers.Helpers;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.ViewModels
 {
@@ -120,19 +121,22 @@ namespace DIYHIIT.ViewModels
             // Create workout with the specified parameters/exercises.
             var workout = new Workout
             {
-                Name = SelectedWorkoutType + " Workout",
+                Name = Enum.GetName(typeof(WorkoutType), workoutType) + " Workout",
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
                 Exercises = Exercises.ToList(),
-                Type = WorkoutType.HIIT,
+                Type = (WorkoutType)workoutType,
                 DateAdded = DateTime.Now
             };
             workout.Duration = GetWorkoutDuration(workout);
 
+            // Set all ID's to 0 (EntityFramework complains if it tries to set the ID and it's already been given a value)
+            foreach (var ex in workout.Exercises)
+                ex.Id = 0;
+
             workout = await GetWorkoutName(workout);
 
             await _workoutDataService.SaveWorkout(workout);
-            await _navigationService.NavigateBackAsync();
         }
 
         private async void OnAddExerciseCommand()

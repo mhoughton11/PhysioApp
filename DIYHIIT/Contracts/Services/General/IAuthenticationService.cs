@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DIYHIIT.Auth;
-using DIYHIIT.Models;
 
 namespace DIYHIIT.Contracts.Services.General
 {

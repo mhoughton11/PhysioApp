@@ -7,8 +7,8 @@ namespace DIYHIIT.Library.Models
 {
     public class Exercise : IExercise
     {
-        [Key]
-        public int ID { get; set; }
+        // Primary key
+        public int Id { get; set; }
 
         public int? Index { get; set; }
 
@@ -21,9 +21,7 @@ namespace DIYHIIT.Library.Models
 
         [StringLength(500)]
         public string Description { get; set; }
-
         public string BodyFocus { get; set; }
-
         public string ImageURL { get; set; }
 
         public double? Duration { get; set; }
@@ -37,7 +35,7 @@ namespace DIYHIIT.Library.Models
             {
                 Debug.WriteLine(" *** ");
                 Debug.WriteLine($"Debugging Exercise: {Name}");
-                Debug.WriteLine($"ID: {ID}");
+                Debug.WriteLine($"ID: {Id}");
                 Debug.Write($"Body focus: ");
                 for (int i = 0; i < 4; i++)
                 {

@@ -15,9 +15,6 @@ namespace DIYHIIT.Library.Contracts
         DateTime? DateAdded { get; set; }
         DateTime? DateUsed { get; set; }
 
-
         List<Exercise> Exercises { get; set; }
-
-        void GetExercises(string value);
     }
 }

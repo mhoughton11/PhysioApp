@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
 using System.Linq;
-using DIYHIIT.Models;
 using System;
 using DIYHIIT.Library.Contracts;
 
@@ -36,7 +35,7 @@ namespace DIYHIIT.Services.Data
             try
             {
                 var all = await Cache.GetAllObjects<T>();
-                return all.Where(t => t.ID == id).SingleOrDefault();
+                return all.Where(t => t.Id == id).SingleOrDefault();
             }
             catch (Exception)
             {

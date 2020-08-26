@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
-using DIYHIIT.Models;
-using DIYHIIT.Views;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels

@@ -40,7 +40,7 @@ namespace DIYHIIT.Data.Controllers
             }
             
             var exercise = await _appDbContext.Exercises
-                                              .Where(e => e.ID == id)
+                                              .Where(e => e.Id == id)
                                               .SingleOrDefaultAsync();
             if (exercise != null)
             {

@@ -42,7 +42,7 @@ namespace DIYHIIT.API.Controllers
             }
 
             var user = await _appDbContext.Users
-                                          .Where(u => u.ID == id)
+                                          .Where(u => u.Id == id)
                                           .SingleOrDefaultAsync();
 
             if (user != null)
@@ -55,8 +55,14 @@ namespace DIYHIIT.API.Controllers
 
         [HttpPost]
         [Route("save")]
-        public async Task<ActionResult> SaveUser([FromBody]User user)
+        public async Task<IActionResult> SaveUser([FromBody]User user)
         {
+            // Check if 
+            if (_appDbContext.Users.Any(u => u.Username == user.Username))
+            {
+                return Forbid();
+            }
+
             _appDbContext.Users.Add(user);
             await _appDbContext.SaveChangesAsync();
 

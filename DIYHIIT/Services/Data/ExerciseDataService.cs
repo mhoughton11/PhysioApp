@@ -10,7 +10,6 @@ using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
-using DIYHIIT.Models;
 
 namespace DIYHIIT.Services.Data
 {

@@ -36,8 +36,6 @@ namespace DIYHIIT.Repository
 
                 var resp = await responseMessage.Content.ReadAsStringAsync();
 
-                Debug.WriteLine($"Client response: {resp}");
-
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string message = await responseMessage.Content.ReadAsStringAsync();
@@ -72,11 +70,10 @@ namespace DIYHIIT.Repository
         {
             try
             {
-                Debug.WriteLine("Posting to client: " + uri);
-
                 HttpClient client = CreateHttpClient(uri);
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
+                Debug.WriteLine($"HTTP Post Json data: {JsonConvert.SerializeObject(data)}");
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 string jsonResult = string.Empty;
@@ -104,7 +101,7 @@ namespace DIYHIIT.Repository
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw;
+                return default;
             }
         }
 

@@ -11,7 +11,7 @@ namespace DIYHIIT.Library.Models
     public class Workout : IWorkout
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public WorkoutType Type { get; set; }
@@ -38,7 +38,7 @@ namespace DIYHIIT.Library.Models
             try
             {
                 Debug.WriteLine($"Debugging workout: {Name}");
-                Debug.WriteLine($"ID: {ID}");
+                Debug.WriteLine($"ID: {Id}");
                 Debug.WriteLine($"Body focus: {BodyFocus}");
                 Debug.WriteLine(" --- ");
             }
@@ -75,27 +75,6 @@ namespace DIYHIIT.Library.Models
             }
 
             Debug.WriteLine(" *** ");
-        }
-
-        /// <summary>
-        /// Retrieve the exercises from the app database and add them to the object exercise list.
-        /// </summary>
-        /// <param name="value">String encoded with the exercises to retrieve from the DB.</param>
-        /// <returns>The number of exercises added to the workout object.</returns>
-        public void GetExercises(string value)
-        {
-            // Split workout string
-            string[] exercises = value.Split(',');
-            //Debug.WriteLine($"Workout contains {exercises.Length - 1} exercises.");
-
-            foreach (var exercise in exercises)
-            {
-                if (!string.IsNullOrEmpty(exercise) || !string.IsNullOrWhiteSpace(exercise))
-                {
-                    //var ex = await App.ExerciseDatabase.GetItemAsync(exercise);
-                    //Exercises.Add(ex);
-                }
-            }
         }
     }
 }

@@ -8,6 +8,7 @@ using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Services.Data
 {
@@ -21,9 +22,20 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IWorkout> SaveWorkout(IWorkout workout)
+        public async Task<IWorkout> SaveWorkout(IWorkout workout, HostOptions options = HostOptions.Production)
         {
-            var path = ApiConstants.BaseApiUrl + ApiConstants.SaveWorkoutEndpoint;
+            string path = string.Empty;
+        
+            switch (options)
+            {
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.SaveWorkoutEndpoint;
+                    break;
+
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.SaveWorkoutEndpoint;
+                    break;
+            }
 
             await _genericRepository.PostAsync(path, workout);
 

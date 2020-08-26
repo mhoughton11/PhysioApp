@@ -5,6 +5,7 @@ namespace DIYHIIT.Constants
     public class ApiConstants
     {
         // Base
+        public const string BaseLocalHost = "http://localhost:45283/api/";
         public const string BaseApiUrl = "https://diyhiit-api.azurewebsites.net/api/";
 
         // Exercises

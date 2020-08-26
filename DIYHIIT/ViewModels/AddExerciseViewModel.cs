@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System;
 using System.Linq;
-using DIYHIIT.Models;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
