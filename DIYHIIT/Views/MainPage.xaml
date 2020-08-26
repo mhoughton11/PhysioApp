@@ -8,6 +8,8 @@
             x:Class="DIYHIIT.Views.MainPage">
 
     <TabbedPage.Children>
+
+        <!-- Home Page -->
         <NavigationPage Title="Home">
 
             <x:Arguments>
@@ -21,6 +23,7 @@
             </NavigationPage.Icon>
         </NavigationPage>
 
+        <!-- Workouts Page -->
         <NavigationPage Title="Workouts">
 
             <x:Arguments>
@@ -35,6 +38,7 @@
             
         </NavigationPage>
 
+        <!-- Profile Page -->
         <NavigationPage Title="Profile">
 
             <x:Arguments>

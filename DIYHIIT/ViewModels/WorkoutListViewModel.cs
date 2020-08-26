@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Views;
@@ -29,8 +30,7 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public Command AddWorkoutCommand => new Command(OnAddWorkoutCommand);
-        
+        public ICommand AddWorkoutCommand => new Command(OnAddWorkoutCommand);
 
         public void WorkoutSelected(IWorkout workout)
         {
@@ -72,7 +72,7 @@ namespace DIYHIIT.ViewModels
 
         private async void OnAddWorkoutCommand()
         {
-            await _navigationService.NavigateToAsync<CreateWorkoutViewModel>();
+            await _navigationService.NavigateToAsync(typeof(CreateWorkoutViewModel));
         }
     }
 }

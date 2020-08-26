@@ -10,9 +10,8 @@ using DIYHIIT.Services.General.Authentication;
 using DIYHIIT.Services.General.Dialog;
 using DIYHIIT.Services.General.Navigation;
 using DIYHIIT.ViewModels;
-using Xamarin.Forms;
 
-namespace DIYHIIT.Utility
+namespace DIYHIIT.DependencyInjection
 {
     public class AppContainer
     {
@@ -39,7 +38,8 @@ namespace DIYHIIT.Utility
             builder.RegisterType<UserDataService>().As<IUserDataService>();
 
             // Services - General
-            builder.RegisterType<NavigationService>().As<INavigationService>();
+            //builder.RegisterType<Navig>().As<INavigation>();
+            builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<DialogService>().As<IDialogService>();
 

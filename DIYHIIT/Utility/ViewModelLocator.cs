@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Reflection;
 using Xamarin.Forms;
 
-namespace DIYHIIT.Utility
+namespace DIYHIIT.ViewModels
 {
     public class ViewModelLocator
     {

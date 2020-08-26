@@ -37,20 +37,20 @@ namespace DIYHIIT.Services.General.Navigation
 
         public async Task ClearBackStack()
         {
-            await CurrentApplication.MainPage.Navigation.PopToRootAsync();
+            await Application.Current.MainPage.Navigation.PopToRootAsync();
         }
 
         public async Task NavigateBackAsync()
         {
-            await CurrentApplication.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PopAsync();
 
-            if (CurrentApplication.MainPage != null)
+            if (Application.Current.MainPage != null)
             {
-                await CurrentApplication.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PopAsync();
             }
             else
             {
-                var navigationPage = CurrentApplication.MainPage as DIYHIITNavigationPage;
+                var navigationPage = Application.Current.MainPage as DIYHIITNavigationPage;
 
                 await navigationPage.PopAsync();
             }
@@ -63,9 +63,9 @@ namespace DIYHIIT.Services.General.Navigation
 
         public async Task PopToRootAsync()
         {
-            if (CurrentApplication.MainPage is MainPage mainPage)
+            if (Application.Current.MainPage is MainPage mainPage)
             {
-                await mainPage.Navigation.PopToRootAsync();
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
         }
 
@@ -91,23 +91,22 @@ namespace DIYHIIT.Services.General.Navigation
 
         protected virtual async Task InternalNavigateToAsync(Type viewModelType, object parameter)
         {
-            var page = CreatePage(viewModelType, parameter);
+            Page page = CreatePage(viewModelType, parameter);
 
             if (page is LoginView || page is RegistrationView)
             {
-                CurrentApplication.MainPage = page;
+                CurrentApplication.MainPage = new DIYHIITNavigationPage(page);
             }
             else
             {
-                var navigationPage = CurrentApplication.MainPage as DIYHIITNavigationPage;
-
+                var navigationPage = Application.Current.MainPage as DIYHIITNavigationPage;
                 if (navigationPage != null)
                 {
                     await navigationPage.PushAsync(page);
                 }
                 else
                 {
-                    CurrentApplication.MainPage = new DIYHIITNavigationPage(page);
+                    Application.Current.MainPage = new DIYHIITNavigationPage(page);
                 }
             }
 

@@ -1,5 +1,5 @@
 ﻿using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Utility;
+using DIYHIIT.DependencyInjection;
 using DIYHIIT.Views;
 using DLToolkit.Forms.Controls;
 using System;
@@ -19,18 +19,18 @@ namespace DIYHIIT
             InitalizeNavigation();            
         }
 
+        private void InitializeApp()
+        {
+            FlowListView.Init();
+            AppContainer.RegisterDependancies();
+        }
+
         private async void InitalizeNavigation()
         {
             var navigationService = AppContainer.Resolve<INavigationService>();
             await navigationService.InitializeAsync();
 
             MainPage = new MainPage();
-        }
-
-        private void InitializeApp()
-        {
-            FlowListView.Init();
-            AppContainer.RegisterDependancies();
         }
 
         protected override void OnStart()

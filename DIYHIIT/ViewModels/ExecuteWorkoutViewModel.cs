@@ -12,10 +12,11 @@ namespace DIYHIIT.ViewModels
 {
     class ExecuteWorkoutViewModel : BaseViewModel
     {
-        public ExecuteWorkoutViewModel(INavigationService navigationService, IDialogService dialogService)
+        public ExecuteWorkoutViewModel(INavigationService navigationService,
+                                       IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            timer = new System.Timers.Timer(1000);
+            timer = new Timer(1000);
 
             EffortDetailEnabled = "False";
             TimeLabelEnabled = "True";

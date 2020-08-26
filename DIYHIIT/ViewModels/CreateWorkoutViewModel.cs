@@ -136,7 +136,22 @@ namespace DIYHIIT.ViewModels
 
             workout = await GetWorkoutName(workout);
 
-            await _workoutDataService.SaveWorkout(workout);
+            //await _workoutDataService.SaveWorkout(workout);
+
+            Debug.WriteLine(0);
+            await Application.Current.MainPage.Navigation.PopToRootAsync();
+
+            Debug.WriteLine(1);
+            await _navigationService.ClearBackStack();
+            Debug.WriteLine(2);
+            await _navigationService.NavigateBackAsync();
+            Debug.WriteLine(3);
+            await _navigationService.PopToRootAsync();
+            Debug.WriteLine(4);
+            await _navigationService.RemoveLastFromBackStackAsync();
+            Debug.WriteLine(5);
+            await _navigationService.NavigateToAsync<HomeViewModel>();
+            //await _navigation.PopToRootAsync();
         }
 
         private async void OnAddExerciseCommand()

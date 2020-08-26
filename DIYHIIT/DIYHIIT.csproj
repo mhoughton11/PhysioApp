@@ -53,6 +53,8 @@
     <Folder Include="Services\General\Navigation\" />
     <Folder Include="Services\General\Authentication\" />
     <Folder Include="Behaviors\" />
+    <Folder Include="Dependency Injection\" />
+    <Folder Include="ViewModels\Base\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIYHIIT.Library\DIYHIIT.Library.csproj" />

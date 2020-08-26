@@ -57,7 +57,7 @@ namespace DIYHIIT.API.Controllers
         [Route("save")]
         public async Task<IActionResult> SaveUser([FromBody]User user)
         {
-            // Check if 
+            // Check if username already exists.
             if (_appDbContext.Users.Any(u => u.Username == user.Username))
             {
                 return Forbid();

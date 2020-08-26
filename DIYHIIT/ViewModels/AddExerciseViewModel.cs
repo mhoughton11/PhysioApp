@@ -17,14 +17,11 @@ namespace DIYHIIT.ViewModels
     {
         #region Constructor
         public AddExerciseViewModel(INavigationService navigationService,
-            IDialogService dialogService,
-            IExerciseDataService exerciseDataService)
+                                    IDialogService dialogService,
+                                    IExerciseDataService exerciseDataService)
             : base(navigationService, dialogService)
         {
             _exeriseDataService = exerciseDataService;
-
-            FlowExercises = new ObservableCollection<IExercise>();
-            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
         }
         #endregion
 
@@ -93,8 +90,10 @@ namespace DIYHIIT.ViewModels
 
         public override async Task InitializeAsync(object data)
         {
-            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
+            ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
+            FlowExercises = new ObservableCollection<IExercise>();
 
+            SelectedIndex = 0;
             await base.InitializeAsync(data);
         }
 

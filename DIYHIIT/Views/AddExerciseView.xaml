@@ -2,8 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
-             xmlns:local="clr-namespace:DIYHIIT"
-             xmlns:behaviors="clr-namespace:DIYHIIT.Behaviors"
              xmlns:utility="clr-namespace:DIYHIIT.Utility"
              utility:ViewModelLocator.AutoWireViewModel="True"
              x:Class="DIYHIIT.Views.AddExerciseView"
