@@ -10,6 +10,7 @@ using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Services.Data
 {
@@ -23,7 +24,7 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(int? t = null)
+        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(int? t = null, HostOptions options = HostOptions.Production)
         {
             // If cache not empty, fetch from cache and return items.
             var cacheExercises = await GetFromCache<List<Exercise>>("Exercises");
@@ -42,7 +43,18 @@ namespace DIYHIIT.Services.Data
             else
             {
                 // Cache empty so get exercises from API as List<Ex.>
-                var path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesEndpoint;
+                string path = string.Empty;
+
+                switch (options)
+                {
+                    case HostOptions.Production:
+                        path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesEndpoint;
+                        break;
+
+                    case HostOptions.LocalHost:
+                        path = ApiConstants.BaseLocalHost + ApiConstants.ExercisesEndpoint;
+                        break;
+                }
 
                 var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
 

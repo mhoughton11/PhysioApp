@@ -136,7 +136,7 @@ namespace DIYHIIT.ViewModels
 
             workout = await GetWorkoutName(workout);
 
-            //await _workoutDataService.SaveWorkout(workout);
+            await _workoutDataService.SaveWorkout(workout);
 
             Debug.WriteLine(0);
             await Application.Current.MainPage.Navigation.PopToRootAsync();

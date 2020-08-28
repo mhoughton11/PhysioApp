@@ -54,7 +54,7 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WorkoutId")
+                    b.Property<int>("WorkoutId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -127,9 +127,11 @@ namespace DIYHIIT.API.Migrations
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
                 {
-                    b.HasOne("DIYHIIT.Library.Models.Workout", null)
+                    b.HasOne("DIYHIIT.Library.Models.Workout", "Workout")
                         .WithMany("Exercises")
-                        .HasForeignKey("WorkoutId");
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

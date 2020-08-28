@@ -2,7 +2,7 @@
 
 namespace DIYHIIT.API.Migrations
 {
-    public partial class UpdatedExerciseSchema : Migration
+    public partial class AddedModelBuilderForeignKey : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

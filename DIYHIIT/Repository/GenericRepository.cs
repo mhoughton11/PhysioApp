@@ -29,8 +29,6 @@ namespace DIYHIIT.Repository
         {
             try
             {
-                Debug.WriteLine("Geting from client: " + uri);
-
                 HttpClient client = CreateHttpClient(uri);
                 HttpResponseMessage responseMessage = await client.GetAsync(uri);
 
@@ -73,7 +71,6 @@ namespace DIYHIIT.Repository
                 HttpClient client = CreateHttpClient(uri);
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
-                Debug.WriteLine($"HTTP Post Json data: {JsonConvert.SerializeObject(data)}");
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 string jsonResult = string.Empty;
@@ -83,7 +80,6 @@ namespace DIYHIIT.Repository
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Debug.WriteLine($"Post successful. Response: {responseMessage.StatusCode}");
                     var json = JsonConvert.DeserializeObject<T>(jsonResult);
                     return json;
                 }

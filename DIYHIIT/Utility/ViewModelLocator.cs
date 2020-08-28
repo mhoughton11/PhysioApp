@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Reflection;
+using DIYHIIT.DependencyInjection;
 using Xamarin.Forms;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.Utility
 {
     public class ViewModelLocator
     {

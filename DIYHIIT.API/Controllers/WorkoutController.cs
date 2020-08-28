@@ -39,7 +39,26 @@ namespace DIYHIIT.API.Controllers
         [Route("save")]
         public async Task<IActionResult> SaveWorkout([FromBody]Workout workout)
         {
-            _appDbContext.Workouts.Add(workout);
+            /*
+            var _workout = new Workout
+            {
+                Name = workout.Name,
+                BodyFocus = workout.BodyFocus,
+                RestInterval = workout.RestInterval,
+                ActiveInterval = workout.ActiveInterval,
+                Effort = workout.Effort,
+                Duration = workout.Duration,
+                DateAdded = workout.DateAdded,
+                DateUsed = workout.DateUsed,
+                Exercises = workout.Exercises,
+                Type = workout.Type
+            };
+            */
+
+            foreach (var ex in workout.Exercises)
+                _appDbContext.Entry(ex).State = EntityState.Modified;
+
+            await _appDbContext.Workouts.AddAsync(workout);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(workout);

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200823080235_AddedBasicUserSchema")]
-    partial class AddedBasicUserSchema
+    [Migration("20200827200647_AddedModelBuilderForeignKey")]
+    partial class AddedModelBuilderForeignKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace DIYHIIT.API.Migrations
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -56,19 +56,19 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WorkoutID")
+                    b.Property<int>("WorkoutId")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("WorkoutID");
+                    b.HasIndex("WorkoutId");
 
                     b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -79,18 +79,18 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -101,10 +101,10 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("BodyFocus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateAdded")
+                    b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateUsed")
+                    b.Property<DateTime?>("DateUsed")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Duration")
@@ -122,16 +122,18 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
                 {
-                    b.HasOne("DIYHIIT.Library.Models.Workout", null)
+                    b.HasOne("DIYHIIT.Library.Models.Workout", "Workout")
                         .WithMany("Exercises")
-                        .HasForeignKey("WorkoutID");
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

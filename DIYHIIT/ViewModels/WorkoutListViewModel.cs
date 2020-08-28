@@ -42,8 +42,6 @@ namespace DIYHIIT.ViewModels
             {
                 _dialogService.Popup("Failed to load workout.");
                 Debug.WriteLine(ex);
-                Debug.WriteLine("Workout:");
-                workout.DebugObject();
             }          
         }
 

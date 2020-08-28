@@ -30,7 +30,7 @@ namespace DIYHIIT.Services.Data
             }
         }
 
-        public async Task<T> GetFromCache<T>(int id) where T : IBaseModel
+        public async Task<T> GetFromCache<T>(int id) where T : IEntity
         {
             try
             {
