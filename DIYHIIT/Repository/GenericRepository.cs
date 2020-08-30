@@ -51,7 +51,7 @@ namespace DIYHIIT.Repository
                     //throw new ServiceAuthenticationException(content);
                 }
 
-                Debug.WriteLine($"Error sending data: {content}");
+                Debug.WriteLine($"Error getting data from uri: {uri}");
 
                 return default;
                 //throw new HttpRequestExceptionEx(responseMessage.StatusCode, content);

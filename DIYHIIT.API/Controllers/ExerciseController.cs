@@ -23,7 +23,7 @@ namespace DIYHIIT.Data.Controllers
         [Route("exercises")]
         public async Task<IActionResult> GetExercises()
         {
-            var items = await _appDbContext.Exercises
+            var items = await _appDbContext.ExerciseCatalog
                                            .OrderBy(e => e.DisplayName)
                                            .ToListAsync();
 
@@ -39,7 +39,7 @@ namespace DIYHIIT.Data.Controllers
                 return NotFound();
             }
             
-            var exercise = await _appDbContext.Exercises
+            var exercise = await _appDbContext.ExerciseCatalog
                                               .Where(e => e.Id == id)
                                               .SingleOrDefaultAsync();
             if (exercise != null)

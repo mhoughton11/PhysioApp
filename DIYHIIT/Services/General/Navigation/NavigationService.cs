@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.ViewModels;
@@ -27,6 +28,7 @@ namespace DIYHIIT.Services.General.Navigation
         {
             if (_authenticationService.IsUserAuthenticated())
             {
+                Debug.WriteLine("Authenticated. Navigating to home view.");
                 await NavigateToAsync<HomeViewModel>();
             }
             else
