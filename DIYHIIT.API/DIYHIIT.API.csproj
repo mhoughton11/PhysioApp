@@ -10,6 +10,7 @@
     <LaunchUrl>weatherforecast</LaunchUrl>
     <ApplicationURL>https://localhost:44143;http://localhost:5982</ApplicationURL>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom' " />
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Migrations\" />

@@ -4,11 +4,11 @@ using Autofac;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Repository;
 using DIYHIIT.Services.Data;
 using DIYHIIT.Services.General.Authentication;
 using DIYHIIT.Services.General.Dialog;
-using DIYHIIT.Services.General.Navigation;
 using DIYHIIT.ViewModels;
 
 namespace DIYHIIT.DependencyInjection
@@ -29,8 +29,6 @@ namespace DIYHIIT.DependencyInjection
             builder.RegisterType<PreviewWorkoutViewModel>();
             builder.RegisterType<ProfileViewModel>();
             builder.RegisterType<WorkoutListViewModel>();
-            builder.RegisterType<LoginViewModel>();
-            builder.RegisterType<RegistrationViewModel>();
 
             // Services - Data
             builder.RegisterType<ExerciseDataService>().As<IExerciseDataService>();
@@ -38,8 +36,6 @@ namespace DIYHIIT.DependencyInjection
             builder.RegisterType<UserDataService>().As<IUserDataService>();
 
             // Services - General
-            //builder.RegisterType<Navig>().As<INavigation>();
-            builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
             builder.RegisterType<DialogService>().As<IDialogService>();
 
@@ -48,7 +44,7 @@ namespace DIYHIIT.DependencyInjection
 
             _container = builder.Build();
         }
-        
+      
         public static object Resolve(Type typeName)
         {
             Debug.Write("Resolving for type: ");

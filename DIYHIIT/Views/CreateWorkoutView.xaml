@@ -2,9 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.CreateWorkoutView"
-             xmlns:utility="clr-namespace:DIYHIIT.Utility"
-             utility:ViewModelLocator.AutoWireViewModel="True"
-             xmlns:local="clr-namespace:DIYHIIT.Converters"
              Title="Create Workout">
 
     <ContentPage.Content>

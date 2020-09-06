@@ -4,22 +4,37 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Contracts.Services.General.Navigation;
+using DIYHIIT.DependencyInjection;
 using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
+using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
-    public class HomeViewModel: BaseViewModel
+    public class HomeViewModel: BaseViewModel, IMainPageSelectedTab
     {
-        public HomeViewModel(INavigationService navigationService, IDialogService dialogService)
+        public HomeViewModel(INavigation navigationService, IDialogService dialogService)
             : base(navigationService, dialogService)
         {
             RecentWorkoutsLabel = "False";
 
-            WorkoutList = new List<IWorkout>();
+            //AppContainer.RegisterInstance<>
+
+            WorkoutList = new List<Workout>();
         }
 
-        private List<IWorkout> _workoutList;
-        public List<IWorkout> WorkoutList
+        #region Private Members
+
+        private string _recentWorkoutsLabel;
+        private List<Workout> _workoutList;
+        private int _selectedTab;
+
+        #endregion
+
+        #region Public Fields and Commands
+
+        public List<Workout> WorkoutList
         {
             get => _workoutList;
             set
@@ -28,8 +43,7 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => WorkoutList);
             }
         }
-
-        private string _recentWorkoutsLabel;
+        
         public string RecentWorkoutsLabel
         {
             get => _recentWorkoutsLabel;
@@ -40,10 +54,27 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public async void OnAppearing()
+        public int SelectedTab
         {
-            WorkoutList = await GetWorkouts();
+            get => _selectedTab;
+            set
+            {
+                SetProperty(ref _selectedTab, value);
+            }
         }
+
+        #endregion
+
+        #region Public Methods
+
+        public void SetSelectedTab(int tabIndex)
+        {
+            SelectedTab = tabIndex;
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private Task<List<IWorkout>> GetWorkouts()
         {
@@ -91,5 +122,7 @@ namespace DIYHIIT.ViewModels
 
             return null;
         }
+
+        #endregion
     }
 }
