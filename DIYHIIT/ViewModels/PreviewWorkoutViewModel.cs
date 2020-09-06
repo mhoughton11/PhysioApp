@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
+using DIYHIIT.Views;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
@@ -22,7 +25,7 @@ namespace DIYHIIT.ViewModels
 
         private IWorkout _workout;
 
-        public PreviewWorkoutViewModel(INavigationService navigationService, IDialogService dialogService)
+        public PreviewWorkoutViewModel(INavigation navigationService, IDialogService dialogService)
             : base(navigationService, dialogService)
         {
             Exercises = new List<IExercise>();
@@ -46,7 +49,7 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public override Task InitializeAsync(object workout)
+        public override void InitializeAsync(object workout)
         {
             _workout = (IWorkout)workout;
 
@@ -55,12 +58,12 @@ namespace DIYHIIT.ViewModels
             BodyFocus = _workout.BodyFocus;
             WorkoutLength = _workout.Duration ?? 0;
 
-            return base.InitializeAsync(workout);
+            base.InitializeAsync(workout);
         }
 
         private async Task ExecuteBeginWorkoutCommand()
         {
-            await _navigationService.NavigateToAsync<ExecuteWorkoutViewModel>(_workout);
+            await _navigation.PushAsync(new ExecuteWorkoutView(_workout as Workout));
         }
     }
 }

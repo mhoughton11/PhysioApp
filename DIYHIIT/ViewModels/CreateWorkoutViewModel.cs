@@ -20,18 +20,27 @@ namespace DIYHIIT.ViewModels
 {
     public class CreateWorkoutViewModel : BaseViewModel
     {
-        public CreateWorkoutViewModel(INavigationService navigationService,
+        public CreateWorkoutViewModel(object data,
+                                      INavigation navigation,
                                       IDialogService dialogService,
                                       IWorkoutDataService workoutDataService)
-            : base(navigationService, dialogService)
+            : base(navigation, dialogService)
         {
             _workoutDataService = workoutDataService;
+
+            InitializeAsync(data);
         }
+
+        #region Private Fields
 
         private Random rand;
         private List<string> _workoutTypes;
         private ObservableCollection<Exercise> _exercises;
         private readonly IWorkoutDataService _workoutDataService;
+
+        #endregion
+
+        #region Public Members and Commands
 
         public string ActiveEntry { get; set; }
         public string RestEntry { get; set; }
@@ -60,13 +69,17 @@ namespace DIYHIIT.ViewModels
         public ICommand DoneCommand => new Command(OnDoneCommand);
         public ICommand AddExerciseCommand => new Command(OnAddExerciseCommand);
 
+        #endregion
+
+        #region Public Methods
+
         public void RemoveObject(int index)
         {
             Exercise ex = Exercises.Where(e => e.Index == index) as Exercise;
             Exercises.Remove(ex);
         }
 
-        public override Task InitializeAsync(object data)
+        public override void InitializeAsync(object data)
         {
             Exercises = new ObservableCollection<Exercise>();
             rand = new Random();
@@ -78,9 +91,11 @@ namespace DIYHIIT.ViewModels
                 arg.Index = rand.Next(0, 0xFFFF);
                 Exercises.Add(arg);
             });
-
-            return base.InitializeAsync(data);
         }
+
+        #endregion
+
+        #region Private Methods
 
         private async void OnDoneCommand()
         {
@@ -110,7 +125,7 @@ namespace DIYHIIT.ViewModels
 
             try
             {
-                workoutType = SelectedWorkoutType;
+                workoutType = 1;
             }
             catch (Exception)
             {
@@ -136,32 +151,17 @@ namespace DIYHIIT.ViewModels
 
             workout = await GetWorkoutName(workout);
 
-            await _workoutDataService.SaveWorkout(workout);
-
-            Debug.WriteLine(0);
-            await Application.Current.MainPage.Navigation.PopToRootAsync();
-
-            Debug.WriteLine(1);
-            await _navigationService.ClearBackStack();
-            Debug.WriteLine(2);
-            await _navigationService.NavigateBackAsync();
-            Debug.WriteLine(3);
-            await _navigationService.PopToRootAsync();
-            Debug.WriteLine(4);
-            await _navigationService.RemoveLastFromBackStackAsync();
-            Debug.WriteLine(5);
-            await _navigationService.NavigateToAsync<HomeViewModel>();
-            //await _navigation.PopToRootAsync();
+            await _navigation.PopAsync();           
         }
 
         private async void OnAddExerciseCommand()
         {
-            await _navigationService.NavigateToAsync<AddExerciseViewModel>();
+            await _navigation.PushAsync(new AddExerciseView());
         }
 
         private async Task<Workout> GetWorkoutName(Workout workout)
         {
-            var name = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
+            var name = await _dialogService.ShowConfirmAsync("Workout name?", "Do you wish to name your workout for easier reference?", "Yes", "No");
 
             if (name)
             {
@@ -178,7 +178,14 @@ namespace DIYHIIT.ViewModels
                 }
             }
 
+            else
+            {
+                workout.Name = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType) + " Workout";
+            }
+
             return workout;
         }
+
+        #endregion
     }
 }

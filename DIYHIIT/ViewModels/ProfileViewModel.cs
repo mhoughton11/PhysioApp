@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Library.Models;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
@@ -17,7 +18,7 @@ namespace DIYHIIT.ViewModels
 
         public string TextLabel { get; set; }
 
-        public ProfileViewModel(INavigationService navigationService, IDialogService dialogService,
+        public ProfileViewModel(INavigation navigationService, IDialogService dialogService,
             IUserDataService userDataService) : base(navigationService, dialogService)
         {
             TextLabel = "Profile";
@@ -25,12 +26,12 @@ namespace DIYHIIT.ViewModels
             random = new Random();
         }
 
-        public override Task InitializeAsync(object data)
+        public override void InitializeAsync(object data)
         {
             random = new Random();
             TextLabel = "Profile" + random.Next(0xFF);
 
-            return base.InitializeAsync(data);
+            base.InitializeAsync(data);
         }
 
         public ICommand TestPostCommand => new Command(OnTestPostCommand);

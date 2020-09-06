@@ -1,4 +1,5 @@
 ﻿using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using System;
@@ -12,7 +13,7 @@ namespace DIYHIIT.ViewModels
 {
     class ExecuteWorkoutViewModel : BaseViewModel
     {
-        public ExecuteWorkoutViewModel(INavigationService navigationService,
+        public ExecuteWorkoutViewModel(INavigation navigationService,
                                        IDialogService dialogService)
             : base(navigationService, dialogService)
         {
@@ -145,7 +146,7 @@ namespace DIYHIIT.ViewModels
 
         List<IExercise> exercises;
 
-        public override Task InitializeAsync(object workout)
+        public override void InitializeAsync(object workout)
         {
             _workout = (IWorkout)workout;
 
@@ -178,8 +179,6 @@ namespace DIYHIIT.ViewModels
             }
 
             BeginWorkoutAsync();
-
-            return Task.Run(() => 0);
         }
 
         private async void BeginWorkoutAsync()

@@ -10,18 +10,22 @@ using DIYHIIT.Library.Models;
 using DIYHIIT.Library.Contracts;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.ViewModels
 {
     public class AddExerciseViewModel : BaseViewModel
     {
         #region Constructor
-        public AddExerciseViewModel(INavigationService navigationService,
+        public AddExerciseViewModel(object data,
+                                    INavigation navigation,
                                     IDialogService dialogService,
                                     IExerciseDataService exerciseDataService)
-            : base(navigationService, dialogService)
+            : base(navigation, dialogService)
         {
             _exeriseDataService = exerciseDataService;
+
+            InitializeAsync(data);
         }
         #endregion
 
@@ -88,13 +92,13 @@ namespace DIYHIIT.ViewModels
 
         #region Public Methods
 
-        public override async Task InitializeAsync(object data)
+        public override void InitializeAsync(object data)
         {
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
             FlowExercises = new ObservableCollection<IExercise>();
 
             SelectedIndex = 0;
-            await base.InitializeAsync(data);
+            base.InitializeAsync(data);
         }
 
         #endregion
@@ -105,7 +109,7 @@ namespace DIYHIIT.ViewModels
         {
             IndicatorEnabled = true;
 
-            var items = await _exeriseDataService.GetAllExercisesAsync(type);
+            var items = await _exeriseDataService.GetAllExercisesAsync(type, HostOptions.LocalHost);
 
             if (items == null)
             {

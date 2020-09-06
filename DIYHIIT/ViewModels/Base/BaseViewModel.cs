@@ -1,13 +1,16 @@
 ﻿using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Contracts.Services.General.Navigation;
 using MvvmCross.ViewModels;
+using Prism.Mvvm;
+using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
     public class BaseViewModel : MvxViewModel
     {
+        protected readonly INavigation _navigation;
         protected readonly IDialogService _dialogService;
-        protected readonly INavigationService _navigationService;
 
         private bool _isBusy;
         public bool IsBusy
@@ -20,15 +23,15 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public BaseViewModel(INavigationService navigationService, IDialogService dialogService)
+        public BaseViewModel(INavigation navigation, IDialogService dialogService)
         {
             _dialogService = dialogService;
-            _navigationService = navigationService;
+            _navigation = navigation;
         }
 
-        public virtual Task InitializeAsync(object data)
+        public virtual void InitializeAsync(object data)
         {
-            return Task.FromResult(false);
+
         }
     }
 }

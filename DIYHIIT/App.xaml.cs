@@ -2,6 +2,9 @@
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.Views;
 using DLToolkit.Forms.Controls;
+using Prism;
+using Prism.Ioc;
+using Prism.Unity;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -16,36 +19,13 @@ namespace DIYHIIT
 
             InitializeApp();
 
-            InitalizeNavigation();            
+            MainPage = new MainPage();
         }
 
         private void InitializeApp()
         {
             FlowListView.Init();
             AppContainer.RegisterDependancies();
-        }
-
-        private async void InitalizeNavigation()
-        {
-            var navigationService = AppContainer.Resolve<INavigationService>();
-            await navigationService.InitializeAsync();
-
-            MainPage = new MainPage();
-        }
-
-        protected override void OnStart()
-        {
- 
-        }
-
-        protected override void OnSleep()
-        {
-
-        }
-
-        protected override void OnResume()
-        {
-
         }
     }
 }

@@ -25,7 +25,7 @@ namespace DIYHIIT.Services.General.Dialog
             return UserDialogs.Instance.AlertAsync(message, title, buttonLabel);
         }
 
-        public Task<bool> ShowConfirmAsync(string message, string title, string ok = "OK", string cancel = "Cancel")
+        public Task<bool> ShowConfirmAsync(string title, string message, string ok = "OK", string cancel = "Cancel")
         {
             return UserDialogs.Instance.ConfirmAsync(message, title: title, okText: ok, cancelText: cancel);
         }

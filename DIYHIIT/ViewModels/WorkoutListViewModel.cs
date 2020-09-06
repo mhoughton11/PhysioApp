@@ -15,7 +15,7 @@ namespace DIYHIIT.ViewModels
     public class WorkoutListViewModel : BaseViewModel
     {
         public WorkoutListViewModel(IWorkoutDataService workoutDataService,
-                                    INavigationService navigationService,
+                                    INavigation navigationService,
                                     IDialogService dialogService)
             : base(navigationService, dialogService)
         {
@@ -58,7 +58,7 @@ namespace DIYHIIT.ViewModels
             }          
         }
 
-        public override async Task InitializeAsync(object data)
+        public override async void InitializeAsync(object data)
         {
             WorkoutList = new List<Workout>();
 
@@ -78,9 +78,10 @@ namespace DIYHIIT.ViewModels
             IsBusy = false;
         }
 
-        private async void OnAddWorkoutCommand()
+        private void OnAddWorkoutCommand()
         {
-            await _navigationService.NavigateToAsync(typeof(CreateWorkoutViewModel));
+            _navigation.PushAsync(new CreateWorkoutView());
+            //_navigationService.NavigateToAsync<CreateWorkoutViewModel>();
         }
     }
 }

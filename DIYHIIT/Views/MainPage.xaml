@@ -11,46 +11,23 @@
 
         <!-- Home Page -->
         <NavigationPage Title="Home">
-
             <x:Arguments>
                 <views:HomeView />
             </x:Arguments>
-
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_feed.png" />
-                </OnPlatform>
-            </NavigationPage.Icon>
         </NavigationPage>
 
         <!-- Workouts Page -->
         <NavigationPage Title="Workouts">
-
             <x:Arguments>
                 <views:WorkoutListView />
             </x:Arguments>
-
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_about.png" />
-                </OnPlatform>
-            </NavigationPage.Icon>
-            
         </NavigationPage>
 
         <!-- Profile Page -->
         <NavigationPage Title="Profile">
-
             <x:Arguments>
                 <views:ProfileView />
             </x:Arguments>
-
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_about.png" />
-                </OnPlatform>
-            </NavigationPage.Icon>
-            
         </NavigationPage>
 
     </TabbedPage.Children>
