@@ -109,7 +109,7 @@ namespace DIYHIIT.ViewModels
         {
             IndicatorEnabled = true;
 
-            var items = await _exeriseDataService.GetAllExercisesAsync(type, HostOptions.LocalHost);
+            var items = await _exeriseDataService.GetAllExercisesAsync(type, App.AppHostOptions);
 
             if (items == null)
             {

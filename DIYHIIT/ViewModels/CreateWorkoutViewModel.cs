@@ -164,7 +164,7 @@ namespace DIYHIIT.ViewModels
             workout.Duration = GetWorkoutDuration(workout);
             workout = await GetWorkoutName(workout);
 
-            await _workoutDataService.SaveWorkout(workout, HostOptions.LocalHost);
+            await _workoutDataService.SaveWorkout(workout, App.AppHostOptions);
             await _navigation.PopAsync();           
         }
 

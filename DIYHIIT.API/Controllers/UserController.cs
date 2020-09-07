@@ -33,8 +33,8 @@ namespace DIYHIIT.API.Controllers
         }
 
         [HttpGet]
-        [Route("user/{id:int?}")]
-        public async Task<IActionResult> GetUser(int? id)
+        [Route("user")]
+        public async Task<IActionResult> GetUser([FromBody]int? id)
         {
             if (id == null || id < 0)
             {

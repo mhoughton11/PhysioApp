@@ -60,8 +60,8 @@ namespace DIYHIIT.Data.Controllers
         }
 
         [HttpGet]
-        [Route("exercises/{id:int?}")]
-        public async Task<IActionResult> GetById(int? id)
+        [Route("exercise")]
+        public async Task<IActionResult> GetById([FromBody]int? id)
         {
             if (id == null || id < 0)
             {

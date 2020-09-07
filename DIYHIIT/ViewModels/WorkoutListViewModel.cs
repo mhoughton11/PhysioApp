@@ -70,7 +70,7 @@ namespace DIYHIIT.ViewModels
 
             try
             {
-                WorkoutList = await _workoutDataService.GetWorkoutsAsync(HostOptions.LocalHost) as List<Workout>;
+                WorkoutList = await _workoutDataService.GetWorkoutsAsync(App.AppHostOptions) as List<Workout>;
                 Debug.WriteLine($"Retrieved {WorkoutList.Count} workouts from data service.");
             }
             catch (Exception ex)

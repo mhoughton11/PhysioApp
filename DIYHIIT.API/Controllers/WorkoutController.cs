@@ -37,14 +37,23 @@ namespace DIYHIIT.API.Controllers
 
         [HttpPost]
         [Route("save")]
-        public async Task<IActionResult> SaveWorkout([FromBody]Workout workout)
+        public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
         {
             await _appDbContext.WorkoutCatalog.AddAsync(workout);
             await _appDbContext.SaveChangesAsync();
 
-            //return CreatedAtAction("")
 
             return Ok(workout);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateWorkout([FromBody] Workout updatedWorkout)
+        {
+            _appDbContext.WorkoutCatalog.Update(updatedWorkout);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(updatedWorkout);
         }
     }
 }
