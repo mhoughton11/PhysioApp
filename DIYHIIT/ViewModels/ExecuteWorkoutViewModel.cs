@@ -1,5 +1,4 @@
 ﻿using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using System;
@@ -151,19 +150,13 @@ namespace DIYHIIT.ViewModels
             _workout = (IWorkout)workout;
 
             var active = _workout.ActiveInterval ?? 0;
-            var count = _workout.Exercises.Count;
+            var count = 5;  // Dummy value for now
             var rest = _workout.RestInterval ?? 0;
 
             duration = active * count + rest * count;
 
             //var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
             //rest.Duration = workout.RestInterval;
-
-            foreach (var ex in _workout.Exercises)
-            {
-                exercises.Add(ex);
-                //exercises.Add(rest);
-            }
 
             CurrentExercise = exercises[0].DisplayName;
             TimeLeft = exercises[0].Duration ?? 0;

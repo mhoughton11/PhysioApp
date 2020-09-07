@@ -71,6 +71,8 @@ namespace DIYHIIT.Repository
                 HttpClient client = CreateHttpClient(uri);
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
+                Debug.WriteLine($"HTTP Post content: {content.ReadAsStringAsync()}");
+
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 string jsonResult = string.Empty;

@@ -13,14 +13,5 @@ namespace DIYHIIT.API.Models
         public DbSet<Exercise> ExerciseCatalog { get; set; }
         public DbSet<Workout> WorkoutCatalog { get; set; }
         public DbSet<User> Users { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<Workout>()
-                .HasMany(w => w.Exercises)
-                .WithOne(e => e.Workout)
-                .HasForeignKey(e => e.WorkoutId);
-                
-        }
     }
 }

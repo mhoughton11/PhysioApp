@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
 using DIYHIIT.Constants;
@@ -44,16 +45,37 @@ namespace DIYHIIT.Services.Data
 
         public Task<IWorkout> GetWorkoutById(int id)
         {
-            IWorkout w = new Workout();
-
-            return Task.Run(() => w);
+            throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<IWorkout>> GetWorkoutsAsync()
+        public async Task<IEnumerable<IWorkout>> GetWorkoutsAsync(HostOptions options = HostOptions.Production)
         {
-            IEnumerable<IWorkout> w = new List<Workout>();
+            // If cache not empty, fetch from cache and return items.
+            var cacheWorkouts = await GetFromCache<List<Workout>>("Workouts");
 
-            return Task.Run(() => w);
+            if (cacheWorkouts != null)
+            {
+                return cacheWorkouts;
+            }
+
+            string path = string.Empty;
+
+            switch (options)
+            {
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.GetWorkoutsEndpoint;
+                    break;
+
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.GetWorkoutsEndpoint;
+                    break;
+            }
+
+            var workouts = await _genericRepository.GetAsync<List<Workout>>(path);
+
+            await Cache.InsertObject("Workouts", workouts, DateTime.Now.AddMinutes(2));
+
+            return workouts;
         }
     }
 }

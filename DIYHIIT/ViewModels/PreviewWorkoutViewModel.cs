@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
@@ -39,22 +38,16 @@ namespace DIYHIIT.ViewModels
         {
             //var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
             //rest.Duration = _workout.RestInterval;
-
-            // Add exercises
-            foreach (var exercise in _workout.Exercises)
-            {
-                exercise.Duration = _workout.ActiveInterval;
-                Exercises.Add(exercise);
-                //Exercises.Add(rest);
-            }
         }
 
         public override void InitializeAsync(object workout)
         {
             _workout = (IWorkout)workout;
 
+
+
             Name = _workout.Name;
-            WorkoutMoves = _workout.Exercises.Count;
+            //WorkoutMoves = _workout.ExerciseIDs.Count;
             BodyFocus = _workout.BodyFocus;
             WorkoutLength = _workout.Duration ?? 0;
 

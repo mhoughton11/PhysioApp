@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
+using DIYHIIT.Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DIYHIIT.Data.Controllers
 {
@@ -28,6 +31,32 @@ namespace DIYHIIT.Data.Controllers
                                            .ToListAsync();
 
             return Ok(items);
+        }
+
+        [HttpGet]
+        [Route("exerciseList")]
+        public async Task<IActionResult> GetExercisesFromList([FromBody]string ids)
+        {
+            var exercises = new List<Exercise>();
+            List<int> exerciseIds = JsonConvert.DeserializeObject(ids) as List<int>;
+
+            if (exerciseIds != null)
+            {
+                foreach (var id in exerciseIds)
+                {
+                    var ex = await _appDbContext.ExerciseCatalog
+                        .Where(e => e.Id == id)
+                        .FirstOrDefaultAsync();
+
+                    exercises.Add(ex);
+                }
+
+                return Ok(exercises);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]

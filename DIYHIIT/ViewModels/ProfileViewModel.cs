@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Library.Models;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;

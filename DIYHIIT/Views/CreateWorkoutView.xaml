@@ -22,7 +22,7 @@
 
             <Picker Title="Select a workout type"
                     ItemsSource="{Binding WorkoutTypes}"
-                    SelectedItem="{Binding SelectedWorkoutType}"
+                    SelectedIndex="{Binding SelectedWorkoutType}"
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     FontSize="20"

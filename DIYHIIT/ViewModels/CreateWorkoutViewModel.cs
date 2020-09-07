@@ -11,6 +11,7 @@ using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using MvvmCross.ViewModels;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 using static DIYHIIT.Library.Helpers.Helpers;
@@ -34,6 +35,7 @@ namespace DIYHIIT.ViewModels
         #region Private Fields
 
         private Random rand;
+        private int _selectedWorkoutType;
         private List<string> _workoutTypes;
         private ObservableCollection<Exercise> _exercises;
         private readonly IWorkoutDataService _workoutDataService;
@@ -44,7 +46,18 @@ namespace DIYHIIT.ViewModels
 
         public string ActiveEntry { get; set; }
         public string RestEntry { get; set; }
-        public int SelectedWorkoutType { get; set; }
+
+        public int SelectedWorkoutType
+        {
+            get => _selectedWorkoutType;
+            set
+            {
+                _selectedWorkoutType = value;
+                RaisePropertyChanged(() => SelectedWorkoutType);
+
+                Debug.WriteLine($"Selected workout type changed: {value}");
+            }
+        }
 
         public ObservableCollection<Exercise> Exercises
         {
@@ -125,7 +138,7 @@ namespace DIYHIIT.ViewModels
 
             try
             {
-                workoutType = 1;
+                workoutType = SelectedWorkoutType;
             }
             catch (Exception)
             {
@@ -133,24 +146,25 @@ namespace DIYHIIT.ViewModels
                 return;
             }
 
+            var Ids = new List<int>();
+            foreach (var ex in _exercises)
+            {
+                Ids.Add(ex.Id);
+            }
+
             // Create workout with the specified parameters/exercises.
             var workout = new Workout
             {
-                Name = Enum.GetName(typeof(WorkoutType), workoutType) + " Workout",
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
-                Exercises = Exercises.ToList(),
+                ExerciseIDs = JsonConvert.SerializeObject(Ids),
                 Type = (WorkoutType)workoutType,
                 DateAdded = DateTime.Now
             };
             workout.Duration = GetWorkoutDuration(workout);
-
-            // Set all ID's to 0 (EntityFramework complains if it tries to set the ID and it's already been given a value)
-            foreach (var ex in workout.Exercises)
-                ex.Id = 0;
-
             workout = await GetWorkoutName(workout);
 
+            await _workoutDataService.SaveWorkout(workout, HostOptions.LocalHost);
             await _navigation.PopAsync();           
         }
 
@@ -161,7 +175,7 @@ namespace DIYHIIT.ViewModels
 
         private async Task<Workout> GetWorkoutName(Workout workout)
         {
-            var name = await _dialogService.ShowConfirmAsync("Workout name?", "Do you wish to name your workout for easier reference?", "Yes", "No");
+            var name = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
 
             if (name)
             {
@@ -174,13 +188,13 @@ namespace DIYHIIT.ViewModels
                 else
                 {
                     _dialogService.Popup("Please type a workout name when prompted.");
-                    return null;
                 }
             }
 
             else
             {
-                workout.Name = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType) + " Workout";
+                var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
+                workout.Name =  t + " Workout";
             }
 
             return workout;

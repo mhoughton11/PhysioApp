@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Contracts.Services.General.Navigation;
 using MvvmCross.ViewModels;
-using Prism.Mvvm;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels

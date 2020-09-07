@@ -2,9 +2,6 @@
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.Views;
 using DLToolkit.Forms.Controls;
-using Prism;
-using Prism.Ioc;
-using Prism.Unity;
 using System;
 using System.IO;
 using Xamarin.Forms;

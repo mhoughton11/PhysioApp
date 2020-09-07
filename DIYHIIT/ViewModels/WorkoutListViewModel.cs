@@ -9,12 +9,14 @@ using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using Xamarin.Forms;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.ViewModels
 {
     public class WorkoutListViewModel : BaseViewModel
     {
-        public WorkoutListViewModel(IWorkoutDataService workoutDataService,
+        public WorkoutListViewModel(object data,
+                                    IWorkoutDataService workoutDataService,
                                     INavigation navigationService,
                                     IDialogService dialogService)
             : base(navigationService, dialogService)
@@ -45,6 +47,8 @@ namespace DIYHIIT.ViewModels
 
         #endregion
 
+        #region Public Methods
+
         public void WorkoutSelected(IWorkout workout)
         {
             try
@@ -66,7 +70,7 @@ namespace DIYHIIT.ViewModels
 
             try
             {
-                WorkoutList = await _workoutDataService.GetWorkoutsAsync() as List<Workout>;
+                WorkoutList = await _workoutDataService.GetWorkoutsAsync(HostOptions.LocalHost) as List<Workout>;
                 Debug.WriteLine($"Retrieved {WorkoutList.Count} workouts from data service.");
             }
             catch (Exception ex)
@@ -78,10 +82,14 @@ namespace DIYHIIT.ViewModels
             IsBusy = false;
         }
 
+        #endregion
+
         private void OnAddWorkoutCommand()
         {
             _navigation.PushAsync(new CreateWorkoutView());
             //_navigationService.NavigateToAsync<CreateWorkoutViewModel>();
         }
+
+        
     }
 }

@@ -26,7 +26,7 @@ namespace DIYHIIT.Library.Models
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUsed { get; set; }
 
-        public ICollection<Exercise> Exercises { get; set; }
+        public string ExerciseIDs { get; set; }
 
         public WorkoutType Type { get; set; }
     }

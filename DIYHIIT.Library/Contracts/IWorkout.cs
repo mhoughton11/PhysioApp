@@ -18,7 +18,7 @@ namespace DIYHIIT.Library.Contracts
         DateTime? DateAdded { get; set; }
         DateTime? DateUsed { get; set; }
 
-        ICollection<Exercise> Exercises { get; set; }
+        string ExerciseIDs { get; set; }
 
         WorkoutType Type { get; set; }
     }

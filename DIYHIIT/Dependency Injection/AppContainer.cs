@@ -4,7 +4,6 @@ using Autofac;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.Repository;
 using DIYHIIT.Services.Data;
 using DIYHIIT.Services.General.Authentication;

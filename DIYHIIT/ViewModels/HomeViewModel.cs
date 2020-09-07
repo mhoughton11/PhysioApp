@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Contracts.Services.General.Navigation;
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
@@ -12,7 +11,7 @@ using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
-    public class HomeViewModel: BaseViewModel, IMainPageSelectedTab
+    public class HomeViewModel: BaseViewModel
     {
         public HomeViewModel(INavigation navigationService, IDialogService dialogService)
             : base(navigationService, dialogService)
