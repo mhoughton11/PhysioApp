@@ -24,6 +24,7 @@ namespace DIYHIIT.ViewModels
         #region Private Fields
 
         private List<Workout> _workoutList;
+        private Workout _selectedWorkout;
         private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
@@ -37,6 +38,18 @@ namespace DIYHIIT.ViewModels
             {
                 _workoutList = value;
                 RaisePropertyChanged(() => WorkoutList);
+            }
+        }
+
+        public Workout SelectedWorkout
+        {
+            get => _selectedWorkout;
+            set
+            {
+                _selectedWorkout = value;
+                RaisePropertyChanged(() => SelectedWorkout);
+
+                WorkoutSelected(value);
             }
         }
 
@@ -84,7 +97,12 @@ namespace DIYHIIT.ViewModels
 
         private void OnAddWorkoutCommand()
         {
-            _navigation.PushAsync(new CreateWorkoutView());
+            await _navigation.PushAsync(new CreateWorkoutView());
+        }
+
+        private void WorkoutSelected(Workout workout)
+        {
+            await _navigation.PushAsync(new PreviewWorkoutView(workout));
         }
 
         #endregion

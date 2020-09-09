@@ -15,6 +15,7 @@
 
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding WorkoutList}"
+                      SelectedItem="{Binding SelectedItem}"
                       SeparatorVisibility="None">
 
                 <ListView.ItemTemplate>
