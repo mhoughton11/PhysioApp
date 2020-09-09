@@ -162,8 +162,8 @@ namespace DIYHIIT.ViewModels
                 Type = (WorkoutType)workoutType,
                 DateAdded = DateTime.Now
             };
-            workout.Duration = GetWorkoutDuration(workout);
-            workout.ExerciseCount = GetWorkoutCountString(workout);
+            workout.Duration = Helpers.GetWorkoutDuration(workout);
+            workout.ExerciseCount = Helpers.GetWorkoutCountString(workout);
             workout = await GetWorkoutName(workout);
 
             await _workoutDataService.SaveWorkout(workout, App.AppHostOptions);

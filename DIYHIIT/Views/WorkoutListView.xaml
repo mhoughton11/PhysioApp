@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.WorkoutListView"
+             xmlns:behaviors="clr-namespace:DIYHIIT.Behaviors"
              Title="Workouts List">
 
     <ContentPage.ToolbarItems>
@@ -15,16 +16,20 @@
 
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding WorkoutList}"
-                      SelectedItem="{Binding SelectedItem}"
                       SeparatorVisibility="None">
-
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        EventName="ItemTapped"
+                        Command="{Binding WorkoutTappedCommand}"
+                        EventArgsConverter="{StaticResource LocalItemTappedConverter}">
+                    </behaviors:EventToCommandBehavior>
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Frame BackgroundColor="LightGray"
                                    CornerRadius="10"
-                                   Margin="6"
-                                   HasShadow="False">
+                                   Margin="6">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2.5*" />

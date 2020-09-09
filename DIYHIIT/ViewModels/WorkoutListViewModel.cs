@@ -24,7 +24,7 @@ namespace DIYHIIT.ViewModels
         #region Private Fields
 
         private List<Workout> _workoutList;
-        private Workout _selectedWorkout;
+        private Workout _selectedItem;
         private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
@@ -41,36 +41,12 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public Workout SelectedWorkout
-        {
-            get => _selectedWorkout;
-            set
-            {
-                _selectedWorkout = value;
-                RaisePropertyChanged(() => SelectedWorkout);
-
-                WorkoutSelected(value);
-            }
-        }
-
         public ICommand AddWorkoutCommand => new Command(OnAddWorkoutCommand);
-        public ICommand BeginWorkoutCommand => new Command<Workout>(OnBeginWorkoutCommand);
+        public ICommand WorkoutTappedCommand => new Command<Workout>(OnWorkoutTapped);
 
         #endregion
 
         #region Public Methods
-
-        public async void OnBeginWorkoutCommand(Workout workout)
-        {
-            try
-            {
-                await _navigation.PushAsync(new PreviewWorkoutView(workout));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }          
-        }
 
         public override async void InitializeAsync(object data)
         {
@@ -95,13 +71,15 @@ namespace DIYHIIT.ViewModels
 
         #region Private Methods
 
-        private void OnAddWorkoutCommand()
+        private async void OnAddWorkoutCommand()
         {
             await _navigation.PushAsync(new CreateWorkoutView());
         }
 
-        private void WorkoutSelected(Workout workout)
+        private async void OnWorkoutTapped(Workout workout)
         {
+            Debug.WriteLine($"Workout selected: {workout.Name}");
+
             await _navigation.PushAsync(new PreviewWorkoutView(workout));
         }
 

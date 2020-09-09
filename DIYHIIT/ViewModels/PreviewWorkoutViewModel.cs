@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
@@ -18,18 +20,18 @@ namespace DIYHIIT.ViewModels
 
         public List<IExercise> Exercises { get; set; }
 
-        public Command BeginWorkoutCommand { get; set; }
+        public ICommand BeginWorkoutCommand => new Command(OnBeginWorkoutCommand);
 
         public INavigation Navigation;
 
         private Workout _workout;
+        private readonly IExerciseDataService _exerciseDataService;
 
-        public PreviewWorkoutViewModel(Workout workout, INavigation navigationService, IDialogService dialogService)
+        public PreviewWorkoutViewModel(Workout workout, IExerciseDataService exerciseDataService, INavigation navigationService, IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            BeginWorkoutCommand = new Command(async() => await ExecuteBeginWorkoutCommand());
-
             InitializeAsync(workout);
+            _exerciseDataService = exerciseDataService;
         }
 
         private void Init()
@@ -40,9 +42,9 @@ namespace DIYHIIT.ViewModels
 
         public override void InitializeAsync(object workout)
         {
-            _workout = (Workout)workout;
+            _workout = workout as Workout;
 
-            Exercises = new List<IExercise>();
+            //_exerciseDataService
 
             Name = _workout.Name;
             //WorkoutMoves = _workout.ExerciseIDs.Count;
@@ -52,9 +54,9 @@ namespace DIYHIIT.ViewModels
             base.InitializeAsync(workout);
         }
 
-        private async Task ExecuteBeginWorkoutCommand()
+        private async void OnBeginWorkoutCommand()
         {
-            await _navigation.PushAsync(new ExecuteWorkoutView(_workout as Workout));
+            await _navigation.PushAsync(new ExecuteWorkoutView(_workout));
         }
     }
 }
