@@ -20,37 +20,28 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame BackgroundColor="{Binding CellBackgroundColour}"
+                            <Frame BackgroundColor="LightGray"
                                    CornerRadius="10"
-                                   Margin="10, 5">
+                                   Margin="6"
+                                   HasShadow="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2.5*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
                                     <Label Text="{Binding Name}"
                                            TextColor="Black"
-                                           FontSize="28"
-                                           Grid.Column="0"
-                                           Grid.Row="0"
+                                           FontSize="25"
                                            Grid.RowSpan="2"
+                                           LineBreakMode="WordWrap"
                                            VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
+                                           HorizontalOptions="StartAndExpand"/>
 
-                                    <Label Text="{Binding Focus}"
-                                           FontSize="Large"
-                                           Grid.Row="0"
-                                           Grid.Column="1"
-                                           Grid.ColumnSpan="2"
-                                           VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
-
-                                    <Label Text="{Binding ExerciseCount, StringFormat='{0} Moves'}"
+                                    <Label Text="{Binding ExerciseCount}"
                                            FontSize="Medium"
-                                           Grid.Row="1"
-                                           Grid.Column="1"
+                                           Grid.Row="0"
+                                           Grid.Column="2"
                                            VerticalOptions="CenterAndExpand"
                                            HorizontalOptions="CenterAndExpand"/>
 

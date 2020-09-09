@@ -17,6 +17,7 @@ namespace DIYHIIT.Library.Models
 
         public string Name { get; set; }
         public string BodyFocus { get; set; }
+        public string ExerciseCount { get; set; }
 
         public double? RestInterval { get; set; }
         public double? ActiveInterval { get; set; }

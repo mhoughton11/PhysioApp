@@ -9,6 +9,7 @@ namespace DIYHIIT.Library.Contracts
     {
         string Name { get; set; }
         string BodyFocus { get; set; }
+        string ExerciseCount { get; set; }
 
         double? RestInterval { get; set; }
         double? ActiveInterval { get; set; }

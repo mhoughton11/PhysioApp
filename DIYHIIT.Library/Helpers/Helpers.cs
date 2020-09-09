@@ -22,5 +22,16 @@ namespace DIYHIIT.Library.Helpers
             TimeSpan t = TimeSpan.FromSeconds(seconds);
             return t.Minutes;
         }
+
+        public static string GetWorkoutCountString(Workout workout)
+        {
+            if (workout.ExerciseIDs == null) { return "0 Moves"; }
+
+            var exercises = JsonConvert.DeserializeObject<List<int>>(workout.ExerciseIDs);
+            if (exercises.Count == 1)
+                return "1 Move";
+
+            return $"{exercises.Count} Moves";
+        }
     }
 }

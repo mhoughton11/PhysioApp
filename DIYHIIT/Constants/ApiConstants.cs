@@ -15,6 +15,7 @@ namespace DIYHIIT.Constants
         // Workouts
         public const string SaveWorkoutEndpoint = "workout/save";
         public const string GetWorkoutsEndpoint = "workout/workouts";
+        public const string UpdateWorkoutEndpoint = "workout/update";
 
         // Users
         public const string GetUsersEndpoint = "user/users";

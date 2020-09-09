@@ -8,6 +8,7 @@ using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Helpers;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using MvvmCross.ViewModels;
@@ -162,6 +163,7 @@ namespace DIYHIIT.ViewModels
                 DateAdded = DateTime.Now
             };
             workout.Duration = GetWorkoutDuration(workout);
+            workout.ExerciseCount = GetWorkoutCountString(workout);
             workout = await GetWorkoutName(workout);
 
             await _workoutDataService.SaveWorkout(workout, App.AppHostOptions);

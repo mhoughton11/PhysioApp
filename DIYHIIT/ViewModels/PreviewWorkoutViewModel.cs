@@ -22,16 +22,14 @@ namespace DIYHIIT.ViewModels
 
         public INavigation Navigation;
 
-        private IWorkout _workout;
+        private Workout _workout;
 
-        public PreviewWorkoutViewModel(INavigation navigationService, IDialogService dialogService)
+        public PreviewWorkoutViewModel(Workout workout, INavigation navigationService, IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            Exercises = new List<IExercise>();
-
             BeginWorkoutCommand = new Command(async() => await ExecuteBeginWorkoutCommand());
 
-            Init();
+            InitializeAsync(workout);
         }
 
         private void Init()
@@ -42,9 +40,9 @@ namespace DIYHIIT.ViewModels
 
         public override void InitializeAsync(object workout)
         {
-            _workout = (IWorkout)workout;
+            _workout = (Workout)workout;
 
-
+            Exercises = new List<IExercise>();
 
             Name = _workout.Name;
             //WorkoutMoves = _workout.ExerciseIDs.Count;

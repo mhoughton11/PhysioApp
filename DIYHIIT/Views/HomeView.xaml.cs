@@ -1,4 +1,5 @@
-﻿using DIYHIIT.Contracts.Services.General;
+﻿using DIYHIIT.Contracts.Services.Data;
+using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.ViewModels;
 using Xamarin.Forms;
@@ -14,8 +15,9 @@ namespace DIYHIIT.Views
             InitializeComponent();
 
             var dialog = AppContainer.Resolve<IDialogService>();
+            var workoutDataService = AppContainer.Resolve<IWorkoutDataService>();
 
-            BindingContext = viewModel = new HomeViewModel(Navigation, dialog);
+            BindingContext = viewModel = new HomeViewModel(workoutDataService, Navigation, dialog);
         }
     }
 }

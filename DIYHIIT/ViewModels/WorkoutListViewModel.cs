@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using Xamarin.Forms;
-using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.ViewModels
 {
@@ -44,21 +41,21 @@ namespace DIYHIIT.ViewModels
         }
 
         public ICommand AddWorkoutCommand => new Command(OnAddWorkoutCommand);
+        public ICommand BeginWorkoutCommand => new Command<Workout>(OnBeginWorkoutCommand);
 
         #endregion
 
         #region Public Methods
 
-        public void WorkoutSelected(IWorkout workout)
+        public async void OnBeginWorkoutCommand(Workout workout)
         {
             try
             {
-                //await Navigation.PushAsync(new PreviewWorkoutView(workout));
+                await _navigation.PushAsync(new PreviewWorkoutView(workout));
             }
             catch (Exception ex)
             {
-                _dialogService.Popup("Failed to load workout.");
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
             }          
         }
 
@@ -71,7 +68,6 @@ namespace DIYHIIT.ViewModels
             try
             {
                 WorkoutList = await _workoutDataService.GetWorkoutsAsync(App.AppHostOptions) as List<Workout>;
-                Debug.WriteLine($"Retrieved {WorkoutList.Count} workouts from data service.");
             }
             catch (Exception ex)
             {
@@ -84,12 +80,13 @@ namespace DIYHIIT.ViewModels
 
         #endregion
 
+        #region Private Methods
+
         private void OnAddWorkoutCommand()
         {
             _navigation.PushAsync(new CreateWorkoutView());
-            //_navigationService.NavigateToAsync<CreateWorkoutViewModel>();
         }
 
-        
+        #endregion
     }
 }

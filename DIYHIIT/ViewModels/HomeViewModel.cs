@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.DependencyInjection;
-using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using Xamarin.Forms;
 
@@ -13,14 +11,14 @@ namespace DIYHIIT.ViewModels
 {
     public class HomeViewModel: BaseViewModel
     {
-        public HomeViewModel(INavigation navigationService, IDialogService dialogService)
+        public HomeViewModel(IWorkoutDataService workoutDataService,
+                             INavigation navigationService,
+                             IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            RecentWorkoutsLabel = "False";
+            _workoutDataService = workoutDataService;
 
-            //AppContainer.RegisterInstance<>
-
-            WorkoutList = new List<Workout>();
+            InitializeAsync(null);
         }
 
         #region Private Members
@@ -28,6 +26,7 @@ namespace DIYHIIT.ViewModels
         private string _recentWorkoutsLabel;
         private List<Workout> _workoutList;
         private int _selectedTab;
+        private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
 
@@ -71,55 +70,27 @@ namespace DIYHIIT.ViewModels
             SelectedTab = tabIndex;
         }
 
+        public override async void InitializeAsync(object data)
+        {
+            base.InitializeAsync(data);
+            RecentWorkoutsLabel = "False";
+
+            WorkoutList = await GetWorkouts();
+        }
+
         #endregion
 
         #region Private Methods
 
-        private Task<List<IWorkout>> GetWorkouts()
+        private async Task<List<Workout>> GetWorkouts()
         {
-            //var workoutList = await App.RecentWorkouts.GetItemsAsync();
-            //// Get workouts
-            //try
-            //{
-            //    for (int i = 0; i < workoutList.Count; i++)
-            //    {
-            //        var workout = workoutList[i];
+            var workouts = await _workoutDataService.GetWorkoutsAsync(App.AppHostOptions);
 
-            //        if (workout.DateUsed != null)
-            //        {
-            //            // if workout is greater than 7 days old, don't include in list.
-            //            var d1 = workout.DateUsed;
-            //            var d2 = DateTime.Now;
+            var result = from workout in workouts
+                         where workout.DateAdded <= DateTime.Today.AddDays(-7)
+                         select workout;
 
-            //            if ((d2 - d1).TotalDays > 7)
-            //                workoutList.RemoveAt(i);
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine("Unable to get recent workouts.");
-            //    Debug.WriteLine(ex.Message);
-            //    return null;
-            //}        
-
-            //try
-            //{
-            //    foreach (var workout in workoutList)
-            //        await workout.GetExercises(workout.ExercisesString);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine("Unable to retrieve exercises for recent workouts.");
-            //    Debug.WriteLine(ex.Message);
-            //    return null;
-            //}
-
-            //RecentWorkoutsLabel = (workoutList.Count > 0) ? "False" : "True";
-
-            //return workoutList.OrderByDescending(o => o.DateUsed).ToList();
-
-            return null;
+            return result as List<Workout>;
         }
 
         #endregion

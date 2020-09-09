@@ -51,12 +51,12 @@ namespace DIYHIIT.Services.Data
         public async Task<IEnumerable<IWorkout>> GetWorkoutsAsync(HostOptions options = HostOptions.Production)
         {
             // If cache not empty, fetch from cache and return items.
-            var cacheWorkouts = await GetFromCache<List<Workout>>("Workouts");
+            //var cacheWorkouts = await GetFromCache<List<Workout>>("Workouts");
 
-            if (cacheWorkouts != null)
-            {
-                return cacheWorkouts;
-            }
+            //if (cacheWorkouts != null)
+            //{
+            //    return cacheWorkouts;
+            //}
 
             string path = string.Empty;
 
