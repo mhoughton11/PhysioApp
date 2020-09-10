@@ -33,8 +33,8 @@ namespace DIYHIIT.ViewModels
         #region Private Fields
 
         private List<Workout> _workoutList;
-        private Workout _selectedItem;
         private bool _workoutsUpdated = true;
+        private string _isRefreshing;
         private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
@@ -51,6 +51,17 @@ namespace DIYHIIT.ViewModels
             }
         }
 
+        public string IsRefreshing
+        {
+            get => _isRefreshing;
+            set
+            {
+                _isRefreshing = value;
+                RaisePropertyChanged(() => IsRefreshing);
+            }
+        }
+
+        public ICommand RefreshCommand => new Command(OnRefresh);
         public ICommand AddWorkoutCommand => new Command(OnAddWorkoutCommand);
         public ICommand WorkoutTappedCommand => new Command<Workout>(OnWorkoutTapped);
 
@@ -98,6 +109,15 @@ namespace DIYHIIT.ViewModels
             Debug.WriteLine($"Workout selected: {workout.Name}");
 
             await _navigation.PushAsync(new PreviewWorkoutView(workout));
+        }
+
+        private async void OnRefresh()
+        {
+            IsRefreshing = "True";
+
+            await InitializeAsync(null);
+
+            IsRefreshing = "False";
         }
 
         #endregion

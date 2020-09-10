@@ -16,7 +16,10 @@
 
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding WorkoutList}"
-                      SeparatorVisibility="None">
+                      SeparatorVisibility="None"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing}"
+                      RefreshCommand="{Binding RefreshCommand}">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior
                         EventName="ItemTapped"
@@ -33,13 +36,13 @@
                                    HasShadow="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2.5*" />
+                                        <ColumnDefinition Width="3.2*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
                                     <Label Text="{Binding Name}"
                                            TextColor="Black"
-                                           FontSize="25"
+                                           FontSize="23"
                                            Grid.RowSpan="2"
                                            LineBreakMode="WordWrap"
                                            VerticalOptions="CenterAndExpand"
