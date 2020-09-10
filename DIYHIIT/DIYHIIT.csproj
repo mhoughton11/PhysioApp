@@ -17,6 +17,7 @@
     <Compile Remove="Data\**" />
     <EmbeddedResource Remove="Data\**" />
     <None Remove="Data\**" />
+    <None Remove="Resources\Fonts\Font Awesome 5 Free-Regular-400.otf" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="mono_crash.1cfb5decbf.0.json" />

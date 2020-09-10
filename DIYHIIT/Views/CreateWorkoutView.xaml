@@ -57,19 +57,19 @@
                                    Margin="4"
                                    BackgroundColor="LightGray"
                                    CornerRadius="16"
-                                   HasShadow="False">
+                                   HasShadow="False"
+                                   HeightRequest="100">
                                 <Grid HorizontalOptions="FillAndExpand"
                                           VerticalOptions="FillAndExpand">
+
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="2*"/>
                                     </Grid.RowDefinitions>
+
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2.2*"/>
-                                        <ColumnDefinition Width="4*"/>
-                                        <ColumnDefinition Width="1.2*"/>
-                                        <ColumnDefinition Width="0.75*"/>
-                                        <ColumnDefinition Width="0.3*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="3*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Image Aspect="AspectFill"
@@ -84,51 +84,17 @@
                                            MaxLines="1"
                                            TextColor="Black"
                                            VerticalOptions="CenterAndExpand"
-                                           Grid.Column="1"
-                                           Grid.RowSpan="2"/>
+                                           HorizontalOptions="CenterAndExpand"
+                                           Grid.Column="1"/>
 
                                     <Label Text="{Binding BodyFocus}"
                                            FontSize="16"
                                            TextColor="Black"
-                                           MaxLines="1"
+                                           LineBreakMode="WordWrap"
                                            Margin="6"
                                            VerticalOptions="Start"
                                            Grid.Column="1"
                                            Grid.Row="1"/>
-
-                                    <Button Margin="0"
-                                            Padding="0"
-                                            BackgroundColor="Black"
-                                            VerticalOptions="Center"
-                                            HeightRequest="80"
-                                            Grid.Column="2"
-                                            Grid.RowSpan="2">
-                                        <Button.Image Aspect="AspectFit">
-                                            <OnPlatform x:TypeArguments="FileImageSource"
-                                                        iOS="BinIcon.png"
-                                                        Android="BinIcon.png"/>
-                                        </Button.Image>
-                                    </Button>
-
-                                    <Button Grid.Row="0"
-                                            Grid.Column="3"
-                                            BackgroundColor="LightGray">
-                                        <Button.Image Aspect="AspectFit">
-                                            <OnPlatform x:TypeArguments="FileImageSource"
-                                                        iOS="UpIcon.png"
-                                                        Android="UpIcon.png"/>
-                                        </Button.Image>
-                                    </Button>
-
-                                    <Button Grid.Row="1"
-                                            Grid.Column="3"
-                                            BackgroundColor="LightGray">
-                                        <Button.Image Aspect="AspectFit">
-                                            <OnPlatform x:TypeArguments="FileImageSource"
-                                                        iOS="DownIcon.png"
-                                                        Android="DownIcon.png"/>
-                                        </Button.Image>
-                                    </Button>
 
                                 </Grid>
                             </Frame>

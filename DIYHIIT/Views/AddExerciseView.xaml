@@ -41,8 +41,8 @@
                                        Source="{Binding ImageURL}"/>
 
                                 <Label Text="{Binding DisplayName}"
-                                       Margin="0, 8"
                                        FontSize="16"
+                                       LineBreakMode="WordWrap"
                                        TextColor="DarkBlue"
                                        VerticalOptions="EndAndExpand"
                                        HorizontalOptions="CenterAndExpand"/>

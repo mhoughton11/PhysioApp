@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+using System.Windows.Input;
 using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.Library.Models

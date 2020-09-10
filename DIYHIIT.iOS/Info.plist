@@ -34,5 +34,9 @@
 	<string>DIYHIIT</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>fa-solid-900.tff</string>
+	</array>
 </dict>
 </plist>
