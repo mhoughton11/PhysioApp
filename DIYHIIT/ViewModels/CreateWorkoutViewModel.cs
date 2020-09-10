@@ -166,7 +166,7 @@ namespace DIYHIIT.ViewModels
             workout.ExerciseCount = Helpers.GetWorkoutCountString(workout);
             workout = await GetWorkoutName(workout);
 
-            await _workoutDataService.SaveWorkout(workout, App.AppHostOptions);
+            await _workoutDataService.SaveWorkout(workout);
             await _navigation.PopAsync();           
         }
 

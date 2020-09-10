@@ -84,7 +84,7 @@ namespace DIYHIIT.ViewModels
 
         private async Task<List<Workout>> GetWorkouts()
         {
-            var workouts = await _workoutDataService.GetWorkoutsAsync(App.AppHostOptions);
+            var workouts = await _workoutDataService.GetWorkoutsAsync();
 
             var result = from workout in workouts
                          where workout.DateAdded <= DateTime.Today.AddDays(-7)

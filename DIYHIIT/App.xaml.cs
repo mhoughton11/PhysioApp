@@ -24,7 +24,7 @@ namespace DIYHIIT
 
         private void InitializeApp()
         {
-            AppHostOptions = HostOptions.Production;
+            AppHostOptions = HostOptions.LocalHost;
 
             FlowListView.Init();
             AppContainer.RegisterDependancies();

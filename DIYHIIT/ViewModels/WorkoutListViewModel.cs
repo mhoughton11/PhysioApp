@@ -56,7 +56,7 @@ namespace DIYHIIT.ViewModels
 
             try
             {
-                WorkoutList = await _workoutDataService.GetWorkoutsAsync(App.AppHostOptions) as List<Workout>;
+                WorkoutList = await _workoutDataService.GetWorkoutsAsync() as List<Workout>;
             }
             catch (Exception ex)
             {

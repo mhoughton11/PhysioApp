@@ -23,11 +23,11 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IWorkout> SaveWorkout(IWorkout workout, HostOptions options = HostOptions.Production)
+        public async Task<IWorkout> SaveWorkout(IWorkout workout)
         {
             string path = string.Empty;
         
-            switch (options)
+            switch (App.AppHostOptions)
             {
                 case HostOptions.Production:
                     path = ApiConstants.BaseApiUrl + ApiConstants.SaveWorkoutEndpoint;
@@ -48,7 +48,7 @@ namespace DIYHIIT.Services.Data
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<IWorkout>> GetWorkoutsAsync(HostOptions options = HostOptions.Production)
+        public async Task<IEnumerable<IWorkout>> GetWorkoutsAsync()
         {
             // If cache not empty, fetch from cache and return items.
             //var cacheWorkouts = await GetFromCache<List<Workout>>("Workouts");
@@ -60,7 +60,7 @@ namespace DIYHIIT.Services.Data
 
             string path = string.Empty;
 
-            switch (options)
+            switch (App.AppHostOptions)
             {
                 case HostOptions.Production:
                     path = ApiConstants.BaseApiUrl + ApiConstants.GetWorkoutsEndpoint;

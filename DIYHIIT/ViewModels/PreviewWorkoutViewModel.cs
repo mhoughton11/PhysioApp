@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
@@ -14,24 +16,35 @@ namespace DIYHIIT.ViewModels
     public class PreviewWorkoutViewModel : BaseViewModel
     {
         public string BodyFocus { get; set; }
-        public int WorkoutMoves { get; set; }
+        public string ExerciseCount { get; set; }
         public double WorkoutLength { get; set; }
         public string Name { get; set; }
 
-        public List<IExercise> Exercises { get; set; }
-
         public ICommand BeginWorkoutCommand => new Command(OnBeginWorkoutCommand);
 
-        public INavigation Navigation;
-
         private Workout _workout;
+        private List<IExercise> _exercises;
         private readonly IExerciseDataService _exerciseDataService;
 
-        public PreviewWorkoutViewModel(Workout workout, IExerciseDataService exerciseDataService, INavigation navigationService, IDialogService dialogService)
-            : base(navigationService, dialogService)
+        public PreviewWorkoutViewModel(Workout workout,
+                                      IExerciseDataService exerciseDataService,
+                                      INavigation navigation,
+                                      IDialogService dialogService)
+            : base(navigation, dialogService)
         {
-            InitializeAsync(workout);
             _exerciseDataService = exerciseDataService;
+
+            InitializeAsync(workout);
+        }
+
+        public List<IExercise> Exercises
+        {
+            get => _exercises;
+            set
+            {
+                _exercises = value;
+                RaisePropertyChanged(() => Exercises);
+            }
         }
 
         private void Init()
@@ -40,18 +53,22 @@ namespace DIYHIIT.ViewModels
             //rest.Duration = _workout.RestInterval;
         }
 
-        public override void InitializeAsync(object workout)
+        public override async void InitializeAsync(object workout)
         {
             _workout = workout as Workout;
 
-            //_exerciseDataService
-
+            var items = await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIDs);
+            Exercises = items.ToList();
+            
             Name = _workout.Name;
-            //WorkoutMoves = _workout.ExerciseIDs.Count;
+            ExerciseCount = _workout.ExerciseCount;
             BodyFocus = _workout.BodyFocus;
             WorkoutLength = _workout.Duration ?? 0;
 
-            base.InitializeAsync(workout);
+            foreach (var ex in Exercises)
+            {
+                ex.Duration = _workout.ActiveInterval;
+            }
         }
 
         private async void OnBeginWorkoutCommand()

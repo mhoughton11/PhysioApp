@@ -10,6 +10,7 @@ namespace DIYHIIT.Constants
 
         // Exercises
         public const string ExercisesEndpoint = "exercise/exercises";
+        public const string ExercisesByListEndpoint = "exercise/list";
         public const string ExerciseByIdEndpoint = "exercise/exercises";
 
         // Workouts

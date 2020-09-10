@@ -9,18 +9,12 @@
             <Label Text="{Binding Name}"
                    HorizontalOptions="Start"
                    Margin="15, 10"
-                   MaxLines="1"
-                   FontSize="40"
-                   TextColor="Black"/>
-
-            <Label Text="{Binding BodyFocus}"
-                   FontSize="32"
-                   HorizontalOptions="Start"
-                   Margin="15, 0"
-                   TextColor="Black"/>
+                   FontSize="36"
+                   TextColor="Black"
+                   LineBreakMode="WordWrap"/>
 
             <Grid HeightRequest="120">
-                <Label Text="{Binding WorkoutMoves, StringFormat='{0} Exercises'}"
+                <Label Text="{Binding ExerciseCount}"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="CenterAndExpand"
                        Margin="10"
@@ -45,18 +39,20 @@
                             <Frame BackgroundColor="LightGray"
                                    CornerRadius="20"
                                    Padding="8"
-                                   Margin="6">
+                                   Margin="6"
+                                   HasShadow="False">
                                 <StackLayout>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding Duration, StringFormat='{0} seconds'}"
-                                               FontSize="18"
-                                               HorizontalOptions="CenterAndExpand"/>
                                         <Label Text="{Binding DisplayName}"
+                                               FontSize="18"/>
+
+                                        <Label Text="{Binding Duration, StringFormat='{0} Seconds'}"
                                                FontSize="18"
+                                               HorizontalOptions="CenterAndExpand"
                                                Grid.Column="1"/>
                                     </Grid>
                                 </StackLayout>
@@ -68,6 +64,7 @@
             </ListView>
 
             <Button BackgroundColor="Green"
+                    Margin="8"
                     CornerRadius="20"
                     Text="Let's go!"
                     Command="{Binding BeginWorkoutCommand}"

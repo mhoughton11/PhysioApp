@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
@@ -34,11 +35,12 @@ namespace DIYHIIT.Data.Controllers
         }
 
         [HttpGet]
-        [Route("exerciseList")]
-        public async Task<IActionResult> GetExercisesFromList([FromBody]string ids)
+        [Route("list")]
+        public async Task<IActionResult> GetExercisesFromList(string ids)
         {
             var exercises = new List<Exercise>();
-            List<int> exerciseIds = JsonConvert.DeserializeObject(ids) as List<int>;
+
+            var exerciseIds = JsonConvert.DeserializeObject<List<int>>(ids);
 
             if (exerciseIds != null)
             {
@@ -57,6 +59,7 @@ namespace DIYHIIT.Data.Controllers
             {
                 return NotFound();
             }
+            
         }
 
         [HttpGet]

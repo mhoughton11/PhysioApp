@@ -5,7 +5,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome back, Max"
-                   FontSize="44"
+                   FontSize="36"
                    Margin="10"
                    VerticalOptions="Start"
                    HorizontalOptions="StartAndExpand"

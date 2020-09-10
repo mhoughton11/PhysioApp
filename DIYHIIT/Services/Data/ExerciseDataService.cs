@@ -24,7 +24,7 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(int? t = null, HostOptions options = HostOptions.Production)
+        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(int? t = null)
         {
             // If cache not empty, fetch from cache and return items.
             var cacheExercises = await GetFromCache<List<Exercise>>("Exercises");
@@ -45,7 +45,7 @@ namespace DIYHIIT.Services.Data
                 // Cache empty so get exercises from API as List<Ex.>
                 string path = string.Empty;
 
-                switch (options)
+                switch (App.AppHostOptions)
                 {
                     case HostOptions.Production:
                         path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesEndpoint;
@@ -95,6 +95,37 @@ namespace DIYHIIT.Services.Data
 
                 return ex;
             }
+        }
+
+        public async Task<IEnumerable<IExercise>> GetExercisesFromList(string exerciseList)
+        {
+            string path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl;
+                    break;
+
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost;
+                    break;
+            }
+
+            path += ApiConstants.ExercisesByListEndpoint + $"?ids={exerciseList}";
+
+            //UriBuilder builder = new UriBuilder()
+            //{
+            //    Path = path + ApiConstants.ExercisesByListEndpoint,
+            //    Query = $"?ids={exerciseList}"
+            //};
+
+            var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
+
+            // If exercises null, return. If not, save to cache and return them.
+            if (ex == null) { return null; }
+
+            return ex;
         }
     }
 }

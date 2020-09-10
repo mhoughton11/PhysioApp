@@ -8,8 +8,8 @@ namespace DIYHIIT.Contracts.Services.Data
 {
     public interface IWorkoutDataService
     {
-        Task<IEnumerable<IWorkout>> GetWorkoutsAsync(HostOptions options = HostOptions.Production);
-        Task<IWorkout> SaveWorkout(IWorkout workout, HostOptions options = HostOptions.Production);
+        Task<IEnumerable<IWorkout>> GetWorkoutsAsync();
+        Task<IWorkout> SaveWorkout(IWorkout workout);
         Task<IWorkout> GetWorkoutById(int id);
     }
 }
