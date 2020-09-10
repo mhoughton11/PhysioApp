@@ -27,9 +27,9 @@ namespace DIYHIIT.ViewModels
             _navigation = navigation;
         }
 
-        public virtual void InitializeAsync(object data)
+        public virtual Task InitializeAsync(object data)
         {
-
+            return Task.FromResult(false);
         }
     }
 }

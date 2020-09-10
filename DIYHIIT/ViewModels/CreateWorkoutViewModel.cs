@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Helpers;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
-using MvvmCross.ViewModels;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
-using static DIYHIIT.Library.Helpers.Helpers;
-using static DIYHIIT.Library.Settings.Settings;
+using static DIYHIIT.Constants.Messages;
+
 
 namespace DIYHIIT.ViewModels
 {
@@ -93,18 +91,20 @@ namespace DIYHIIT.ViewModels
             Exercises.Remove(ex);
         }
 
-        public override void InitializeAsync(object data)
+        public override Task InitializeAsync(object data)
         {
             Exercises = new ObservableCollection<Exercise>();
             rand = new Random();
 
             WorkoutTypes = Enum.GetNames(typeof(WorkoutType)).ToList();
 
-            MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, "ExerciseAdded", (sender, arg) =>
+            MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, ExerciseAdded, (sender, arg) =>
             {
                 arg.Index = rand.Next(0, 0xFFFF);
                 Exercises.Add(arg);
             });
+
+            return base.InitializeAsync(data);
         }
 
         #endregion
@@ -167,6 +167,9 @@ namespace DIYHIIT.ViewModels
             workout = await GetWorkoutName(workout);
 
             await _workoutDataService.SaveWorkout(workout);
+
+            MessagingCenter.Send(this, WorkoutsUpdated);
+
             await _navigation.PopAsync();           
         }
 

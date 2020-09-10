@@ -7,8 +7,9 @@
         <StackLayout BackgroundColor="White">
 
             <Label Text="{Binding Name}"
-                   HorizontalOptions="Start"
-                   Margin="15, 10"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   Margin="15"
                    FontSize="36"
                    TextColor="Black"
                    LineBreakMode="WordWrap"/>
@@ -20,7 +21,7 @@
                        Margin="10"
                        FontSize="24"/>
 
-                <Label Text="{Binding WorkoutLength, StringFormat='{0} Minutes'}"
+                <Label Text="{Binding WorkoutLength}"
                        Grid.Column="1"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="CenterAndExpand"
@@ -44,16 +45,18 @@
                                 <StackLayout>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.2*"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <Label Text="{Binding DisplayName}"
-                                               FontSize="18"/>
+                                               FontSize="18"
+                                               Grid.Column="1"/>
 
                                         <Label Text="{Binding Duration, StringFormat='{0} Seconds'}"
                                                FontSize="18"
                                                HorizontalOptions="CenterAndExpand"
-                                               Grid.Column="1"/>
+                                               Grid.Column="2"/>
                                     </Grid>
                                 </StackLayout>
                                 

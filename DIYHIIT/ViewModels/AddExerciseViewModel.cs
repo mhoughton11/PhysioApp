@@ -11,6 +11,8 @@ using DIYHIIT.Library.Contracts;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static DIYHIIT.Library.Settings.Settings;
+using static DIYHIIT.Constants.Messages;
+
 
 namespace DIYHIIT.ViewModels
 {
@@ -92,13 +94,17 @@ namespace DIYHIIT.ViewModels
 
         #region Public Methods
 
-        public override void InitializeAsync(object data)
+        public override Task InitializeAsync(object data)
         {
+            _dialogService.ShowLoading("Loading exericses...");
+
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
             FlowExercises = new ObservableCollection<IExercise>();
 
             SelectedIndex = 0;
-            base.InitializeAsync(data);
+            _dialogService.HideLoading();
+
+            return base.InitializeAsync(data);
         }
 
         #endregion
@@ -129,7 +135,7 @@ namespace DIYHIIT.ViewModels
 
         private void OnExerciseTapped(Exercise selectedExercise)
         {
-            MessagingCenter.Send(this, "ExerciseAdded", selectedExercise);
+            MessagingCenter.Send(this, ExerciseAdded, selectedExercise);
         }
 
         #endregion

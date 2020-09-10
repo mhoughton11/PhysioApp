@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using Xamarin.Forms;
+
+using static DIYHIIT.Constants.Messages;
+
 
 namespace DIYHIIT.ViewModels
 {
@@ -19,12 +23,18 @@ namespace DIYHIIT.ViewModels
             : base(navigationService, dialogService)
         {
             _workoutDataService = workoutDataService;
+
+            MessagingCenter.Subscribe<CreateWorkoutViewModel>(this, WorkoutsUpdated, (sender) =>
+            {
+                _workoutsUpdated = true;
+            });
         }
 
         #region Private Fields
 
         private List<Workout> _workoutList;
         private Workout _selectedItem;
+        private bool _workoutsUpdated = true;
         private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
@@ -48,21 +58,28 @@ namespace DIYHIIT.ViewModels
 
         #region Public Methods
 
-        public override async void InitializeAsync(object data)
+        public override async Task InitializeAsync(object data)
         {
-            WorkoutList = new List<Workout>();
-
             IsBusy = true;
 
-            try
+            if (_workoutsUpdated)
             {
-                WorkoutList = await _workoutDataService.GetWorkoutsAsync() as List<Workout>;
+                WorkoutList = new List<Workout>();
+
+                try
+                {
+                    _dialogService.ShowLoading("Loading workouts...");
+                    WorkoutList = await _workoutDataService.GetWorkoutsAsync() as List<Workout>;
+                    _dialogService.HideLoading();
+                }
+                catch (Exception ex)
+                {
+                    _dialogService.Popup("Loading workouts failed.");
+                    Debug.WriteLine(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                _dialogService.Popup("Loading workouts failed.");
-                Debug.WriteLine(ex);
-            }
+
+            _workoutsUpdated = false;
 
             IsBusy = false;
         }

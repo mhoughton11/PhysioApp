@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,30 +15,33 @@ using Xamarin.Forms;
 namespace DIYHIIT.ViewModels
 {
     public class PreviewWorkoutViewModel : BaseViewModel
-    {
-        public string BodyFocus { get; set; }
-        public string ExerciseCount { get; set; }
-        public double WorkoutLength { get; set; }
-        public string Name { get; set; }
-
-        public ICommand BeginWorkoutCommand => new Command(OnBeginWorkoutCommand);
-
-        private Workout _workout;
-        private List<IExercise> _exercises;
-        private readonly IExerciseDataService _exerciseDataService;
-
+    { 
         public PreviewWorkoutViewModel(Workout workout,
-                                      IExerciseDataService exerciseDataService,
-                                      INavigation navigation,
-                                      IDialogService dialogService)
+                                       IExerciseDataService exerciseDataService,
+                                       INavigation navigation,
+                                       IDialogService dialogService)
             : base(navigation, dialogService)
         {
             _exerciseDataService = exerciseDataService;
 
-            InitializeAsync(workout);
+            Task.Run(async () => await InitializeAsync(workout));
         }
 
-        public List<IExercise> Exercises
+        #region Private Fields
+
+        private string _workoutLength;
+        private string _exerciseCount;
+        private string _name;
+        private Exercise _rest;
+        private Workout _workout;
+        private ObservableCollection<IExercise> _exercises;
+        private readonly IExerciseDataService _exerciseDataService;
+
+        #endregion
+
+        #region Public Properties and Commands
+
+        public ObservableCollection<IExercise> Exercises
         {
             get => _exercises;
             set
@@ -47,33 +51,86 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private void Init()
+        public string ExerciseCount
         {
-            //var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
-            //rest.Duration = _workout.RestInterval;
+            get => _exerciseCount;
+            set
+            {
+                _exerciseCount = value;
+                RaisePropertyChanged(() => ExerciseCount);
+            }
         }
 
-        public override async void InitializeAsync(object workout)
+        public string WorkoutLength
         {
+            get => _workoutLength;
+            set
+            {
+                _workoutLength = value;
+                RaisePropertyChanged(() => WorkoutLength);
+            }
+        }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                RaisePropertyChanged(() => Name);
+            }
+        }
+
+        public ICommand BeginWorkoutCommand => new Command(OnBeginWorkoutCommand);
+
+        #endregion
+
+        #region Public Methods
+
+        public override async Task InitializeAsync(object workout)
+        {
+            _dialogService.ShowLoading("Loading workout...");
+
             _workout = workout as Workout;
 
-            var items = await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIDs);
-            Exercises = items.ToList();
+            var items = (await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIDs)).ToList();
+
+            Exercises = new ObservableCollection<IExercise>();
             
             Name = _workout.Name;
             ExerciseCount = _workout.ExerciseCount;
-            BodyFocus = _workout.BodyFocus;
-            WorkoutLength = _workout.Duration ?? 0;
+            WorkoutLength = $"{_workout.Duration ?? 0} Minutes";
 
-            foreach (var ex in Exercises)
+            _rest = new Exercise()
             {
-                ex.Duration = _workout.ActiveInterval;
+                Name = "Rest",
+                DisplayName = "Rest",
+
+                Duration = _workout.RestInterval,
+                ImageURL = "https://content.thriveglobal.com/wp-content/uploads/2018/09/morning_workout_tired.jpeg?w=1550"
+            };
+
+            for (int i = 0; i < items.Count()-2; i++)
+            {
+                items[i].Duration = _workout.ActiveInterval;
+                Exercises.Add(items[i]);
+                Exercises.Add(_rest);
             }
+            items[items.Count - 1].Duration = _workout.ActiveInterval;
+            Exercises.Add(items[items.Count - 1]);
+
+            _dialogService.HideLoading();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private async void OnBeginWorkoutCommand()
         {
             await _navigation.PushAsync(new ExecuteWorkoutView(_workout));
         }
+
+        #endregion
     }
 }

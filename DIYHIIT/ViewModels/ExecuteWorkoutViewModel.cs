@@ -145,7 +145,7 @@ namespace DIYHIIT.ViewModels
 
         List<IExercise> exercises;
 
-        public override void InitializeAsync(object workout)
+        public override async Task InitializeAsync(object workout)
         {
             _workout = (IWorkout)workout;
 
@@ -172,6 +172,8 @@ namespace DIYHIIT.ViewModels
             }
 
             BeginWorkoutAsync();
+
+            await base.InitializeAsync(workout);
         }
 
         private async void BeginWorkoutAsync()

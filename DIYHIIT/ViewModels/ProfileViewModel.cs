@@ -25,12 +25,12 @@ namespace DIYHIIT.ViewModels
             random = new Random();
         }
 
-        public override void InitializeAsync(object data)
+        public override Task InitializeAsync(object data)
         {
             random = new Random();
             TextLabel = "Profile" + random.Next(0xFF);
 
-            base.InitializeAsync(data);
+            return base.InitializeAsync(data);
         }
 
         public ICommand TestPostCommand => new Command(OnTestPostCommand);

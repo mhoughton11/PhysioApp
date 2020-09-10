@@ -70,12 +70,12 @@ namespace DIYHIIT.ViewModels
             SelectedTab = tabIndex;
         }
 
-        public override async void InitializeAsync(object data)
+        public override async Task InitializeAsync(object data)
         {
-            base.InitializeAsync(data);
             RecentWorkoutsLabel = "False";
 
             WorkoutList = await GetWorkouts();
+            await base.InitializeAsync(data);
         }
 
         #endregion

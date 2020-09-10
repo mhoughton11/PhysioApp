@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using DIYHIIT.Contracts.Services.General;
 using Plugin.Toast;
+using System;
 using System.Threading.Tasks;
 
 namespace DIYHIIT.Services.General.Dialog
@@ -28,6 +29,16 @@ namespace DIYHIIT.Services.General.Dialog
         public Task<bool> ShowConfirmAsync(string title, string message, string ok = "OK", string cancel = "Cancel")
         {
             return UserDialogs.Instance.ConfirmAsync(message, title: title, okText: ok, cancelText: cancel);
+        }
+
+        public void ShowLoading(string message)
+        {
+            UserDialogs.Instance.ShowLoading(message);
+        }
+
+        public void HideLoading()
+        {
+            UserDialogs.Instance.HideLoading();
         }
 
         public async Task<string> ShowPromptAsync(string message, string title, string ok = "OK", string cancel = "Cancel")

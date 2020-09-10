@@ -29,7 +29,8 @@
                         <ViewCell>
                             <Frame BackgroundColor="LightGray"
                                    CornerRadius="10"
-                                   Margin="6">
+                                   Margin="6"
+                                   HasShadow="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2.5*" />
