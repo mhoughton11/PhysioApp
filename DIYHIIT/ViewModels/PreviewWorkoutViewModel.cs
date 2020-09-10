@@ -128,7 +128,7 @@ namespace DIYHIIT.ViewModels
 
         private async void OnBeginWorkoutCommand()
         {
-            await _navigation.PushAsync(new ExecuteWorkoutView(_workout));
+            await _navigation.PushAsync(new ExecuteWorkoutView(_workout, _exercises.ToList()));
         }
 
         #endregion

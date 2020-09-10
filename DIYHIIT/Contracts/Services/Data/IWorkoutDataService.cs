@@ -11,5 +11,6 @@ namespace DIYHIIT.Contracts.Services.Data
         Task<IEnumerable<IWorkout>> GetWorkoutsAsync();
         Task<IWorkout> SaveWorkout(IWorkout workout);
         Task<IWorkout> GetWorkoutById(int id);
+        Task<IWorkout> UpdateWorkout(IWorkout workout);
     }
 }

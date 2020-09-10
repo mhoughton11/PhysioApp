@@ -28,6 +28,8 @@ namespace DIYHIIT.ViewModels
             {
                 _workoutsUpdated = true;
             });
+
+            Task.Run(async () => await InitializeAsync(data));
         }
 
         #region Private Fields

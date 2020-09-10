@@ -50,14 +50,6 @@ namespace DIYHIIT.Services.Data
 
         public async Task<IEnumerable<IWorkout>> GetWorkoutsAsync()
         {
-            // If cache not empty, fetch from cache and return items.
-            //var cacheWorkouts = await GetFromCache<List<Workout>>("Workouts");
-
-            //if (cacheWorkouts != null)
-            //{
-            //    return cacheWorkouts;
-            //}
-
             string path = string.Empty;
 
             switch (App.AppHostOptions)
@@ -76,6 +68,24 @@ namespace DIYHIIT.Services.Data
             await Cache.InsertObject("Workouts", workouts, DateTime.Now.AddMinutes(2));
 
             return workouts;
+        }
+
+        public async Task<IWorkout> UpdateWorkout(IWorkout workout)
+        {
+            string path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.UpdateWorkoutEndpoint;
+                    break;
+
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.UpdateWorkoutEndpoint;
+                    break;
+            }
+
+            return await _genericRepository.PostAsync(path, workout);
         }
     }
 }

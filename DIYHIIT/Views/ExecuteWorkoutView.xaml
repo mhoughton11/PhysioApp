@@ -85,6 +85,7 @@
 
             <Button Text="Done"
                     Margin="10"
+                    FontSize="40"
                     Command="{Binding DoneCommand}"
                     IsVisible="{Binding EffortDetailEnabled}"
                     HorizontalOptions="CenterAndExpand"

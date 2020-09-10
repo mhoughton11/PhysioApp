@@ -1,4 +1,5 @@
-﻿using DIYHIIT.Contracts.Services.General;
+﻿using DIYHIIT.Contracts.Services.Data;
+using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using System;
@@ -6,27 +7,57 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels
 {
     class ExecuteWorkoutViewModel : BaseViewModel
     {
-        public ExecuteWorkoutViewModel(INavigation navigationService,
+        public ExecuteWorkoutViewModel(Workout workout,
+                                       List<IExercise> exercises,
+                                       IWorkoutDataService workoutDataService,
+                                       INavigation navigationService,
                                        IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            timer = new Timer(1000);
+            _workout = workout;
+            _exercises = exercises;
+            _workoutDataService = workoutDataService;
 
-            EffortDetailEnabled = "False";
-            TimeLabelEnabled = "True";
-
-            exercises = new List<IExercise>();
-
-            DoneCommand = new Command(() => ExecuteDoneCommand());
+            Task.Run(async() => await InitializeAsync(workout));
         }
 
+        #region Private Fields
+
+        // View Components
         private string _currentExercise;
+        private string _imageName;
+        private double _timeLeft;
+        private string _nextExercise;
+        private double _workoutProgress;
+        private string _progressLabel;
+        private string _timeLeftColour;
+        private string _effortDetailEnabled;
+        private string _timeLabelEnabled;
+
+        // Model Components
+        double curTime;
+        double totalTime = 0;
+        double duration;
+
+        private IWorkout _workout;
+        int counter = 0;
+
+        Timer timer;
+
+        private List<IExercise> _exercises;
+        private readonly IWorkoutDataService _workoutDataService;
+
+        #endregion
+
+        #region Public Members and Commands
+
         public string CurrentExercise 
         {
             get => _currentExercise;
@@ -36,8 +67,7 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => CurrentExercise);
             }
         }
-
-        private string _imageName;
+        
         public string ImageName
         {
             get => _imageName;
@@ -47,8 +77,7 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => ImageName);
             }
         }
-
-        private double _timeLeft;
+        
         public double TimeLeft 
         {
             get => _timeLeft;
@@ -60,8 +89,7 @@ namespace DIYHIIT.ViewModels
                 GetTimeLeftColour(value);
             }
         }
-
-        private string _nextExercise;
+        
         public string NextExercise 
         {
             get => _nextExercise;
@@ -72,7 +100,6 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private double _workoutProgress;
         public double WorkoutProgress 
         {
             get => _workoutProgress;
@@ -82,8 +109,7 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => WorkoutProgress);
             }
         }
-
-        private string _progressLabel;
+        
         public string ProgressLabel
         {
             get => _progressLabel;
@@ -93,8 +119,7 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => ProgressLabel);
             }
         }
-
-        private string _timeLeftColour;
+        
         public string TimeLeftColour
         {
             get => _timeLeftColour;
@@ -104,10 +129,7 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => TimeLeftColour);
             }
         }
-
-        public Command DoneCommand { get; set; }
-
-        private string _effortDetailEnabled;
+        
         public string EffortDetailEnabled 
         {
             get => _effortDetailEnabled;
@@ -118,7 +140,6 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        private string _timeLabelEnabled;
         public string TimeLabelEnabled
         {
             get => _timeLabelEnabled;
@@ -129,25 +150,24 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-
         public double EffortSliderValue { get; set; }
 
-        public INavigation Navigation { get; set; }
+        public ICommand DoneCommand => new Command(ExecuteDoneCommand);
 
-        double curTime;
-        double totalTime = 0;
-        double duration;
+        #endregion
 
-        private IWorkout _workout;
-        int counter = 0;
 
-        System.Timers.Timer timer;
 
-        List<IExercise> exercises;
+        #region
+
+        #endregion
 
         public override async Task InitializeAsync(object workout)
         {
-            _workout = (IWorkout)workout;
+            timer = new Timer(1000);
+
+            EffortDetailEnabled = "False";
+            TimeLabelEnabled = "True";
 
             var active = _workout.ActiveInterval ?? 0;
             var count = 5;  // Dummy value for now
@@ -155,16 +175,13 @@ namespace DIYHIIT.ViewModels
 
             duration = active * count + rest * count;
 
-            //var rest = await App.ExerciseDatabase.GetItemAsync("Rest");
-            //rest.Duration = workout.RestInterval;
-
-            CurrentExercise = exercises[0].DisplayName;
-            TimeLeft = exercises[0].Duration ?? 0;
-            ImageName = exercises[0].ImageURL;
+            CurrentExercise = _exercises[0].DisplayName;
+            TimeLeft = _exercises[0].Duration ?? 0;
+            ImageName = _exercises[0].ImageURL;
 
             try
             {
-                NextExercise = exercises[2].DisplayName;
+                NextExercise = _exercises[2].DisplayName;
             }
             catch (Exception)
             {
@@ -196,12 +213,12 @@ namespace DIYHIIT.ViewModels
                 UpdateUI(counter, curTime);
             });
 
-            if (curTime+1 > exercises[counter].Duration)
+            if (curTime+1 > _exercises[counter].Duration)
             {
                 curTime = 0;
                 counter++;
 
-                if (counter == exercises.Count)
+                if (counter == _exercises.Count)
                     StopWorkout();
             }
 
@@ -211,27 +228,27 @@ namespace DIYHIIT.ViewModels
 
         private void UpdateUI(int count, double timerValue)
         {
-            if (count == exercises.Count)
+            if (count == _exercises.Count)
                 return;
 
             // Update image
-            ImageName = exercises[count].ImageURL;
+            ImageName = _exercises[count].ImageURL;
 
             // Update timer
-            TimeLeft = (exercises[count].Duration ?? 0) - timerValue + 1;
+            TimeLeft = (_exercises[count].Duration ?? 0) - timerValue + 1;
 
             WorkoutProgress = totalTime / duration;
             ProgressLabel = string.Format("{0:0}%", WorkoutProgress * 100);
 
             // Update current exercise
-            CurrentExercise = exercises[count].DisplayName;
+            CurrentExercise = _exercises[count].DisplayName;
 
             if (CurrentExercise != "Rest")
             {
                 // Update next exercise
                 try
                 {
-                    NextExercise = exercises[count + 2].DisplayName;
+                    NextExercise = _exercises[count + 2].DisplayName;
                 }
                 catch (Exception)
                 {
@@ -243,7 +260,7 @@ namespace DIYHIIT.ViewModels
                 // Update next exercise
                 try
                 {
-                    NextExercise = exercises[count + 1].DisplayName;
+                    NextExercise = _exercises[count + 1].DisplayName;
                 }
                 catch (Exception)
                 {
@@ -277,20 +294,12 @@ namespace DIYHIIT.ViewModels
         private async void ExecuteDoneCommand()
         {
             // Make a copy and the recently used date and effort of the workout.
-            var newWorkout = new Workout()
-            {
-                Name = _workout.Name,
-                ActiveInterval = _workout.ActiveInterval,
-                RestInterval = _workout.RestInterval,
-                Type = _workout.Type,
-                BodyFocus = _workout.BodyFocus,
-                Effort = EffortSliderValue,
-                DateAdded = _workout.DateAdded,
-                DateUsed = DateTime.Now,
-            };           
+            _workout.DateUsed = DateTime.Now;
+            _workout.Effort = Math.Round(EffortSliderValue, 1);
 
-            //await App.RecentWorkouts.SaveItemAsync(newWorkout);
-            await Navigation.PopAsync();
+            await _workoutDataService.UpdateWorkout(_workout);
+
+            await _navigation.PopAsync();
         }
     }
 }
