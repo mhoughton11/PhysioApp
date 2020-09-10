@@ -37,6 +37,7 @@ namespace DIYHIIT.ViewModels
         private List<Workout> _workoutList;
         private bool _workoutsUpdated = true;
         private string _isRefreshing;
+        private Workout _selectedItem;
         private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
@@ -52,6 +53,19 @@ namespace DIYHIIT.ViewModels
                 RaisePropertyChanged(() => WorkoutList);
             }
         }
+        /*
+        public Workout SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                RaisePropertyChanged(() => SelectedItem);
+
+                SelectedItem = null;
+            }
+        }
+        */
 
         public string IsRefreshing
         {

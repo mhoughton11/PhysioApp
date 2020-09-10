@@ -105,17 +105,18 @@ namespace DIYHIIT.ViewModels
             {
                 Name = "Rest",
                 DisplayName = "Rest",
-
                 Duration = _workout.RestInterval,
                 ImageURL = "https://content.thriveglobal.com/wp-content/uploads/2018/09/morning_workout_tired.jpeg?w=1550"
             };
 
-            for (int i = 0; i < items.Count()-2; i++)
+            // Add rest behind all but last exercises.
+            for (int i = 0; i < items.Count()-1; i++)
             {
                 items[i].Duration = _workout.ActiveInterval;
                 Exercises.Add(items[i]);
                 Exercises.Add(_rest);
             }
+
             items[items.Count - 1].Duration = _workout.ActiveInterval;
             Exercises.Add(items[items.Count - 1]);
 

@@ -158,9 +158,7 @@ namespace DIYHIIT.ViewModels
 
 
 
-        #region
-
-        #endregion
+        #region Public Methods
 
         public override async Task InitializeAsync(object workout)
         {
@@ -170,7 +168,7 @@ namespace DIYHIIT.ViewModels
             TimeLabelEnabled = "True";
 
             var active = _workout.ActiveInterval ?? 0;
-            var count = 5;  // Dummy value for now
+            var count = _exercises.Count;
             var rest = _workout.RestInterval ?? 0;
 
             duration = active * count + rest * count;
@@ -192,6 +190,10 @@ namespace DIYHIIT.ViewModels
 
             await base.InitializeAsync(workout);
         }
+
+        #endregion
+
+        #region Private Methods
 
         private async void BeginWorkoutAsync()
         {
@@ -301,5 +303,7 @@ namespace DIYHIIT.ViewModels
 
             await _navigation.PopAsync();
         }
+
+        #endregion
     }
 }

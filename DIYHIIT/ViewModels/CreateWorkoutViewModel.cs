@@ -53,8 +53,6 @@ namespace DIYHIIT.ViewModels
             {
                 _selectedWorkoutType = value;
                 RaisePropertyChanged(() => SelectedWorkoutType);
-
-                Debug.WriteLine($"Selected workout type changed: {value}");
             }
         }
 
@@ -147,6 +145,12 @@ namespace DIYHIIT.ViewModels
                 return;
             }
 
+            if (_exercises.Count == 0 || _exercises == null)
+            {
+                await _dialogService.ShowAlertAsync("No exercises.", "Pleases add at least one exercise.", "OK");
+                return;
+            }
+
             var Ids = new List<int>();
             foreach (var ex in _exercises)
             {
@@ -193,9 +197,10 @@ namespace DIYHIIT.ViewModels
                 else
                 {
                     _dialogService.Popup("Please type a workout name when prompted.");
+                    var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
+                    workout.Name = t + " Workout";
                 }
             }
-
             else
             {
                 var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
