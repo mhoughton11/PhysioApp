@@ -17,8 +17,11 @@ namespace DIYHIIT.ViewModels
 
         public string TextLabel { get; set; }
 
-        public ProfileViewModel(INavigation navigationService, IDialogService dialogService,
-            IUserDataService userDataService) : base(navigationService, dialogService)
+        public ProfileViewModel(INavigation navigation,
+                                IDialogService dialogService,
+                                IAuthenticationService authenticationService,
+                                IUserDataService userDataService)
+            : base(navigation, dialogService)
         {
             TextLabel = "Profile";
             _userDataService = userDataService;

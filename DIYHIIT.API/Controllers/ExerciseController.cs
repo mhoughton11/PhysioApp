@@ -39,7 +39,6 @@ namespace DIYHIIT.Data.Controllers
         public async Task<IActionResult> GetExercisesFromList(string ids)
         {
             var exercises = new List<Exercise>();
-
             var exerciseIds = JsonConvert.DeserializeObject<List<int>>(ids);
 
             if (exerciseIds != null)
@@ -64,7 +63,7 @@ namespace DIYHIIT.Data.Controllers
 
         [HttpGet]
         [Route("exercise")]
-        public async Task<IActionResult> GetById([FromBody]int? id)
+        public async Task<IActionResult> GetById(int? id)
         {
             if (id == null || id < 0)
             {

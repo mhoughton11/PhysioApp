@@ -13,7 +13,6 @@ using System.Windows.Input;
 using static DIYHIIT.Library.Settings.Settings;
 using static DIYHIIT.Constants.Messages;
 
-
 namespace DIYHIIT.ViewModels
 {
     public class AddExerciseViewModel : BaseViewModel

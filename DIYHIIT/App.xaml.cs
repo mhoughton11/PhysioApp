@@ -13,21 +13,21 @@ namespace DIYHIIT
     {
         public static HostOptions AppHostOptions;
 
-        public App()
+        public App(AppSetup setup)
         {
             InitializeComponent();
 
-            InitializeApp();
+            InitializeApp(setup);
 
-            MainPage = new MainPage();
+            MainPage = new LoginView();
         }
 
-        private void InitializeApp()
+        private void InitializeApp(AppSetup setup)
         {
             AppHostOptions = HostOptions.Production;
 
+            AppContainer.Container = setup.CreateContainer();
             FlowListView.Init();
-            AppContainer.RegisterDependancies();
         }
     }
 }

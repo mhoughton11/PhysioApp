@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DIYHIIT.Auth;
+using DIYHIIT.Authentication;
+using DIYHIIT.Library.Models;
 
 namespace DIYHIIT.Contracts.Services.General
 {
     public interface IAuthenticationService
     {
-        Task<AuthenticationResponse> Register(string firstName, string lastName, string email, string userName,
-            string password);
-
-        Task<AuthenticationResponse> Authenticate(string userName, string password);
-
-        bool IsUserAuthenticated();
+        Task<AuthenticationResponse> LoginWithEmailAndPassword(string userName, string password);
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>74800088234-p81vr25q8668539o13op1vp698gbi3bi.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.74800088234-p81vr25q8668539o13op1vp698gbi3bi</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAr8V03uFeFvhT0WBlhNrZQxpRLXG18Nnk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>74800088234</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.houghtonstudio.uk.DIY-HIIT.DIYHIIT</string>
+	<key>PROJECT_ID</key>
+	<string>diy-hiit</string>
+	<key>STORAGE_BUCKET</key>
+	<string>diy-hiit.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:74800088234:ios:e13ea5d26680d72db4fcd3</string>
+	<key>DATABASE_URL</key>
+	<string>https://diy-hiit.firebaseio.com</string>
+</dict>
+</plist>

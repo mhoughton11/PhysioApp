@@ -15,15 +15,19 @@ namespace DIYHIIT.Services.Data
     {
         private readonly IGenericRepository _genericRepository;
 
+        public User CurrentUser { get; set; }
+
+        public User GetCurrentUser() => CurrentUser;
+
         public UserDataService(IGenericRepository genericRepository, IBlobCache blobCache = null)
             : base(blobCache)
         {
             _genericRepository = genericRepository;
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<User> GetUser(string uid)
         {
-            var cacheUser = await GetFromCache<User>($"User{id}");
+            var cacheUser = await GetFromCache<User>($"User{uid}");
 
             if (cacheUser != null)
             {
@@ -32,14 +36,14 @@ namespace DIYHIIT.Services.Data
             else
             {
                 var path = ApiConstants.BaseApiUrl
-                    + ApiConstants.GetUserEndpoint + $"/{id}";
+                    + ApiConstants.GetUserEndpoint + $"?uid={uid}";
 
                 var user = _genericRepository.GetAsync<User>(path);
 
                 // If user null, return. If not, save to cache and return.
                 if (user == null) { return null; }
 
-                await Cache.InsertObject($"User{id}", user, DateTime.Now.AddSeconds(60));
+                await Cache.InsertObject($"User{uid}", user, DateTime.Now.AddSeconds(60));
 
                 return await user;
             }

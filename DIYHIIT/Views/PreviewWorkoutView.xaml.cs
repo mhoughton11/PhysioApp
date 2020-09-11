@@ -1,4 +1,5 @@
-﻿using DIYHIIT.Contracts.Services.Data;
+﻿using Autofac;
+using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.Library.Models;
@@ -15,8 +16,8 @@ namespace DIYHIIT.Views
         {
             InitializeComponent();
 
-            var dialogService = AppContainer.Resolve<IDialogService>();
-            var exerciseDataService = AppContainer.Resolve<IExerciseDataService>();
+            var dialogService = AppContainer.Container.Resolve<IDialogService>();
+            var exerciseDataService = AppContainer.Container.Resolve<IExerciseDataService>();
 
             BindingContext = viewModel = new PreviewWorkoutViewModel(workout, exerciseDataService, Navigation, dialogService);
         }

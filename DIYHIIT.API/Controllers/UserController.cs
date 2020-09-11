@@ -34,15 +34,15 @@ namespace DIYHIIT.API.Controllers
 
         [HttpGet]
         [Route("user")]
-        public async Task<IActionResult> GetUser([FromBody]int? id)
+        public async Task<IActionResult> GetUser(string uid)
         {
-            if (id == null || id < 0)
+            if (uid == null)
             {
                 return NotFound();
             }
 
             var user = await _appDbContext.Users
-                                          .Where(u => u.Id == id)
+                                          .Where(u => u.Uid == uid)
                                           .SingleOrDefaultAsync();
 
             if (user != null)
@@ -57,8 +57,10 @@ namespace DIYHIIT.API.Controllers
         [Route("save")]
         public async Task<IActionResult> SaveUser([FromBody]User user)
         {
+            if (user == null) { return NoContent(); }
+
             // Check if username already exists.
-            if (_appDbContext.Users.Any(u => u.Username == user.Username))
+            if (_appDbContext.Users.Any(u => u.Uid == user.Uid))
             {
                 return Forbid();
             }

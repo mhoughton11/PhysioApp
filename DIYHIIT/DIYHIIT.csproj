@@ -48,13 +48,11 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Constants\" />
-    <Folder Include="Utility\" />
     <Folder Include="Contracts\Services\" />
     <Folder Include="Contracts\Services\Data\" />
     <Folder Include="Contracts\Services\General\" />
     <Folder Include="Services\General\" />
     <Folder Include="Services\General\Dialog\" />
-    <Folder Include="Services\General\Authentication\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Dependency Injection\" />
     <Folder Include="ViewModels\Base\" />
