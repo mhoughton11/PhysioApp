@@ -16,41 +16,30 @@ namespace DIYHIIT.iOS.Authentication
     {
         public async Task<AuthenticationResponse> LoginWithEmailAndPassword(string userName, string password)
         {
-            var userDataService = AppContainer.Container.Resolve<IUserDataService>();
+           AuthenticationResponse response;
 
             try
             {
                 // Attempt sign in
                 var result = await Auth.DefaultInstance.SignInWithPasswordAsync(userName, password);
 
-                // Does user already exist in DB? If not create new.
-                var user = await userDataService.GetUser(result.User.Uid);
-
-                if (user != null)
+                response = new AuthenticationResponse
                 {
-                    userDataService.CurrentUser = user;
-                }
-                else
-                {
-                    user.Uid = result.User.Uid;
-                    user.Username = result.User.Email;
-                    userDataService.CurrentUser = await userDataService.SaveUser(user);
-                }
-
-                return new AuthenticationResponse
-                {
-                    User = user,
+                    UserUid = result.User.Uid,
                     IsAuthenticated = true,
                     ResponseToken = await result.User.GetIdTokenAsync()
                 };
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                userDataService.CurrentUser = null;
-                Debug.WriteLine(e.Message);
+                response = new AuthenticationResponse
+                {
+                    IsAuthenticated = false,
+                    ResponseToken = null
+                };
             }
 
-            return null;
+            return response;
         }
     }
 }

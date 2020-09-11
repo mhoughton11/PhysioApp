@@ -1,5 +1,6 @@
 ﻿using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.DependencyInjection;
+using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using DLToolkit.Forms.Controls;
 using System;
@@ -12,6 +13,7 @@ namespace DIYHIIT
     public partial class App : Application
     {
         public static HostOptions AppHostOptions;
+        public static User CurrentUser;
 
         public App(AppSetup setup)
         {
@@ -24,7 +26,7 @@ namespace DIYHIIT
 
         private void InitializeApp(AppSetup setup)
         {
-            AppHostOptions = HostOptions.Production;
+            AppHostOptions = HostOptions.LocalHost;
 
             AppContainer.Container = setup.CreateContainer();
             FlowListView.Init();

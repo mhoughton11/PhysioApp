@@ -31,7 +31,7 @@ namespace DIYHIIT.Services.General.Dialog
             return UserDialogs.Instance.ConfirmAsync(message, title: title, okText: ok, cancelText: cancel);
         }
 
-        public void ShowLoading(string message)
+        public void ShowLoading(string message = "Loading...")
         {
             UserDialogs.Instance.ShowLoading(message);
         }

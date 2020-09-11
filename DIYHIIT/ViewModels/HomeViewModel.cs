@@ -18,14 +18,17 @@ namespace DIYHIIT.ViewModels
         {
             _workoutDataService = workoutDataService;
 
-            InitializeAsync(null);
+            Task.Run(() => InitializeAsync(null));
         }
 
         #region Private Members
 
+        // View Components
         private string _recentWorkoutsLabel;
+        private string _welcomeText;
         private List<Workout> _workoutList;
-        private int _selectedTab;
+
+        // Services
         private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
@@ -52,12 +55,13 @@ namespace DIYHIIT.ViewModels
             }
         }
 
-        public int SelectedTab
+        public string WelcomeText
         {
-            get => _selectedTab;
+            get => _welcomeText;
             set
             {
-                SetProperty(ref _selectedTab, value);
+                _welcomeText = value;
+                RaisePropertyChanged(() => WelcomeText);
             }
         }
 
@@ -65,14 +69,11 @@ namespace DIYHIIT.ViewModels
 
         #region Public Methods
 
-        public void SetSelectedTab(int tabIndex)
-        {
-            SelectedTab = tabIndex;
-        }
-
         public override async Task InitializeAsync(object data)
         {
             RecentWorkoutsLabel = "False";
+
+            WelcomeText = $"Welcome back, {App.CurrentUser.FirstName}";
 
             WorkoutList = await GetWorkouts();
             await base.InitializeAsync(data);

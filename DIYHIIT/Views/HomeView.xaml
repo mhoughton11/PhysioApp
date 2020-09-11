@@ -4,7 +4,7 @@
              x:Class="DIYHIIT.Views.HomeView">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome back, Max"
+            <Label Text="{Binding WelcomeText}"
                    FontSize="36"
                    Margin="10"
                    VerticalOptions="Start"

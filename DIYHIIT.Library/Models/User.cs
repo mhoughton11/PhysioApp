@@ -4,7 +4,7 @@ using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.Library.Models
 {
-    public class User
+    public class User : IUser
     {
         [Key]
         public string Uid { get; set; }

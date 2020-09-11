@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.ViewModels;
@@ -18,8 +19,9 @@ namespace DIYHIIT.Views
 
             var dialog = AppContainer.Container.Resolve<IDialogService>();
             var authentication = AppContainer.Container.Resolve<IAuthenticationService>();
+            var userService = AppContainer.Container.Resolve<IUserDataService>();
 
-            BindingContext = viewModel = new LoginViewModel(Navigation, dialog, authentication);
+            BindingContext = viewModel = new LoginViewModel(Navigation, dialog, authentication, userService);
         }
     }
 }

@@ -8,6 +8,7 @@ using DIYHIIT.Constants;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Models;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Services.Data
 {
@@ -35,17 +36,29 @@ namespace DIYHIIT.Services.Data
             }
             else
             {
-                var path = ApiConstants.BaseApiUrl
-                    + ApiConstants.GetUserEndpoint + $"?uid={uid}";
+                var path = string.Empty;
 
-                var user = _genericRepository.GetAsync<User>(path);
+                switch (App.AppHostOptions)
+                {
+                    case HostOptions.LocalHost:
+                        path = ApiConstants.BaseLocalHost
+                            + ApiConstants.GetUserEndpoint + $"?uid={uid}";
+                        break;
+
+                    case HostOptions.Production:
+                        path = ApiConstants.BaseApiUrl
+                            + ApiConstants.GetUserEndpoint + $"?uid={uid}";
+                        break;
+                }
+
+                var user = await _genericRepository.GetAsync<User>(path);
 
                 // If user null, return. If not, save to cache and return.
                 if (user == null) { return null; }
 
                 await Cache.InsertObject($"User{uid}", user, DateTime.Now.AddSeconds(60));
 
-                return await user;
+                return user;
             }
         }
 

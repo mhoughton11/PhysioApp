@@ -6,7 +6,7 @@ namespace DIYHIIT.Contracts.Services.General
     public interface IDialogService
     {
         void Popup(string message);
-        void ShowLoading(string message);
+        void ShowLoading(string message = "Loading...");
         void HideLoading();
         Task ShowAlertAsync(string message);
         Task ShowAlertAsync(string message, string title);
