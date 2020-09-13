@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 using Foundation;
 using UIKit;
 
@@ -23,9 +24,9 @@ namespace DIYHIIT.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App(new Setup()));
-
             Firebase.Core.App.Configure();
+
+            LoadApplication(new App(new Setup()));
 
             return base.FinishedLaunching(app, options);
         }

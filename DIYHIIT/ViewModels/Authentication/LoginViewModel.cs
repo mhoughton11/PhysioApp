@@ -7,7 +7,6 @@ using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;
 using DIYHIIT.Views;
-using Plugin.AutoLogin;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels.Authentication
@@ -82,6 +81,8 @@ namespace DIYHIIT.ViewModels.Authentication
         {
             ErrorLabelVisible = "False";
 
+            AttemptAutoLogin();
+
             return base.InitializeAsync(data);
         }
 
@@ -91,8 +92,6 @@ namespace DIYHIIT.ViewModels.Authentication
 
         private async void OnLoginCommand()
         {
-            _dialogService.ShowLoading("Logging in...");
-
             var response = await _authenticationService.LoginWithEmailAndPassword(UserEmail, UserPassword);
             var user = await _userDataService.GetUser(response.UserUid);
 
@@ -100,8 +99,6 @@ namespace DIYHIIT.ViewModels.Authentication
             {
                 //user.AuthToken = response.ResponseToken;
                 App.CurrentUser = user;
-
-                CrossAutoLogin.Current.SaveUserInfos(UserEmail, UserPassword);
 
                 _dialogService.HideLoading();
                 App.Current.MainPage = new MainPage();
@@ -112,6 +109,36 @@ namespace DIYHIIT.ViewModels.Authentication
                 ErrorLabelVisible = "True";
                 Debug.WriteLine("Log in failed.");
             }
+        }
+
+        private async void AttemptAutoLogin()
+        {
+            try
+            {
+                var response = _authenticationService.AutoLogin();
+
+                if (!response.IsAuthenticated)
+                {
+                    Debug.WriteLine($"Auto login failed");
+                    return;
+                }
+                // Success
+                var user = await _userDataService.GetUser(response.UserUid);
+
+                if (user != null)
+                {
+                    Debug.WriteLine($"Auto login success: {user.Username}");
+
+                    App.CurrentUser = user;
+                    App.Current.MainPage = new MainPage();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Auto login failed");
+                Debug.WriteLine(e.Message);
+            }
+            
         }
 
         private void OnRegisterCommand()

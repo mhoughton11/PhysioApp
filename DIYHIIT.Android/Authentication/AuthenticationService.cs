@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using DIYHIIT.Authentication;
 using DIYHIIT.Contracts.Services.General;
@@ -8,23 +9,63 @@ namespace DIYHIIT.Droid.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
+        public AuthenticationResponse AutoLogin()
+        {
+            if (FirebaseAuth.Instance.CurrentUser != null)
+            {
+                return new AuthenticationResponse
+                {
+                    UserUid = FirebaseAuth.Instance.CurrentUser.Uid,
+                    IsAuthenticated = true,
+                };
+            }
+
+            else
+            {
+                return new AuthenticationResponse
+                {
+                    UserUid = null,
+                    IsAuthenticated = false
+                };
+
+            }
+        }
+
         public async Task<AuthenticationResponse> LoginWithEmailAndPassword(string userName, string password)
         {
-            var user = await FirebaseAuth.Instance.SignInWithEmailAndPasswordAsync(userName, password);
-            return new AuthenticationResponse()
+            AuthenticationResponse response;
+
+            try
             {
-                ResponseToken = (await user.User.GetIdTokenAsync(false)).Token
-            };
-        }
+                // Attempt sign in
+                var result = await FirebaseAuth.Instance.SignInWithEmailAndPasswordAsync(userName, password);
 
-        public bool IsUserAuthenticated()
-        {
-            throw new NotImplementedException();
-        }
+                if (await result.User.GetIdTokenAsync(false) != null)
+                {
+                    Debug.WriteLine("Firebase auth suuccess");
+                    Debug.WriteLine(result.User.Uid);
+                }
 
-        public Task<AuthenticationResponse> Register(string firstName, string lastName, string email, string userName, string password)
-        {
-            throw new NotImplementedException();
+                var token = await result.User.GetIdTokenAsync(false);
+                Debug.WriteLine($"Auth token: {token}");
+
+                response = new AuthenticationResponse
+                {
+                    UserUid = result.User.Uid,
+                    IsAuthenticated = true,
+                    ResponseToken = (await result.User.GetIdTokenAsync(false)).ToString()
+                };
+            }
+            catch (Exception)
+            {
+                response = new AuthenticationResponse
+                {
+                    IsAuthenticated = false,
+                    ResponseToken = null
+                };
+            }
+
+            return response;
         }
     }
 }

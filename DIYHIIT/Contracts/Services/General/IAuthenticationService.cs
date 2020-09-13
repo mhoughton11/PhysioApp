@@ -7,6 +7,8 @@ namespace DIYHIIT.Contracts.Services.General
 {
     public interface IAuthenticationService
     {
+        AuthenticationResponse AutoLogin();
+
         Task<AuthenticationResponse> LoginWithEmailAndPassword(string userName, string password);
     }
 }

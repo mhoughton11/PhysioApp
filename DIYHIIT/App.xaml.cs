@@ -3,7 +3,6 @@ using DIYHIIT.DependencyInjection;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using DLToolkit.Forms.Controls;
-using Plugin.AutoLogin;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -22,7 +21,7 @@ namespace DIYHIIT
 
             InitializeApp(setup);
 
-            MainPage = InitializeNavigation();
+            MainPage = new LoginView();
         }
 
         private void InitializeApp(AppSetup setup)
@@ -31,18 +30,6 @@ namespace DIYHIIT
 
             AppContainer.Container = setup.CreateContainer();
             FlowListView.Init();
-        }
-
-        private Page InitializeNavigation()
-        {
-            if (CrossAutoLogin.Current.UserIsSaved)
-            {
-                return new MainPage();
-            }
-            else
-            {
-               return new LoginView();
-            }
         }
     }
 }

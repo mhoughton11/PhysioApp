@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using DIYHIIT.Authentication;
 using DIYHIIT.Contracts.Services.General;
@@ -8,6 +9,28 @@ namespace DIYHIIT.iOS.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
+        public AuthenticationResponse AutoLogin()
+        {
+            if (Auth.DefaultInstance.CurrentUser != null)
+            {
+                return new AuthenticationResponse
+                {
+                    UserUid = Auth.DefaultInstance.CurrentUser.Uid,
+                    IsAuthenticated = true,
+                };
+            }
+
+            else
+            {
+                return new AuthenticationResponse
+                {
+                    UserUid = null,
+                    IsAuthenticated = false
+                };
+
+            }
+        }
+
         public async Task<AuthenticationResponse> LoginWithEmailAndPassword(string userName, string password)
         {
            AuthenticationResponse response;

@@ -1,6 +1,5 @@
 ﻿using Acr.UserDialogs;
 using DIYHIIT.Contracts.Services.General;
-using Plugin.Toast;
 using System;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace DIYHIIT.Services.General.Dialog
     {
         public void Popup(string message)
         {
-            CrossToastPopUp.Current.ShowToastMessage(message);
+            UserDialogs.Instance.Toast(message);
         }
         public Task ShowAlertAsync(string message)
         {
