@@ -12,6 +12,7 @@ using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;
 using DIYHIIT.ViewModels.Exercises;
 using DIYHIIT.Views;
+using DIYHIIT.Views.Exercises;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 

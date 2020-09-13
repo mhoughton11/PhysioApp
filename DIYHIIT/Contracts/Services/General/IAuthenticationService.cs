@@ -10,5 +10,6 @@ namespace DIYHIIT.Contracts.Services.General
         AuthenticationResponse AutoLogin();
 
         Task<AuthenticationResponse> LoginWithEmailAndPassword(string userName, string password);
+        void SignOut();
     }
 }

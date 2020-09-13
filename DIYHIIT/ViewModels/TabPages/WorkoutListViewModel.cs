@@ -9,6 +9,7 @@ using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;
 using DIYHIIT.ViewModels.Workouts;
 using DIYHIIT.Views;
+using DIYHIIT.Views.Workouts;
 using Xamarin.Forms;
 
 using static DIYHIIT.Constants.Messages;

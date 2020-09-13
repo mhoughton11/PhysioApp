@@ -5,6 +5,7 @@ using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
+using DIYHIIT.Views.Authentication;
 using DIYHIIT.ViewModels.Base;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
@@ -13,6 +14,7 @@ namespace DIYHIIT.ViewModels.Tabs
 {
     public class ProfileViewModel : BaseViewModel
     {
+        private readonly IAuthenticationService _authenticationService;
         private readonly IUserDataService _userDataService;
         Random random;
 
@@ -25,6 +27,7 @@ namespace DIYHIIT.ViewModels.Tabs
             : base(navigation, dialogService)
         {
             TextLabel = "Profile";
+            _authenticationService = authenticationService;
             _userDataService = userDataService;
             random = new Random();
         }
@@ -37,35 +40,18 @@ namespace DIYHIIT.ViewModels.Tabs
             return base.InitializeAsync(data);
         }
 
-        public ICommand TestPostCommand => new Command(OnTestPostCommand);
-        public ICommand TestGetCommand => new Command(OnTestGetCommand);
+        public ICommand LogoutCommand => new Command(OnLogoutCommand);
 
-        private async void OnTestGetCommand()
+        #region Private Methods
+
+        private void OnLogoutCommand()
         {
-            var users = await _userDataService.GetUsers();
+            _authenticationService.SignOut();
 
-            if (users != null)
-            {
-                Debug.WriteLine("Users:");
-                foreach (var user in users)
-                {
-                    Debug.WriteLine(user.Username);
-                }
-            }
-            else
-            {
-                Debug.WriteLine("Unable to fetch users.");
-            }
+            App.CurrentUser = null;
+            App.Current.MainPage = new LoginView();
         }
 
-        private async void OnTestPostCommand()
-        {
-            User user = new User()
-            {
-                Username = "TestUser" + random.Next(0xFF).ToString()
-            };
-
-            await _userDataService.SaveUser(user);
-        }
+        #endregion
     }
 }

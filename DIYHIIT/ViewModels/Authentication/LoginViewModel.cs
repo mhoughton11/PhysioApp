@@ -7,6 +7,7 @@ using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;
 using DIYHIIT.Views;
+using DIYHIIT.Views.Authentication;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels.Authentication
@@ -81,8 +82,6 @@ namespace DIYHIIT.ViewModels.Authentication
         {
             ErrorLabelVisible = "False";
 
-            AttemptAutoLogin();
-
             return base.InitializeAsync(data);
         }
 
@@ -109,36 +108,6 @@ namespace DIYHIIT.ViewModels.Authentication
                 ErrorLabelVisible = "True";
                 Debug.WriteLine("Log in failed.");
             }
-        }
-
-        private async void AttemptAutoLogin()
-        {
-            try
-            {
-                var response = _authenticationService.AutoLogin();
-
-                if (!response.IsAuthenticated)
-                {
-                    Debug.WriteLine($"Auto login failed");
-                    return;
-                }
-                // Success
-                var user = await _userDataService.GetUser(response.UserUid);
-
-                if (user != null)
-                {
-                    Debug.WriteLine($"Auto login success: {user.Username}");
-
-                    App.CurrentUser = user;
-                    App.Current.MainPage = new MainPage();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Auto login failed");
-                Debug.WriteLine(e.Message);
-            }
-            
         }
 
         private void OnRegisterCommand()

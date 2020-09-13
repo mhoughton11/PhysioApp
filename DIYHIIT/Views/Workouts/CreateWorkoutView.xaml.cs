@@ -9,7 +9,7 @@ using DIYHIIT.ViewModels;
 using DIYHIIT.ViewModels.Workouts;
 using Xamarin.Forms;
 
-namespace DIYHIIT.Views
+namespace DIYHIIT.Views.Workouts
 {
     public partial class CreateWorkoutView : ContentPage
     {

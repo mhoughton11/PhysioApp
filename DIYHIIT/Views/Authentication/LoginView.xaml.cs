@@ -8,7 +8,7 @@ using DIYHIIT.ViewModels;
 using DIYHIIT.ViewModels.Authentication;
 using Xamarin.Forms;
 
-namespace DIYHIIT.Views
+namespace DIYHIIT.Views.Authentication
 {
     public partial class LoginView : ContentPage
     {

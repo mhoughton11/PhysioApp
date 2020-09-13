@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DIYHIIT.Authentication;
 using DIYHIIT.Contracts.Services.General;
 using Firebase.Auth;
+using Foundation;
 
 namespace DIYHIIT.iOS.Authentication
 {
@@ -27,8 +28,13 @@ namespace DIYHIIT.iOS.Authentication
                     UserUid = null,
                     IsAuthenticated = false
                 };
-
             }
+        }
+
+        public void SignOut()
+        {
+            NSError error;
+            Auth.DefaultInstance.SignOut(out error);
         }
 
         public async Task<AuthenticationResponse> LoginWithEmailAndPassword(string userName, string password)

@@ -11,6 +11,7 @@ using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;
 using DIYHIIT.Views;
+using DIYHIIT.Views.Workouts;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels.Workouts

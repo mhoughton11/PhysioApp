@@ -6,7 +6,7 @@ using DIYHIIT.ViewModels;
 using DIYHIIT.ViewModels.Tabs;
 using Xamarin.Forms;
 
-namespace DIYHIIT.Views
+namespace DIYHIIT.Views.Tabs
 {
     public partial class WorkoutListView : ContentPage
     {

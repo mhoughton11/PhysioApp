@@ -1,10 +1,15 @@
-﻿using DIYHIIT.Contracts.Services.General;
+﻿using Autofac;
+using DIYHIIT.Contracts.Services.Data;
+using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
+using DIYHIIT.Views.Authentication;
 using DLToolkit.Forms.Controls;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using static DIYHIIT.Library.Settings.Settings;
 
@@ -21,7 +26,7 @@ namespace DIYHIIT
 
             InitializeApp(setup);
 
-            MainPage = new LoginView();
+            AttemptAutoLogin();
         }
 
         private void InitializeApp(AppSetup setup)
@@ -30,6 +35,42 @@ namespace DIYHIIT
 
             AppContainer.Container = setup.CreateContainer();
             FlowListView.Init();
+        }
+
+        private async void AttemptAutoLogin()
+        {
+            var _authenticationService = AppContainer.Container.Resolve<IAuthenticationService>();
+            var _userDataService = AppContainer.Container.Resolve<IUserDataService>();
+
+            try
+            {
+                var response = _authenticationService.AutoLogin();
+
+                if (!response.IsAuthenticated)
+                {
+                    Debug.WriteLine($"Auto login failed");
+                    MainPage = new LoginView();
+                    return;
+                }
+                // Success
+                var user = await _userDataService.GetUser(response.UserUid);
+
+                if (user != null)
+                {
+                    Debug.WriteLine($"Auto login success: {user.Username}");
+
+                    App.CurrentUser = user;
+                    MainPage = new MainPage();
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Auto login failed");
+                Debug.WriteLine(e.Message);
+            }
+
+            MainPage = new LoginView();
         }
     }
 }
