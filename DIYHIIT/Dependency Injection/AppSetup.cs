@@ -8,6 +8,10 @@ using DIYHIIT.Repository;
 using DIYHIIT.Services.Data;
 using DIYHIIT.Services.General.Dialog;
 using DIYHIIT.ViewModels;
+using DIYHIIT.ViewModels.Authentication;
+using DIYHIIT.ViewModels.Exercises;
+using DIYHIIT.ViewModels.Tabs;
+using DIYHIIT.ViewModels.Workouts;
 
 namespace DIYHIIT.DependencyInjection
 {
@@ -33,6 +37,7 @@ namespace DIYHIIT.DependencyInjection
             builder.RegisterType<PreviewWorkoutViewModel>();
             builder.RegisterType<ProfileViewModel>();
             builder.RegisterType<WorkoutListViewModel>();
+            builder.RegisterType<RegistrationViewModel>();
 
             // Services - Data
             builder.RegisterType<ExerciseDataService>().As<IExerciseDataService>();

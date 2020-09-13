@@ -8,6 +8,7 @@ namespace DIYHIIT.Library.Models
     {
         [Key]
         public string Uid { get; set; }
+        public string AuthToken { get; set; }
 
         [Required]
         public string Username { get; set; }

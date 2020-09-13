@@ -3,7 +3,7 @@ using DIYHIIT.Contracts.Services.General;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Base
 {
     public class BaseViewModel : MvxViewModel
     {

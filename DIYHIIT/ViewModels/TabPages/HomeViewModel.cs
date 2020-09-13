@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
 using Xamarin.Forms;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Tabs
 {
     public class HomeViewModel: BaseViewModel
     {

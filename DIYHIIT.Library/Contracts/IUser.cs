@@ -4,6 +4,7 @@ namespace DIYHIIT.Library.Contracts
     public interface IUser
     {
         string Uid { get; set; }
+        string AuthToken { get; set; }
 
         string Username { get; set; }
 

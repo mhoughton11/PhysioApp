@@ -12,8 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using static DIYHIIT.Library.Settings.Settings;
 using static DIYHIIT.Constants.Messages;
+using DIYHIIT.ViewModels.Base;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Exercises
 {
     public class AddExerciseViewModel : BaseViewModel
     {

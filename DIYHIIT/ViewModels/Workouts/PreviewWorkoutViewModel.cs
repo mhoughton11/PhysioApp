@@ -9,10 +9,11 @@ using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
 using DIYHIIT.Views;
 using Xamarin.Forms;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Workouts
 {
     public class PreviewWorkoutViewModel : BaseViewModel
     { 

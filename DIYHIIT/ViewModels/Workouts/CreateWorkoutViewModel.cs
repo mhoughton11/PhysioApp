@@ -9,6 +9,8 @@ using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Helpers;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
+using DIYHIIT.ViewModels.Exercises;
 using DIYHIIT.Views;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -16,7 +18,7 @@ using Xamarin.Forms;
 using static DIYHIIT.Constants.Messages;
 
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Workouts
 {
     public class CreateWorkoutViewModel : BaseViewModel
     {

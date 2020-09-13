@@ -2,6 +2,7 @@
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,7 @@ using System.Timers;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Workouts
 {
     class ExecuteWorkoutViewModel : BaseViewModel
     {

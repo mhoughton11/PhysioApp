@@ -5,10 +5,11 @@ using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Tabs
 {
     public class ProfileViewModel : BaseViewModel
     {

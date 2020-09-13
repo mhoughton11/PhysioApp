@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.LoginView">
     <ContentPage.Content>
-        <StackLayout Padding="10">
+        <StackLayout Padding="10"
+                     VerticalOptions="Center">
                     <Label Text="Log in"
                            HorizontalOptions="Center"
                            TextColor="#4682B4"

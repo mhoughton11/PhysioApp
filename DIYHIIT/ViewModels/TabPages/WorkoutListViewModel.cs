@@ -6,13 +6,15 @@ using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
+using DIYHIIT.ViewModels.Workouts;
 using DIYHIIT.Views;
 using Xamarin.Forms;
 
 using static DIYHIIT.Constants.Messages;
 
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Tabs
 {
     public class WorkoutListViewModel : BaseViewModel
     {

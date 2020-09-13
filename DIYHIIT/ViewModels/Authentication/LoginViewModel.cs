@@ -5,10 +5,12 @@ using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
 using DIYHIIT.Views;
+using Plugin.AutoLogin;
 using Xamarin.Forms;
 
-namespace DIYHIIT.ViewModels
+namespace DIYHIIT.ViewModels.Authentication
 {
     public class LoginViewModel : BaseViewModel
     {
@@ -69,14 +71,19 @@ namespace DIYHIIT.ViewModels
             }
         }
 
+        public ICommand LoginCommand => new Command(OnLoginCommand);
+        public ICommand RegisterCommand => new Command(OnRegisterCommand);
+
+        #endregion
+
+        #region Public Methods
+
         public override Task InitializeAsync(object data)
         {
             ErrorLabelVisible = "False";
 
             return base.InitializeAsync(data);
         }
-
-        public ICommand LoginCommand => new Command(OnLoginCommand);
 
         #endregion
 
@@ -91,16 +98,25 @@ namespace DIYHIIT.ViewModels
 
             if (user != null)
             {
+                //user.AuthToken = response.ResponseToken;
                 App.CurrentUser = user;
+
+                CrossAutoLogin.Current.SaveUserInfos(UserEmail, UserPassword);
 
                 _dialogService.HideLoading();
                 App.Current.MainPage = new MainPage();
             }
             else
             {
+                _dialogService.HideLoading();
                 ErrorLabelVisible = "True";
                 Debug.WriteLine("Log in failed.");
             }
+        }
+
+        private void OnRegisterCommand()
+        {
+            App.Current.MainPage = new RegistrationView();
         }
 
         #endregion

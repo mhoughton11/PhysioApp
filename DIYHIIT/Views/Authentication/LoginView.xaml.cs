@@ -5,6 +5,7 @@ using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.DependencyInjection;
 using DIYHIIT.ViewModels;
+using DIYHIIT.ViewModels.Authentication;
 using Xamarin.Forms;
 
 namespace DIYHIIT.Views

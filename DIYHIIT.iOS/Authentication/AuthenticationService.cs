@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Autofac;
 using DIYHIIT.Authentication;
-using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
-using DIYHIIT.DependencyInjection;
-using DIYHIIT.iOS.Authentication;
 using Firebase.Auth;
-using Xamarin.Forms;
 
 namespace DIYHIIT.iOS.Authentication
 {

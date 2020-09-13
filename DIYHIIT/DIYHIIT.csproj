@@ -18,6 +18,7 @@
     <EmbeddedResource Remove="Data\**" />
     <None Remove="Data\**" />
     <None Remove="Resources\Fonts\Font Awesome 5 Free-Regular-400.otf" />
+    <Compile Remove="Views\Exercise\AddExerciseView.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="mono_crash.1cfb5decbf.0.json" />
@@ -44,6 +45,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="AutoLogin.Mabrouk" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
@@ -56,6 +58,13 @@
     <Folder Include="Behaviors\" />
     <Folder Include="Dependency Injection\" />
     <Folder Include="ViewModels\Base\" />
+    <Folder Include="Views\Authentication\" />
+    <Folder Include="Views\Workout\" />
+    <Folder Include="Views\Exercise\" />
+    <Folder Include="ViewModels\Authentication\" />
+    <Folder Include="ViewModels\Exercises\" />
+    <Folder Include="ViewModels\TabPages\" />
+    <Folder Include="ViewModels\Workouts\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIYHIIT.Library\DIYHIIT.Library.csproj" />
@@ -64,6 +73,21 @@
     <EmbeddedResource Update="Views\ExecuteWorkoutPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\TabPages\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Exercise\AddExerciseView.xaml.cs">
+      <DependentUpon>AddExerciseView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Authentication\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Authentication\RegistrationView.xaml.cs">
+      <DependentUpon>RegistrationView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
