@@ -28,7 +28,7 @@ namespace DIYHIIT.API.Controllers
         [Route("workouts")]
         public async Task<IActionResult> GetWorkouts()
         {
-            var items = await _appDbContext.WorkoutCatalog
+            var items = await _appDbContext.Workouts
                                            .OrderBy(w => w.Id)
                                            .ToListAsync();
 
@@ -39,7 +39,7 @@ namespace DIYHIIT.API.Controllers
         [Route("save")]
         public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
         {
-            await _appDbContext.WorkoutCatalog.AddAsync(workout);
+            await _appDbContext.Workouts.AddAsync(workout);
             await _appDbContext.SaveChangesAsync();
 
 
@@ -50,7 +50,7 @@ namespace DIYHIIT.API.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateWorkout([FromBody] Workout updatedWorkout)
         {
-            _appDbContext.WorkoutCatalog.Update(updatedWorkout);
+            _appDbContext.Workouts.Update(updatedWorkout);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(updatedWorkout);

@@ -29,6 +29,8 @@ namespace DIYHIIT.Library.Models
 
         public string ExerciseIDs { get; set; }
 
+        public List<Exercise> Exercises { get; set; }
+
         public WorkoutType Type { get; set; }
     }
 }
