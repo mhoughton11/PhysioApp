@@ -67,5 +67,10 @@ namespace DIYHIIT.Droid.Authentication
 
             return response;
         }
+
+        public void SignOut()
+        {
+            FirebaseAuth.Instance.SignOut();
+        }
     }
 }

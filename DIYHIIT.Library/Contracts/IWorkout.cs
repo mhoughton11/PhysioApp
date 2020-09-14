@@ -7,6 +7,7 @@ namespace DIYHIIT.Library.Contracts
 {
     public interface IWorkout : IEntity
     {
+        // Data
         string Name { get; set; }
         string BodyFocus { get; set; }
         string ExerciseCount { get; set; }
@@ -22,5 +23,8 @@ namespace DIYHIIT.Library.Contracts
         string ExerciseIDs { get; set; }
 
         WorkoutType Type { get; set; }
+
+        // View Components
+        string BackgroundImage { get; set; }
     }
 }

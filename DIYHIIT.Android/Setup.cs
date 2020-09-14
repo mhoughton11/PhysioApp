@@ -12,7 +12,7 @@ namespace DIYHIIT.Droid
         {
             base.RegisterDependencies(builder);
 
-            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().SingleInstance();
+            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
         }
     }
 }

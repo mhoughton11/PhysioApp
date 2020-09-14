@@ -167,8 +167,10 @@ namespace DIYHIIT.ViewModels.Workouts
                 RestInterval = restInterval,
                 ExerciseIDs = JsonConvert.SerializeObject(Ids),
                 Type = (WorkoutType)workoutType,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                BackgroundImage = _exercises[0].ImageURL
             };
+
             workout.Duration = Helpers.GetWorkoutDuration(workout);
             workout.ExerciseCount = Helpers.GetWorkoutCountString(workout);
             workout = await GetWorkoutName(workout);

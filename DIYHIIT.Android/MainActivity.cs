@@ -19,10 +19,11 @@ namespace DIYHIIT.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            FirebaseApp.InitializeApp(Application.Context);
+
             base.OnCreate(savedInstanceState);
 
             UserDialogs.Init(this);
-            FirebaseApp.InitializeApp(Application.Context);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

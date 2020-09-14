@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.Library.Models
@@ -30,5 +26,7 @@ namespace DIYHIIT.Library.Models
         public string ExerciseIDs { get; set; }
 
         public WorkoutType Type { get; set; }
+
+        public string BackgroundImage { get; set; }
     }
 }
