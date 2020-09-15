@@ -6,13 +6,12 @@ namespace DIYHIIT.API.Models
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<DB_Exercise> Exercises { get; set; }
+        public DbSet<User> DB_Users { get; set; }
+        public DbSet<DB_Exercise> DB_Exercises { get; set; }
 
         public AppDbContext(DbContextOptions options)
             :base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -28,58 +28,11 @@ namespace DIYHIIT.Data.Controllers
         [Route("exercises")]
         public async Task<IActionResult> GetExercises()
         {
-            var items = await _appDbContext.Exercises
+            var items = await _appDbContext.DB_Exercises
                                            .OrderBy(e => e.DisplayName)
                                            .ToListAsync();
 
             return Ok(items);
-        }
-
-        [HttpGet]
-        [Route("list")]
-        public async Task<IActionResult> GetExercisesFromList(string ids)
-        {
-            var exercises = new List<IExercise>();
-            var exerciseIds = JsonConvert.DeserializeObject<List<int>>(ids);
-
-            if (exerciseIds != null)
-            {
-                foreach (var id in exerciseIds)
-                {
-                    var ex = await _appDbContext.Exercises
-                        .Where(e => e.Id == id)
-                        .FirstOrDefaultAsync();
-
-                    exercises.Add(ex);
-                }
-
-                return Ok(exercises);
-            }
-            else
-            {
-                return NotFound();
-            }
-            
-        }
-
-        [HttpGet]
-        [Route("exercise")]
-        public async Task<IActionResult> GetById(int? id)
-        {
-            if (id == null || id < 0)
-            {
-                return NotFound();
-            }
-            
-            var exercise = await _appDbContext.Exercises
-                                              .Where(e => e.Id == id)
-                                              .SingleOrDefaultAsync();
-            if (exercise != null)
-            {
-                return Ok(exercise);
-            }
-
-            return NotFound();
         }
     }
 }
