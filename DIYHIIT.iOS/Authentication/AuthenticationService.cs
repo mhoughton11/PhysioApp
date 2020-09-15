@@ -64,5 +64,30 @@ namespace DIYHIIT.iOS.Authentication
 
             return response;
         }
+
+        public async Task<AuthenticationResponse> SignUpWithEmailAndPassword(string userName, string password)
+        {
+            try
+            {
+                var result = await Auth.DefaultInstance.CreateUserAsync(userName, password);
+
+                if (result != null)
+                {
+                    return new AuthenticationResponse
+                    {
+                        IsAuthenticated = true,
+                        ResponseToken = result.User.GetIdTokenAsync(false).ToString(),
+                        UserUid = result.User.Uid
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Sign up failed.");
+                Debug.WriteLine(ex.Message);
+            }
+
+            return null;
+        }
     }
 }

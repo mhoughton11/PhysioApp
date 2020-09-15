@@ -1,4 +1,11 @@
 ﻿using System;
+using System.Windows.Input;
+using DIYHIIT.Contracts.Services.Data;
+using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Base;
+using DIYHIIT.Views;
+using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels.Authentication
 {
@@ -6,7 +13,9 @@ namespace DIYHIIT.ViewModels.Authentication
     {
         public RegistrationViewModel(IUserDataService userDataService,
                                      IAuthenticationService authenticationService,
-                                     Navigation navigation)
+                                     INavigation navigation,
+                                     IDialogService dialogService)
+            : base(navigation, dialogService)
         {
             _userDataService = userDataService;
             _authenticationService = authenticationService;
@@ -54,7 +63,50 @@ namespace DIYHIIT.ViewModels.Authentication
 
         private async void OnRegisterCommand()
         {
+            string email, password;
 
+            // Make sure inputted values are valid
+            if (UserEmail == null)
+            {
+                await _dialogService.ShowPromptAsync("Please enter a valid address.", "Email empty");
+                return;
+            }
+            else
+            {
+                email = UserEmail;
+            }
+
+            if (UserPassword == null)
+            {
+                await _dialogService.ShowPromptAsync("Please enter a valid address.", "Email empty");
+                return;
+            }
+            else
+            {
+                password = UserEmail;
+            }
+
+            // Save user into Firebase with auth service
+            var response = await _authenticationService.SignUpWithEmailAndPassword(email, password);
+
+            if (response != null)
+            {
+                var user = new User
+                {
+                    Uid = response.UserUid,
+                    Username = email
+                };
+
+                // Create new user in DIYHIIT database
+                var result = await _userDataService.SaveUser(user);
+
+                // If all steps successful, set current user as result and navigate to new home page.
+                if (result != null)
+                {
+                    App.CurrentUser = result;
+                    App.Current.MainPage = new MainPage();
+                }
+            }
         }
 
         #endregion
