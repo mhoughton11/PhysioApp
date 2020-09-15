@@ -24,8 +24,6 @@ namespace DIYHIIT.ViewModels.Authentication
             _userDataService = userDataService;
 
             InitializeAsync(null);
-
-            AttemptAutoLogin();
         }
 
         #region Private Fields
@@ -84,47 +82,12 @@ namespace DIYHIIT.ViewModels.Authentication
         {
             ErrorLabelVisible = "False";
 
-            AttemptAutoLogin();
-
             return base.InitializeAsync(data);
         }
 
         #endregion
 
         #region Private Methods
-
-        private async void AttemptAutoLogin()
-        {
-            try
-            {
-                var response = _authenticationService.AutoLogin();
-
-                if (!response.IsAuthenticated)
-                {
-                    Debug.WriteLine($"Auto login failed");
-                    App.Current.MainPage = new LoginView();
-                    return;
-                }
-                // Success
-                var user = await _userDataService.GetUser(response.UserUid);
-
-                if (user != null)
-                {
-                    Debug.WriteLine($"Auto login success: {user.Username}");
-
-                    App.CurrentUser = user;
-                    App.Current.MainPage = new MainPage();
-                    return;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Auto login failed");
-                Debug.WriteLine(e.Message);
-            }
-
-            App.Current.MainPage = new LoginView();
-        }
 
         private async void OnLoginCommand()
         {
