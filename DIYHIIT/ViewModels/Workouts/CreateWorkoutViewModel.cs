@@ -24,14 +24,13 @@ namespace DIYHIIT.ViewModels.Workouts
     public class CreateWorkoutViewModel : BaseViewModel
     {
         public CreateWorkoutViewModel(object data,
+                                      IUserDataService userDataService,
                                       INavigation navigation,
-                                      IDialogService dialogService,
-                                      IWorkoutDataService workoutDataService)
+                                      IDialogService dialogService)
             : base(navigation, dialogService)
         {
-            _workoutDataService = workoutDataService;
-
             InitializeAsync(data);
+            _userDataService = userDataService;
         }
 
         #region Private Fields
@@ -40,7 +39,7 @@ namespace DIYHIIT.ViewModels.Workouts
         private int _selectedWorkoutType;
         private List<string> _workoutTypes;
         private ObservableCollection<Exercise> _exercises;
-        private readonly IWorkoutDataService _workoutDataService;
+        private readonly IUserDataService _userDataService;
 
         #endregion
 
@@ -160,6 +159,8 @@ namespace DIYHIIT.ViewModels.Workouts
                 Ids.Add(ex.Id);
             }
 
+            var name = await GetWorkoutName();
+
             // Create workout with the specified parameters/exercises.
             var workout = new Workout
             {
@@ -167,13 +168,15 @@ namespace DIYHIIT.ViewModels.Workouts
                 RestInterval = restInterval,
                 ExerciseIDs = JsonConvert.SerializeObject(Ids),
                 Type = (WorkoutType)workoutType,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                Duration = Helpers.GetWorkoutDuration(_exercises.ToList(), activeInterval, restInterval),
+                ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList()),
+                User = App.CurrentUser,
+                UserId = App.CurrentUser.Id,
+                Name = name
             };
-            workout.Duration = Helpers.GetWorkoutDuration(workout);
-            workout.ExerciseCount = Helpers.GetWorkoutCountString(workout);
-            workout = await GetWorkoutName(workout);
 
-            await _workoutDataService.SaveWorkout(workout);
+            await _userDataService.SaveWorkout(workout);
 
             MessagingCenter.Send(this, WorkoutsUpdated);
 
@@ -185,32 +188,34 @@ namespace DIYHIIT.ViewModels.Workouts
             await _navigation.PushAsync(new AddExerciseView());
         }
 
-        private async Task<Workout> GetWorkoutName(Workout workout)
+        private async Task<string> GetWorkoutName()
         {
-            var name = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
+            var getName = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
 
-            if (name)
+            var name = string.Empty;
+
+            if (getName)
             {
                 string input = await _dialogService.ShowPromptAsync("Workout Name", "Enter workout name below", "OK", "Cancel");
 
                 if (!string.IsNullOrWhiteSpace(input) || !string.IsNullOrEmpty(input))
                 {
-                    workout.Name = input;
+                    name = input;
                 }
                 else
                 {
                     _dialogService.Popup("Please type a workout name when prompted.");
                     var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
-                    workout.Name = t + " Workout";
+                    name = t + " Workout";
                 }
             }
             else
             {
                 var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
-                workout.Name =  t + " Workout";
+                name =  t + " Workout";
             }
 
-            return workout;
+            return name;
         }
 
         #endregion

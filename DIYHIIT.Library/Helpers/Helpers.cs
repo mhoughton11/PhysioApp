@@ -8,26 +8,21 @@ namespace DIYHIIT.Library.Helpers
 {
     public static class Helpers
     {
-        public static int GetWorkoutDuration(Workout workout)
+        public static int GetWorkoutDuration(List<Exercise> exercises, double active, double rest)
         {
-            if (workout.ExerciseIDs == null) { return 0; }
-
-            var exercises = JsonConvert.DeserializeObject<List<int>>(workout.ExerciseIDs);
             if (exercises.Count == 0)
                 return 0;
 
-            double seconds = (workout.ActiveInterval * exercises.Count)
-                + (workout.RestInterval * exercises.Count - 1) ?? 0;
+            double seconds = (active * exercises.Count) + (rest * exercises.Count - 1);
 
             TimeSpan t = TimeSpan.FromSeconds(seconds);
             return t.Minutes;
         }
 
-        public static string GetWorkoutCountString(Workout workout)
+        public static string GetWorkoutCountString(List<Exercise> exercises)
         {
-            if (workout.ExerciseIDs == null) { return "0 Moves"; }
+            if (exercises.Count == 0) { return "0 Moves"; }
 
-            var exercises = JsonConvert.DeserializeObject<List<int>>(workout.ExerciseIDs);
             if (exercises.Count == 1)
                 return "1 Move";
 

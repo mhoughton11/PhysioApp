@@ -61,7 +61,7 @@ namespace DIYHIIT.Services.Data
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var cacheUsers = await GetFromCache<List<DB_User>>($"Users");
+            var cacheUsers = await GetFromCache<List<User>>($"Users");
 
             if (cacheUsers != null)
             {
@@ -71,7 +71,7 @@ namespace DIYHIIT.Services.Data
             {
                 var path = ApiConstants.BaseApiUrl + ApiConstants.GetUsersEndpoint;
 
-                var users = _genericRepository.GetAsync<List<DB_User>>(path);
+                var users = _genericRepository.GetAsync<List<User>>(path);
 
                 // If user null, return. If not, save to cache and return.
                 if (users == null) { return null; }
@@ -89,6 +89,26 @@ namespace DIYHIIT.Services.Data
             await _genericRepository.PostAsync(path, user);
 
             return user;
+        }
+
+        public async Task<Workout> SaveWorkout(Workout workout)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.UpdateUserEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.UpdateUserEndpoint;
+                    break;
+            }
+
+            if (workout.User == null) { return null; }
+
+            return await _genericRepository.PostAsync(path, workout);
         }
 
         public async Task<User> UpdateUser(User user)

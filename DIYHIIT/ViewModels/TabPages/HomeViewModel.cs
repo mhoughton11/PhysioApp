@@ -76,7 +76,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
             WelcomeText = $"Welcome back, {App.CurrentUser.FirstName}";
 
-            WorkoutList = await GetWorkouts();
+            WorkoutList = App.CurrentUser.Workouts.Where(w => w.DateUsed >= DateTime.Now).ToList();
             await base.InitializeAsync(data);
         }
 
@@ -84,16 +84,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Methods
 
-        private async Task<List<Workout>> GetWorkouts()
-        {
-            var workouts = await _userDataService.GetWorkoutsAsync();
-
-            var result = from workout in workouts
-                         where workout.DateAdded <= DateTime.Today.AddDays(-7)
-                         select workout;
-
-            return result as List<Workout>;
-        }
+        
 
         #endregion
     }

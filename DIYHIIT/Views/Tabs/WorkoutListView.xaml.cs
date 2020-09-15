@@ -16,10 +16,9 @@ namespace DIYHIIT.Views.Tabs
         {
             InitializeComponent();
 
-            var exerciseDataService = AppContainer.Container.Resolve<IExerciseDataService>();
             var dialogService = AppContainer.Container.Resolve<IDialogService>();
 
-            BindingContext = viewModel = new WorkoutListViewModel(0, exerciseDataService, Navigation, dialogService);
+            BindingContext = viewModel = new WorkoutListViewModel(0, Navigation, dialogService);
         }
 
         protected override void OnAppearing()

@@ -33,8 +33,6 @@ namespace DIYHIIT.ViewModels.Base
 
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<DB_User, User>();
-                cfg.CreateMap<User, DB_User>();
                 cfg.CreateMap<DB_Exercise, Exercise>();
                 cfg.CreateMap<Exercise, DB_Exercise>();
             });

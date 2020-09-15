@@ -19,10 +19,10 @@ namespace DIYHIIT.Views.Workouts
         {
             InitializeComponent();
 
-            var workoutDataService = AppContainer.Container.Resolve<IWorkoutDataService>();
+            var userDataService = AppContainer.Container.Resolve<IUserDataService>();
             var dialogService = AppContainer.Container.Resolve<IDialogService>();
 
-            BindingContext = viewModel = new CreateWorkoutViewModel(0, Navigation, dialogService, workoutDataService);
+            BindingContext = viewModel = new CreateWorkoutViewModel(0, userDataService, Navigation, dialogService);
         }
     }
 }

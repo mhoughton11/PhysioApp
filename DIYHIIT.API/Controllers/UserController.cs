@@ -56,7 +56,7 @@ namespace DIYHIIT.API.Controllers
 
         [HttpPost]
         [Route("save")]
-        public async Task<IActionResult> SaveUser([FromBody]DB_User user)
+        public async Task<IActionResult> SaveUser([FromBody]User user)
         {
             if (user == null) { return NoContent(); }
 
@@ -74,12 +74,38 @@ namespace DIYHIIT.API.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateUser([FromBody]DB_User user)
+        public async Task<IActionResult> UpdateUser([FromBody]User user)
         {
             _appDbContext.Users.Update(user);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("updateWorkout")]
+        public async Task<IActionResult> UpdateWorkout([FromBody]Workout workout)
+        {
+            // Get associated parent user
+            var user = await _appDbContext.Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
+
+            // Does workout already exist in user
+            if(!user.Workouts.Any(w => w.Id == workout.Id))
+            {
+                // Workout exists so update
+                var _workout = user.Workouts.Where(w => w.Id == workout.Id).SingleOrDefault();
+                _workout = workout;
+            }
+            else
+            {
+                // Workout doesn't exist in user so create
+                user.Workouts.Add(workout);
+            }
+
+            _appDbContext.Users.Update(user);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(workout);
         }
     }
 }

@@ -89,13 +89,12 @@ namespace DIYHIIT.ViewModels.Workouts
 
         #region Public Methods
 
-        public override async Task InitializeAsync(object workout)
+        public override Task InitializeAsync(object data)
         {
             _dialogService.ShowLoading("Loading workout...");
 
-            _workout = workout as Workout;
-
-            var items = (await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIDs)).ToList();
+            _workout = data as Workout;
+            var items = _workout.Exercises;
 
             Exercises = new ObservableCollection<IExercise>();
             
@@ -123,6 +122,8 @@ namespace DIYHIIT.ViewModels.Workouts
             Exercises.Add(items[items.Count - 1]);
 
             _dialogService.HideLoading();
+
+            return base.InitializeAsync(data);
         }
 
         #endregion

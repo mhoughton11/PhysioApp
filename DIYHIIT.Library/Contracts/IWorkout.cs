@@ -22,5 +22,8 @@ namespace DIYHIIT.Library.Contracts
         List<Exercise> Exercises { get; set; }
 
         WorkoutType Type { get; set; }
+
+        User User { get; set; }
+        int UserId { get; set; }
     }
 }

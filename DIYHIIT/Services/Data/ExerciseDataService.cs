@@ -25,10 +25,10 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<IExercise>> GetAllExercisesAsync(int? t = null)
+        public async Task<IEnumerable<DB_Exercise>> GetAllExercisesAsync(int? t = null)
         {
             // If cache not empty, fetch from cache and return items.
-            var cacheExercises = await GetFromCache<List<Exercise>>("Exercises");
+            var cacheExercises = await GetFromCache<List<DB_Exercise>>("Exercises");
         
             if (cacheExercises != null)
             {
@@ -64,7 +64,6 @@ namespace DIYHIIT.Services.Data
 
                 await Cache.InsertObject("Exercises", ex, DateTime.Now.AddMinutes(2));
 
-
                 if (t == null || t == 0)
                 {
                     return ex;
@@ -74,59 +73,6 @@ namespace DIYHIIT.Services.Data
                     return ex.Where(e => (int)e.Type == t);
                 }
             }
-        }
-
-        public async Task<IExercise> GetExerciseById(int id)
-        {
-            var cacheExercise = await GetFromCache<Exercise>(id.ToString());
-            if (cacheExercise != null)
-            {
-                return cacheExercise;
-            }
-            else
-            {
-                UriBuilder builder = new UriBuilder(ApiConstants.BaseApiUrl)
-                {
-                    Path = ApiConstants.ExerciseByIdEndpoint + $"/{id}"
-                };
-
-                var ex = await _genericRepository.GetAsync<Exercise>(builder.ToString());
-
-                await Cache.InsertObject($"{id}", ex, DateTime.Now.AddMinutes(2));
-
-                return ex;
-            }
-        }
-
-        public async Task<IEnumerable<IExercise>> GetExercisesFromList(string exerciseList)
-        {
-            string path = string.Empty;
-
-            switch (App.AppHostOptions)
-            {
-                case HostOptions.Production:
-                    path = ApiConstants.BaseApiUrl;
-                    break;
-
-                case HostOptions.LocalHost:
-                    path = ApiConstants.BaseLocalHost;
-                    break;
-            }
-
-            path += ApiConstants.ExercisesByListEndpoint + $"?ids={exerciseList}";
-
-            //UriBuilder builder = new UriBuilder()
-            //{
-            //    Path = path + ApiConstants.ExercisesByListEndpoint,
-            //    Query = $"?ids={exerciseList}"
-            //};
-
-            var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
-
-            // If exercises null, return. If not, save to cache and return them.
-            if (ex == null) { return null; }
-
-            return ex;
         }
     }
 }

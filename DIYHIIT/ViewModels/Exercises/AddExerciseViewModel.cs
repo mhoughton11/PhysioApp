@@ -134,11 +134,9 @@ namespace DIYHIIT.ViewModels.Exercises
             GetExercises(SelectedIndex);   
         }
 
-        private void OnExerciseTapped(DB_Exercise selectedExercise)
+        private void OnExerciseTapped(Exercise selectedExercise)
         {
-            var ex = Mapper.Map<Exercise>(selectedExercise);
-
-            MessagingCenter.Send(this, ExerciseAdded, ex);
+            MessagingCenter.Send(this, ExerciseAdded, selectedExercise);
         }
 
         #endregion
