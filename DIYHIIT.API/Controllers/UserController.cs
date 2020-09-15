@@ -26,7 +26,7 @@ namespace DIYHIIT.API.Controllers
         [Route("users")]
         public async Task<IActionResult> Get()
         {
-            var items = await _appDbContext.Users
+            var items = await _appDbContext.DB_Users
                                            .OrderBy(u => u.Username)
                                            .ToListAsync();
 
@@ -42,7 +42,7 @@ namespace DIYHIIT.API.Controllers
                 return NotFound();
             }
 
-            var user = await _appDbContext.Users
+            var user = await _appDbContext.DB_Users
                                           .Where(u => u.Uid == uid)
                                           .SingleOrDefaultAsync();
 
@@ -61,12 +61,12 @@ namespace DIYHIIT.API.Controllers
             if (user == null) { return NoContent(); }
 
             // Check if username already exists.
-            if (_appDbContext.Users.Any(u => u.Uid == user.Uid))
+            if (_appDbContext.DB_Users.Any(u => u.Uid == user.Uid))
             {
                 return Forbid();
             }
 
-            _appDbContext.Users.Add(user);
+            _appDbContext.DB_Users.Add(user);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(user);
@@ -76,7 +76,7 @@ namespace DIYHIIT.API.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateUser([FromBody]User user)
         {
-            _appDbContext.Users.Update(user);
+            _appDbContext.DB_Users.Update(user);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(user);
@@ -87,7 +87,7 @@ namespace DIYHIIT.API.Controllers
         public async Task<IActionResult> UpdateWorkout([FromBody]Workout workout)
         {
             // Get associated parent user
-            var user = await _appDbContext.Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
+            var user = await _appDbContext.DB_Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
 
             // Does workout already exist in user
             if(!user.Workouts.Any(w => w.Id == workout.Id))
@@ -102,7 +102,7 @@ namespace DIYHIIT.API.Controllers
                 user.Workouts.Add(workout);
             }
 
-            _appDbContext.Users.Update(user);
+            _appDbContext.DB_Users.Update(user);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(workout);
