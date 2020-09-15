@@ -12,5 +12,7 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Settings\" />
+    <Folder Include="Persistance\" />
+    <Folder Include="Persistance\Models\" />
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
+using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace DIYHIIT.Data.Controllers
         [Route("list")]
         public async Task<IActionResult> GetExercisesFromList(string ids)
         {
-            var exercises = new List<Exercise>();
+            var exercises = new List<IExercise>();
             var exerciseIds = JsonConvert.DeserializeObject<List<int>>(ids);
 
             if (exerciseIds != null)

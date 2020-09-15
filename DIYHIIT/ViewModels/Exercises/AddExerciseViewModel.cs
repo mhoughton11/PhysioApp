@@ -13,6 +13,7 @@ using System.Windows.Input;
 using static DIYHIIT.Library.Settings.Settings;
 using static DIYHIIT.Constants.Messages;
 using DIYHIIT.ViewModels.Base;
+using DIYHIIT.Library.Persistance.Models;
 
 namespace DIYHIIT.ViewModels.Exercises
 {
@@ -133,9 +134,11 @@ namespace DIYHIIT.ViewModels.Exercises
             GetExercises(SelectedIndex);   
         }
 
-        private void OnExerciseTapped(Exercise selectedExercise)
+        private void OnExerciseTapped(DB_Exercise selectedExercise)
         {
-            MessagingCenter.Send(this, ExerciseAdded, selectedExercise);
+            var ex = Mapper.Map<Exercise>(selectedExercise);
+
+            MessagingCenter.Send(this, ExerciseAdded, ex);
         }
 
         #endregion

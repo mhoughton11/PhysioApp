@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
 
-namespace DIYHIIT.Library.Models
+namespace DIYHIIT.Library.Persistance.Models
 {
-    public class User : IUser
+    public class DB_User : IUser
     {
         [Key]
         public int Id { get; set; }

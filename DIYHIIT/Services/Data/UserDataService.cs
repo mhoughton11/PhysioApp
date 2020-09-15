@@ -8,6 +8,7 @@ using DIYHIIT.Constants;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Models;
+using DIYHIIT.Library.Persistance.Models;
 using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Services.Data
@@ -15,10 +16,6 @@ namespace DIYHIIT.Services.Data
     public class UserDataService : BaseService, IUserDataService
     {
         private readonly IGenericRepository _genericRepository;
-
-        public User CurrentUser { get; set; }
-
-        public User GetCurrentUser() => CurrentUser;
 
         public UserDataService(IGenericRepository genericRepository, IBlobCache blobCache = null)
             : base(blobCache)
@@ -64,7 +61,7 @@ namespace DIYHIIT.Services.Data
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var cacheUsers = await GetFromCache<List<User>>($"Users");
+            var cacheUsers = await GetFromCache<List<DB_User>>($"Users");
 
             if (cacheUsers != null)
             {
@@ -74,7 +71,7 @@ namespace DIYHIIT.Services.Data
             {
                 var path = ApiConstants.BaseApiUrl + ApiConstants.GetUsersEndpoint;
 
-                var users = _genericRepository.GetAsync<List<User>>(path);
+                var users = _genericRepository.GetAsync<List<DB_User>>(path);
 
                 // If user null, return. If not, save to cache and return.
                 if (users == null) { return null; }
@@ -92,6 +89,24 @@ namespace DIYHIIT.Services.Data
             await _genericRepository.PostAsync(path, user);
 
             return user;
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.UpdateUserEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.UpdateUserEndpoint;
+                    break;
+            }
+
+            return await _genericRepository.PostAsync(path, user);
         }
     }
 }

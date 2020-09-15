@@ -19,7 +19,7 @@ namespace DIYHIIT.Library.Contracts
         DateTime? DateAdded { get; set; }
         DateTime? DateUsed { get; set; }
 
-        string ExerciseIDs { get; set; }
+        List<Exercise> Exercises { get; set; }
 
         WorkoutType Type { get; set; }
     }

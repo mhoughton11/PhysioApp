@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
 using DIYHIIT.Library.Models;
+using DIYHIIT.Library.Persistance.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,7 +56,7 @@ namespace DIYHIIT.API.Controllers
 
         [HttpPost]
         [Route("save")]
-        public async Task<IActionResult> SaveUser([FromBody]User user)
+        public async Task<IActionResult> SaveUser([FromBody]DB_User user)
         {
             if (user == null) { return NoContent(); }
 
@@ -66,6 +67,16 @@ namespace DIYHIIT.API.Controllers
             }
 
             _appDbContext.Users.Add(user);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateUser([FromBody]DB_User user)
+        {
+            _appDbContext.Users.Update(user);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(user);

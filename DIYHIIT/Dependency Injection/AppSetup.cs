@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Autofac;
+using Autofac.Core;
+using AutoMapper;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
@@ -41,7 +43,6 @@ namespace DIYHIIT.DependencyInjection
 
             // Services - Data
             builder.RegisterType<ExerciseDataService>().As<IExerciseDataService>();
-            builder.RegisterType<WorkoutDataService>().As<IWorkoutDataService>();
             builder.RegisterType<UserDataService>().As<IUserDataService>();
 
             // Services - General

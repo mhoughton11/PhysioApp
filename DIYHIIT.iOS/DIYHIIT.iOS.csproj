@@ -181,4 +181,7 @@
     <Folder Include="Assets.xcassets\ProfileIcon.imageset\" />
     <Folder Include="Authentication\" />
   </ItemGroup>
+  <ItemGroup>
+    <LinkDescription Include="Resources\Linker.xml" />
+  </ItemGroup>
 </Project>

@@ -12,12 +12,12 @@ namespace DIYHIIT.ViewModels.Tabs
 {
     public class HomeViewModel: BaseViewModel
     {
-        public HomeViewModel(IWorkoutDataService workoutDataService,
+        public HomeViewModel(IUserDataService userDataService,
                              INavigation navigationService,
                              IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            _workoutDataService = workoutDataService;
+            _userDataService = userDataService;
 
             Task.Run(() => InitializeAsync(null));
         }
@@ -30,7 +30,7 @@ namespace DIYHIIT.ViewModels.Tabs
         private List<Workout> _workoutList;
 
         // Services
-        private readonly IWorkoutDataService _workoutDataService;
+        private readonly IUserDataService _userDataService;
 
         #endregion
 
@@ -86,7 +86,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
         private async Task<List<Workout>> GetWorkouts()
         {
-            var workouts = await _workoutDataService.GetWorkoutsAsync();
+            var workouts = await _userDataService.GetWorkoutsAsync();
 
             var result = from workout in workouts
                          where workout.DateAdded <= DateTime.Today.AddDays(-7)

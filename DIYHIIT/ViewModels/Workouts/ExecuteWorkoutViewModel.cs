@@ -17,15 +17,14 @@ namespace DIYHIIT.ViewModels.Workouts
     {
         public ExecuteWorkoutViewModel(Workout workout,
                                        List<IExercise> exercises,
-                                       IWorkoutDataService workoutDataService,
+                                       IUserDataService userDataService,
                                        INavigation navigationService,
                                        IDialogService dialogService)
             : base(navigationService, dialogService)
         {
             _workout = workout;
             _exercises = exercises;
-            _workoutDataService = workoutDataService;
-
+            _userDataService = userDataService;
             Task.Run(async() => await InitializeAsync(workout));
         }
 
@@ -53,7 +52,7 @@ namespace DIYHIIT.ViewModels.Workouts
         Timer timer;
 
         private List<IExercise> _exercises;
-        private readonly IWorkoutDataService _workoutDataService;
+        private readonly IUserDataService _userDataService;
 
         #endregion
 
@@ -300,7 +299,7 @@ namespace DIYHIIT.ViewModels.Workouts
             _workout.DateUsed = DateTime.Now;
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
-            await _workoutDataService.UpdateWorkout(_workout);
+            
 
             await _navigation.PopAsync();
         }

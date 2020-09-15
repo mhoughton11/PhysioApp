@@ -10,6 +10,7 @@ using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
+using DIYHIIT.Library.Persistance.Models;
 using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Services.Data
@@ -56,7 +57,7 @@ namespace DIYHIIT.Services.Data
                         break;
                 }
 
-                var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
+                var ex = await _genericRepository.GetAsync<List<DB_Exercise>>(path);
 
                 // If exercises null, return. If not, save to cache and return them.
                 if (ex == null) { return null; }

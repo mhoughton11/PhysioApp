@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -20,13 +21,10 @@ namespace DIYHIIT.ViewModels.Tabs
     public class WorkoutListViewModel : BaseViewModel
     {
         public WorkoutListViewModel(object data,
-                                    IWorkoutDataService workoutDataService,
                                     INavigation navigationService,
                                     IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            _workoutDataService = workoutDataService;
-
             MessagingCenter.Subscribe<CreateWorkoutViewModel>(this, WorkoutsUpdated, (sender) =>
             {
                 _workoutsUpdated = true;
@@ -37,17 +35,15 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Fields
 
-        private List<Workout> _workoutList;
+        private ObservableCollection<Workout> _workoutList;
         private bool _workoutsUpdated = true;
         private string _isRefreshing;
-        private Workout _selectedItem;
-        private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
 
         #region Public Members and Commands
 
-        public List<Workout> WorkoutList
+        public ObservableCollection<Workout> WorkoutList
         {
             get => _workoutList;
             set
@@ -56,19 +52,6 @@ namespace DIYHIIT.ViewModels.Tabs
                 RaisePropertyChanged(() => WorkoutList);
             }
         }
-        /*
-        public Workout SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                RaisePropertyChanged(() => SelectedItem);
-
-                SelectedItem = null;
-            }
-        }
-        */
 
         public string IsRefreshing
         {
@@ -88,30 +71,31 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Public Methods
 
-        public override async Task InitializeAsync(object data)
+        public override Task InitializeAsync(object data)
         {
             IsBusy = true;
+            _dialogService.ShowLoading("Loading workouts...");
 
             if (_workoutsUpdated)
             {
-                WorkoutList = new List<Workout>();
-
                 try
                 {
-                    _dialogService.ShowLoading("Loading workouts...");
-                    WorkoutList = await _workoutDataService.GetWorkoutsAsync() as List<Workout>;
-                    _dialogService.HideLoading();
+                    WorkoutList = new ObservableCollection<Workout>(App.CurrentUser.Workouts);  
                 }
                 catch (Exception ex)
                 {
                     _dialogService.Popup("Loading workouts failed.");
+                    _dialogService.HideLoading();
                     Debug.WriteLine(ex);
                 }
             }
 
+            _dialogService.HideLoading();
             _workoutsUpdated = false;
 
             IsBusy = false;
+
+            return base.InitializeAsync(data);
         }
 
         #endregion

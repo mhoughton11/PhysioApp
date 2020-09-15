@@ -1,18 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
-using System.Windows.Input;
 using DIYHIIT.Library.Contracts;
+using DIYHIIT.Library.Models;
 
-namespace DIYHIIT.Library.Models
+namespace DIYHIIT.Library.Persistance.Models
 {
-    // Dependent Entity
-    public class Exercise : IExercise
+    public class DB_Exercise : IExercise
     {
         [Key]
         public int Id { get; set; }
-
         public int? Index { get; set; }
 
         [Required]
@@ -29,7 +25,6 @@ namespace DIYHIIT.Library.Models
 
         public double? Duration { get; set; }
 
-        [Required]
         public WorkoutType Type { get; set; }
     }
 }
