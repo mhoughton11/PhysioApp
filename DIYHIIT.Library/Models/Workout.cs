@@ -11,7 +11,11 @@ namespace DIYHIIT.Library.Models
     // Principle Entity
     public class Workout : IWorkout
     {
-        // Principle Key
+        public Workout()
+        {
+            Exercises = new List<Exercise>();
+        }
+
         [Key]
         public int Id { get; set; }
 

@@ -91,6 +91,8 @@ namespace DIYHIIT.ViewModels.Authentication
 
         private async void OnLoginCommand()
         {
+            _dialogService.ShowLoading("Logging in...");
+
             var response = await _authenticationService.LoginWithEmailAndPassword(UserEmail, UserPassword);
             var user = await _userDataService.GetUser(response.UserUid);
 

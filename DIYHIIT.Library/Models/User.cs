@@ -7,6 +7,11 @@ namespace DIYHIIT.Library.Models
 {
     public class User : IUser
     {
+        public User()
+        {
+            Workouts = new List<Workout>();
+        }
+
         [Key]
         public int Id { get; set; }
         public string Uid { get; set; }

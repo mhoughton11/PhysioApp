@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.Tabs.WorkoutListView"
              xmlns:behaviors="clr-namespace:DIYHIIT.Behaviors"
-             Title="Workouts List">
+             Title="My Workouts">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Create"

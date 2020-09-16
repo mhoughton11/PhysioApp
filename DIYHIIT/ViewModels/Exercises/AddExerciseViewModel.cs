@@ -46,7 +46,7 @@ namespace DIYHIIT.ViewModels.Exercises
         #region Public Fields and Commands
 
         public ICommand RefreshCommand => new Command(OnRefreshCommand);
-        public ICommand ExerciseTapped => new Command<Exercise>(OnExerciseTapped);
+        public ICommand ExerciseTapped => new Command<DB_Exercise>(OnExerciseTapped);
         
         public bool IndicatorEnabled
         {
@@ -134,9 +134,11 @@ namespace DIYHIIT.ViewModels.Exercises
             GetExercises(SelectedIndex);   
         }
 
-        private void OnExerciseTapped(Exercise selectedExercise)
+        private void OnExerciseTapped(DB_Exercise selectedExercise)
         {
-            MessagingCenter.Send(this, ExerciseAdded, selectedExercise);
+            var ex = Mapper.Map<Exercise>(selectedExercise);
+
+            MessagingCenter.Send(this, ExerciseAdded, ex);
         }
 
         #endregion

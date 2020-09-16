@@ -63,12 +63,14 @@ namespace DIYHIIT.ViewModels.Authentication
 
         private async void OnRegisterCommand()
         {
+            _dialogService.ShowLoading("Signing up...");
+
             string email, password;
 
             // Make sure inputted values are valid
             if (UserEmail == null)
             {
-                await _dialogService.ShowPromptAsync("Please enter a valid address.", "Email empty");
+                await _dialogService.ShowAlertAsync("Please enter a valid address.", "Email empty");
                 return;
             }
             else
@@ -78,7 +80,7 @@ namespace DIYHIIT.ViewModels.Authentication
 
             if (UserPassword == null)
             {
-                await _dialogService.ShowPromptAsync("Please enter a valid address.", "Email empty");
+                await _dialogService.ShowAlertAsync("Please enter a valid address.", "Email empty");
                 return;
             }
             else
@@ -91,7 +93,7 @@ namespace DIYHIIT.ViewModels.Authentication
 
             if (response != null)
             {
-                var user = new User
+                var user = new User()
                 {
                     Uid = response.UserUid,
                     Username = email
@@ -103,10 +105,14 @@ namespace DIYHIIT.ViewModels.Authentication
                 // If all steps successful, set current user as result and navigate to new home page.
                 if (result != null)
                 {
+                    _dialogService.HideLoading();
+
                     App.CurrentUser = result;
                     App.Current.MainPage = new MainPage();
                 }
             }
+
+            _dialogService.HideLoading();
         }
 
         #endregion

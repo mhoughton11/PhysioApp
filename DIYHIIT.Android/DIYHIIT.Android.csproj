@@ -83,7 +83,6 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
-    <None Include="Properties\google-services.json" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.xml" />
@@ -126,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authentication\" />
+  </ItemGroup>
+  <ItemGroup>
+    <GoogleServicesJson Include="Properties\google-services.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

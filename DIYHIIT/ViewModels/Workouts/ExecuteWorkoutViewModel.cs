@@ -299,7 +299,7 @@ namespace DIYHIIT.ViewModels.Workouts
             _workout.DateUsed = DateTime.Now;
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
-            await _userDataService.SaveWorkout(_workout as Workout);
+            await _userDataService.UpdateWorkout(_workout as Workout);
 
             await _navigation.PopAsync();
         }

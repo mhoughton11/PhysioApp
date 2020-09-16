@@ -4,7 +4,7 @@
              x:Class="DIYHIIT.Views.Tabs.ProfileView">
 
      <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Create"
+        <ToolbarItem Text="Log out"
                      Command="{Binding LogoutCommand}"/>
     </ContentPage.ToolbarItems>
 

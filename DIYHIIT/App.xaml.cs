@@ -51,7 +51,7 @@ namespace DIYHIIT
                 if (!response.IsAuthenticated)
                 {
                     Debug.WriteLine($"Auto login failed");
-                    App.Current.MainPage = new LoginView();
+                    MainPage = new LoginView();
                     return;
                 }
                 // Success
@@ -62,7 +62,7 @@ namespace DIYHIIT
                     Debug.WriteLine($"Auto login success: {user.Username}");
 
                     App.CurrentUser = user;
-                    App.Current.MainPage = new MainPage();
+                    MainPage = new MainPage();
                     return;
                 }
             }
@@ -72,7 +72,7 @@ namespace DIYHIIT
                 Debug.WriteLine(e.Message);
             }
 
-            App.Current.MainPage = new LoginView();
+            MainPage = new LoginView();
         }
     }
 }

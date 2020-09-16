@@ -89,19 +89,34 @@ namespace DIYHIIT.API.Controllers
             // Get associated parent user
             var user = await _appDbContext.DB_Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
 
-            // Does workout already exist in user
-            if(!user.Workouts.Any(w => w.Id == workout.Id))
+            // Get
+            var _workout = user.Workouts.Find(w => w.Id == workout.Id);
+
+            if (_workout == null) { return NotFound(); }
+
+            _workout = workout;
+
+            _appDbContext.DB_Users.Update(user);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(workout);
+        }
+
+        [HttpPost]
+        [Route("saveWorkout")]
+        public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
+        {
+            // Get associated parent user
+            var user = await _appDbContext.DB_Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
+
+            // Check workout is a new workout
+            if (user.Workouts.Contains(workout))
             {
-                // Workout exists so update
-                var _workout = user.Workouts.Where(w => w.Id == workout.Id).SingleOrDefault();
-                _workout = workout;
-            }
-            else
-            {
-                // Workout doesn't exist in user so create
-                user.Workouts.Add(workout);
+                return Forbid();
             }
 
+            // Add workout to user, update user profile and save changes.
+            user.Workouts.Add(workout);
             _appDbContext.DB_Users.Update(user);
             await _appDbContext.SaveChangesAsync();
 

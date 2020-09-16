@@ -84,25 +84,36 @@ namespace DIYHIIT.Services.Data
 
         public async Task<User> SaveUser(User user)
         {
-            var path = ApiConstants.BaseApiUrl + ApiConstants.SaveUserEndpoint;
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.SaveUserEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.SaveUserEndpoint;
+                    break;
+            }
 
             await _genericRepository.PostAsync(path, user);
 
             return user;
         }
 
-        public async Task<Workout> SaveWorkout(Workout workout)
+        public async Task<Workout> UpdateWorkout(Workout workout)
         {
             var path = string.Empty;
 
             switch (App.AppHostOptions)
             {
                 case HostOptions.LocalHost:
-                    path = ApiConstants.BaseLocalHost + ApiConstants.UpdateUserEndpoint;
+                    path = ApiConstants.BaseLocalHost + ApiConstants.UpdateWorkoutEndpoint;
                     break;
 
                 case HostOptions.Production:
-                    path = ApiConstants.BaseApiUrl + ApiConstants.UpdateUserEndpoint;
+                    path = ApiConstants.BaseApiUrl + ApiConstants.UpdateWorkoutEndpoint;
                     break;
             }
 
@@ -127,6 +138,24 @@ namespace DIYHIIT.Services.Data
             }
 
             return await _genericRepository.PostAsync(path, user);
+        }
+
+        public async Task<Workout> SaveWorkout(Workout workout)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.SaveWorkoutEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.SaveWorkoutEndpoint;
+                    break;
+            }
+
+            return await _genericRepository.PostAsync(path, workout);
         }
     }
 }

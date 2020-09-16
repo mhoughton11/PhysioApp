@@ -13,5 +13,6 @@ namespace DIYHIIT.Contracts.Services.Data
         Task<User> SaveUser(User user);
         Task<User> UpdateUser(User user);
         Task<Workout> SaveWorkout(Workout workout);
+        Task<Workout> UpdateWorkout(Workout workout);
     }
 }
