@@ -13,12 +13,17 @@ namespace DIYHIIT.Constants
         public const string ExercisesByListEndpoint = "exercise/list";
         public const string ExerciseByIdEndpoint = "exercise/exercises";
 
+
+        // Workouts
+        public const string SaveWorkoutEndpoint = "workout/save";
+        public const string GetWorkoutsEndpoint = "workout/workouts";
+        public const string GetUserWorkoutsEndpoint = "workout/userWorkouts";
+        public const string UpdateWorkoutEndpoint = "workout/update";
+
         // Users
         public const string GetUsersEndpoint = "user/users";
         public const string GetUserEndpoint = "user/user";
         public const string SaveUserEndpoint = "user/save";
         public const string UpdateUserEndpoint = "user/update";
-        public const string UpdateWorkoutEndpoint = "user/updateWorkout";
-        public const string SaveWorkoutEndpoint = "user/saveWorkout";
     }
 }

@@ -4,14 +4,16 @@ using DIYHIIT.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200916103930_RejiggedEntityConfigurations")]
+    partial class RejiggedEntityConfigurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +135,7 @@ namespace DIYHIIT.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DB_Workouts");
+                    b.ToTable("Workout");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Persistance.Models.DB_Exercise", b =>

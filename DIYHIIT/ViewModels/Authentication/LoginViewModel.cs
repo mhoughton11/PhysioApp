@@ -94,6 +94,15 @@ namespace DIYHIIT.ViewModels.Authentication
             _dialogService.ShowLoading("Logging in...");
 
             var response = await _authenticationService.LoginWithEmailAndPassword(UserEmail, UserPassword);
+
+            if (!response.IsAuthenticated)
+            {
+                Debug.WriteLine("Firebase auth failed.");
+                ErrorLabelVisible = "True";
+                _dialogService.HideLoading();
+                return;
+            }
+
             var user = await _userDataService.GetUser(response.UserUid);
 
             if (user != null)
@@ -108,7 +117,7 @@ namespace DIYHIIT.ViewModels.Authentication
             {
                 _dialogService.HideLoading();
                 ErrorLabelVisible = "True";
-                Debug.WriteLine("Log in failed.");
+                Debug.WriteLine("User db retrieval failed.");
             }
         }
 

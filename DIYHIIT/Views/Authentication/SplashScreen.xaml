@@ -5,7 +5,7 @@
     <ContentPage.Content>
         <StackLayout HorizontalOptions="CenterAndExpand"
                      VerticalOptions="CenterAndExpand">
-            <Label Text="Splash"
+            <Label Text="DIY HIIT yay"
                    FontSize="30"/>
         </StackLayout>
     </ContentPage.Content>

@@ -42,9 +42,15 @@ namespace DIYHIIT.API.Controllers
                 return NotFound();
             }
 
+            // Retrieve user
             var user = await _appDbContext.DB_Users
                                           .Where(u => u.Uid == uid)
                                           .SingleOrDefaultAsync();
+
+            // Retrieve user workouts
+            user.Workouts = await _appDbContext.DB_Workouts
+                                        .Where(w => w.UserId == user.Id)
+                                        .ToListAsync();
 
             if (user != null)
             {
@@ -76,51 +82,13 @@ namespace DIYHIIT.API.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateUser([FromBody]User user)
         {
-            _appDbContext.DB_Users.Update(user);
+            var _user = _appDbContext.DB_Users.Find(user.Id);
+            _user = user;
+
+            _appDbContext.DB_Users.Update(_user);
             await _appDbContext.SaveChangesAsync();
 
-            return Ok(user);
-        }
-
-        [HttpPost]
-        [Route("updateWorkout")]
-        public async Task<IActionResult> UpdateWorkout([FromBody]Workout workout)
-        {
-            // Get associated parent user
-            var user = await _appDbContext.DB_Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
-
-            // Get
-            var _workout = user.Workouts.FirstOrDefault(w => w.Id == workout.Id);
-
-            if (_workout == null) { return NotFound(); }
-
-            _workout = workout;
-
-            _appDbContext.DB_Users.Update(user);
-            await _appDbContext.SaveChangesAsync();
-
-            return Ok(workout);
-        }
-
-        [HttpPost]
-        [Route("saveWorkout")]
-        public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
-        {
-            // Get associated parent user
-            var user = await _appDbContext.DB_Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
-
-            // Check workout is a new workout
-            if (user.Workouts.Contains(workout))
-            {
-                return Forbid();
-            }
-
-            // Add workout to user, update user profile and save changes.
-            user.Workouts.Add(workout);
-            _appDbContext.DB_Users.Update(user);
-            await _appDbContext.SaveChangesAsync();
-
-            return Ok(workout);
+            return Ok(_user);
         }
     }
 }

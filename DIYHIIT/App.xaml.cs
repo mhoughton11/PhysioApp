@@ -33,7 +33,7 @@ namespace DIYHIIT
 
         private void InitializeApp(AppSetup setup)
         {
-            AppHostOptions = HostOptions.LocalHost;
+            AppHostOptions = HostOptions.Production;
 
             AppContainer.Container = setup.CreateContainer();
             FlowListView.Init();
@@ -61,7 +61,7 @@ namespace DIYHIIT
                 {
                     Debug.WriteLine($"Auto login success: {user.Username}");
 
-                    App.CurrentUser = user;
+                    CurrentUser = user;
                     MainPage = new MainPage();
                     return;
                 }

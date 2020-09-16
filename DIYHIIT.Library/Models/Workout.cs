@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,11 +34,10 @@ namespace DIYHIIT.Library.Models
 
         public WorkoutType Type { get; set; }
 
-        public virtual List<Exercise> Exercises { get; set; }
+        public List<Exercise> Exercises { get; set; }
 
-        
-        
-        public virtual User User {get; set; }
-        public int? UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User {get; set; }
+        public int UserId { get; set; }
     }
 }

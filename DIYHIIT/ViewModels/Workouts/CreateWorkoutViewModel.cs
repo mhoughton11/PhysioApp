@@ -24,12 +24,14 @@ namespace DIYHIIT.ViewModels.Workouts
     public class CreateWorkoutViewModel : BaseViewModel
     {
         public CreateWorkoutViewModel(object data,
+                                      IWorkoutDataService workoutDataService,
                                       IUserDataService userDataService,
                                       INavigation navigation,
                                       IDialogService dialogService)
             : base(navigation, dialogService)
         {
             InitializeAsync(data);
+            _workoutDataService = workoutDataService;
             _userDataService = userDataService;
         }
 
@@ -39,6 +41,7 @@ namespace DIYHIIT.ViewModels.Workouts
         private int _selectedWorkoutType;
         private List<string> _workoutTypes;
         private ObservableCollection<Exercise> _exercises;
+        private readonly IWorkoutDataService _workoutDataService;
         private readonly IUserDataService _userDataService;
 
         #endregion
@@ -165,12 +168,13 @@ namespace DIYHIIT.ViewModels.Workouts
                 DateAdded = DateTime.Now,
                 Exercises = _exercises.ToList(),
                 Duration = Helpers.GetWorkoutDuration(_exercises.ToList(), activeInterval, restInterval),
-                ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList())
+                ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList()),
+                UserId = App.CurrentUser.Id
             };
 
-            App.CurrentUser.Workouts.Add(workout);
+            //App.CurrentUser.Workouts.Add(workout);
+            await _workoutDataService.SaveWorkout(workout);
 
-            App.CurrentUser = await _userDataService.UpdateUser(App.CurrentUser);
             MessagingCenter.Send(this, WorkoutsUpdated);
 
             await _navigation.PopAsync();           

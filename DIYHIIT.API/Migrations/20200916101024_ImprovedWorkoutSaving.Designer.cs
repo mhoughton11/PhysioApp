@@ -4,14 +4,16 @@ using DIYHIIT.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200916101024_ImprovedWorkoutSaving")]
+    partial class ImprovedWorkoutSaving
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,7 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkoutId")
+                    b.Property<int?>("WorkoutId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -126,14 +128,14 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DB_Workouts");
+                    b.ToTable("Workout");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Persistance.Models.DB_Exercise", b =>
@@ -171,7 +173,7 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkoutId")
+                    b.Property<int?>("WorkoutId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -185,27 +187,21 @@ namespace DIYHIIT.API.Migrations
                 {
                     b.HasOne("DIYHIIT.Library.Models.Workout", "Workout")
                         .WithMany("Exercises")
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkoutId");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
                 {
                     b.HasOne("DIYHIIT.Library.Models.User", "User")
                         .WithMany("Workouts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Persistance.Models.DB_Exercise", b =>
                 {
                     b.HasOne("DIYHIIT.Library.Models.Workout", "Workout")
                         .WithMany()
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkoutId");
                 });
 #pragma warning restore 612, 618
         }

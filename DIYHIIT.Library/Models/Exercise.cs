@@ -32,7 +32,7 @@ namespace DIYHIIT.Library.Models
         [Required]
         public WorkoutType Type { get; set; }
         
-        public virtual Workout Workout { get; set; }
-        public int? WorkoutId { get; set; }
+        public Workout Workout { get; set; }
+        public int WorkoutId { get; set; }
     }
 }
