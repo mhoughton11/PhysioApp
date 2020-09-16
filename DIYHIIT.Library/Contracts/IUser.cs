@@ -12,6 +12,6 @@ namespace DIYHIIT.Library.Contracts
         string FirstName { get; set; }
         string LastName { get; set; }
 
-        List<Workout> Workouts { get; set; }
+        ICollection<Workout> Workouts { get; set; }
     }
 }

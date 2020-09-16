@@ -153,32 +153,24 @@ namespace DIYHIIT.ViewModels.Workouts
                 return;
             }
 
-            var Ids = new List<int>();
-            foreach (var ex in _exercises)
-            {
-                Ids.Add(ex.Id);
-            }
-
             var name = await GetWorkoutName();
 
             // Create workout with the specified parameters/exercises.
             var workout = new Workout()
             {
+                Name = name,
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
-                ExerciseIDs = JsonConvert.SerializeObject(Ids),
                 Type = (WorkoutType)workoutType,
                 DateAdded = DateTime.Now,
                 Exercises = _exercises.ToList(),
                 Duration = Helpers.GetWorkoutDuration(_exercises.ToList(), activeInterval, restInterval),
-                ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList()),
-                User = App.CurrentUser,
-                UserId = App.CurrentUser.Id,
-                Name = name
+                ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList())
             };
 
-            workout = await _userDataService.SaveWorkout(workout);
+            App.CurrentUser.Workouts.Add(workout);
 
+            App.CurrentUser = await _userDataService.UpdateUser(App.CurrentUser);
             MessagingCenter.Send(this, WorkoutsUpdated);
 
             await _navigation.PopAsync();           

@@ -24,6 +24,6 @@ namespace DIYHIIT.Library.Contracts
         WorkoutType Type { get; set; }
 
         User User { get; set; }
-        int UserId { get; set; }
+        int? UserId { get; set; }
     }
 }

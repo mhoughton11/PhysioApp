@@ -28,6 +28,6 @@ namespace DIYHIIT.Library.Persistance.Models
         public WorkoutType Type { get; set; }
         
         public Workout Workout { get; set; }
-        public int WorkoutId { get; set; }
+        public int? WorkoutId { get; set; }
     }
 }

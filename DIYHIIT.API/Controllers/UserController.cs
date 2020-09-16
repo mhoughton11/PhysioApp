@@ -90,7 +90,7 @@ namespace DIYHIIT.API.Controllers
             var user = await _appDbContext.DB_Users.Where(u => u.Id == workout.UserId).SingleOrDefaultAsync();
 
             // Get
-            var _workout = user.Workouts.Find(w => w.Id == workout.Id);
+            var _workout = user.Workouts.FirstOrDefault(w => w.Id == workout.Id);
 
             if (_workout == null) { return NotFound(); }
 

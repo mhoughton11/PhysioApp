@@ -22,6 +22,6 @@ namespace DIYHIIT.Library.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public List<Workout> Workouts { get; set; }
+        public virtual ICollection<Workout> Workouts { get; set; }
     }
 }

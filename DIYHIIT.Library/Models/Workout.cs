@@ -31,13 +31,13 @@ namespace DIYHIIT.Library.Models
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUsed { get; set; }
 
-        public string ExerciseIDs { get; set; }
-
-        public List<Exercise> Exercises { get; set; }
-
         public WorkoutType Type { get; set; }
+
+        public virtual List<Exercise> Exercises { get; set; }
+
         
-        public User User {get; set; }
-        public int UserId { get; set; }
+        
+        public virtual User User {get; set; }
+        public int? UserId { get; set; }
     }
 }
