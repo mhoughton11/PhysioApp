@@ -12,11 +12,6 @@ namespace DIYHIIT.Views.Authentication
 {
     public partial class SplashScreen : ContentPage
     {
-
-        public SplashScreen()
-        {
-            InitializeComponent();
-
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserDataService _userDataService;
 

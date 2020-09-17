@@ -11,8 +11,7 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="Center"
-                     VerticalOptions="CenterAndExpand">
+        <StackLayout>
 
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding WorkoutList}"
@@ -27,6 +26,7 @@
                         Command="{Binding WorkoutTappedCommand}"
                         EventArgsConverter="{StaticResource LocalItemTappedConverter}">
                     </behaviors:EventToCommandBehavior>
+
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -35,12 +35,15 @@
                                    CornerRadius="10"
                                    Margin="6"
                                    Padding="0"
+                                   IsClippedToBounds="True"
+                                   HasShadow="False"
                                    HeightRequest="90">
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="1.2*" />
-                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
 
                                     <Image Source="{Binding BackgroundImage}"
                                            Grid.ColumnSpan="2"
@@ -51,19 +54,20 @@
 
                                     <Label Text="{Binding Name}"
                                            TextColor="Black"
-                                           FontSize="23"
+                                           FontSize="25"
                                            Padding="10"
-                                           Grid.RowSpan="2"
+                                           Grid.Row="0"
+                                           Grid.ColumnSpan="2"
                                            LineBreakMode="WordWrap"
                                            VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="StartAndExpand"/>
+                                           HorizontalOptions="CenterAndExpand"/>
 
                                     <Label Text="{Binding ExerciseCount}"
                                            FontSize="Medium"
-                                           Grid.Row="0"
-                                           Grid.Column="1"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
                                            VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="StartAndExpand"/>
+                                           HorizontalOptions="CenterAndExpand"/>
 
                                     <Label Text="{Binding Duration, StringFormat='{0} Mins'}"
                                            FontSize="Medium"
@@ -71,7 +75,7 @@
                                            Grid.Row="1"
                                            Grid.Column="1"
                                            VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="StartAndExpand"/>
+                                           HorizontalOptions="CenterAndExpand"/>
                                 </Grid>
 
                             </Frame>

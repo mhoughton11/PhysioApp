@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200917064413_SimplifiedSchemaWithExerciseString")]
-    partial class SimplifiedSchemaWithExerciseString
+    [Migration("20200917082630_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,9 @@ namespace DIYHIIT.API.Migrations
 
                     b.Property<double?>("ActiveInterval")
                         .HasColumnType("float");
+
+                    b.Property<string>("BackgroundImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BodyFocus")
                         .HasColumnType("nvarchar(max)");
