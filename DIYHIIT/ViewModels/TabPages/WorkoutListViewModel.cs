@@ -24,10 +24,14 @@ namespace DIYHIIT.ViewModels.Tabs
     {
         public WorkoutListViewModel(object data,
                                     IWorkoutDataService workoutDataService,
+                                    IExerciseDataService exerciseDataService,
                                     INavigation navigationService,
                                     IDialogService dialogService)
             : base(navigationService, dialogService)
         {
+            _workoutDataService = workoutDataService;
+            _exerciseDataService = exerciseDataService;
+
             MessagingCenter.Subscribe<CreateWorkoutViewModel>(this, WorkoutsUpdated, (sender) =>
             {
                 _workoutsUpdated = true;
@@ -43,6 +47,7 @@ namespace DIYHIIT.ViewModels.Tabs
         private bool _workoutsUpdated = true;
         private string _isRefreshing;
         private readonly IWorkoutDataService _workoutDataService;
+        private readonly IExerciseDataService _exerciseDataService;
 
         #endregion
 
@@ -87,6 +92,7 @@ namespace DIYHIIT.ViewModels.Tabs
                 {
                     var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.Id);
                     WorkoutList = new ObservableCollection<IWorkout>(workouts);  
+
                 }
                 catch (Exception ex)
                 {

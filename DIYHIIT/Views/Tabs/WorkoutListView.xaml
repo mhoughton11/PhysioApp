@@ -20,6 +20,7 @@
                       IsPullToRefreshEnabled="True"
                       IsRefreshing="{Binding IsRefreshing}"
                       RefreshCommand="{Binding RefreshCommand}">
+
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior
                         EventName="ItemTapped"
@@ -30,19 +31,28 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame BackgroundColor="LightGray"
+                            <Frame BackgroundColor="White"
                                    CornerRadius="10"
                                    Margin="6"
-                                   HasShadow="False">
+                                   Padding="0"
+                                   HeightRequest="90">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3.2*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="1.2*" />
                                     </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding BackgroundImage}"
+                                           Grid.ColumnSpan="2"
+                                           Grid.RowSpan="2"
+                                           Opacity="0.25"
+                                           Aspect="AspectFill"
+                                           HorizontalOptions="Fill"/>
 
                                     <Label Text="{Binding Name}"
                                            TextColor="Black"
                                            FontSize="23"
+                                           Padding="10"
                                            Grid.RowSpan="2"
                                            LineBreakMode="WordWrap"
                                            VerticalOptions="CenterAndExpand"
@@ -51,16 +61,17 @@
                                     <Label Text="{Binding ExerciseCount}"
                                            FontSize="Medium"
                                            Grid.Row="0"
-                                           Grid.Column="2"
+                                           Grid.Column="1"
                                            VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
+                                           HorizontalOptions="StartAndExpand"/>
 
                                     <Label Text="{Binding Duration, StringFormat='{0} Mins'}"
                                            FontSize="Medium"
+                                           FontFamily=""
                                            Grid.Row="1"
-                                           Grid.Column="2"
+                                           Grid.Column="1"
                                            VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
+                                           HorizontalOptions="StartAndExpand"/>
                                 </Grid>
 
                             </Frame>

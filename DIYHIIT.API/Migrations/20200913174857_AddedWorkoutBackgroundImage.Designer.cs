@@ -4,14 +4,16 @@ using DIYHIIT.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200913174857_AddedWorkoutBackgroundImage")]
+    partial class AddedWorkoutBackgroundImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,22 +56,18 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkoutId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutId");
-
-                    b.ToTable("DB_Exercises");
+                    b.ToTable("ExerciseCatalog");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Uid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AuthToken")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -77,16 +75,13 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Uid")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Uid");
 
-                    b.ToTable("DB_Users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
@@ -120,7 +115,7 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("ExerciseCount")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExerciseIds")
+                    b.Property<string>("ExerciseIDs")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -132,32 +127,9 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("DB_Workouts");
-                });
-
-            modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
-                {
-                    b.HasOne("DIYHIIT.Library.Models.Workout", null)
-                        .WithMany("Exercises")
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
-                {
-                    b.HasOne("DIYHIIT.Library.Models.User", null)
-                        .WithMany("Workouts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("WorkoutCatalog");
                 });
 #pragma warning restore 612, 618
         }
