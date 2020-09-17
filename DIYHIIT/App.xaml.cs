@@ -27,6 +27,8 @@ namespace DIYHIIT
             InitializeApp(setup);
 
             MainPage = new SplashScreen();
+
+            AttemptAutoLogin();
         }
 
         private void InitializeApp(AppSetup setup)
@@ -35,6 +37,42 @@ namespace DIYHIIT
 
             AppContainer.Container = setup.CreateContainer();
             FlowListView.Init();
+        }
+
+        private async void AttemptAutoLogin()
+        {
+            var _authenticationService = AppContainer.Container.Resolve<IAuthenticationService>();
+            var _userDataService = AppContainer.Container.Resolve<IUserDataService>();
+
+            try
+            {
+                var response = _authenticationService.AutoLogin();
+
+                if (!response.IsAuthenticated)
+                {
+                    Debug.WriteLine($"Auto login failed");
+                    MainPage = new LoginView();
+                    return;
+                }
+                // Success
+                var user = await _userDataService.GetUser(response.UserUid);
+
+                if (user != null)
+                {
+                    Debug.WriteLine($"Auto login success: {user.Username}");
+
+                    CurrentUser = user;
+                    MainPage = new MainPage();
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Auto login failed");
+                Debug.WriteLine(e.Message);
+            }
+
+            MainPage = new LoginView();
         }
     }
 }

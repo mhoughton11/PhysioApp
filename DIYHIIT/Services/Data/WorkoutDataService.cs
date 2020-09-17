@@ -26,7 +26,7 @@ namespace DIYHIIT.Services.Data
         public async Task<IWorkout> SaveWorkout(IWorkout workout)
         {
             string path = string.Empty;
-        
+
             switch (App.AppHostOptions)
             {
                 case HostOptions.Production:
@@ -86,6 +86,24 @@ namespace DIYHIIT.Services.Data
             }
 
             return await _genericRepository.PostAsync(path, workout);
+        }
+
+        public async Task<IEnumerable<IWorkout>> GetWorkoutsForUser(int userId)
+        {
+            string path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.GetUserWorkoutsEndpoint + $"?userId={userId}"; ;
+                    break;
+
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.GetUserWorkoutsEndpoint + $"?userId={userId}"; ;
+                    break;
+            }
+
+            return await _genericRepository.GetAsync<List<Workout>>(path);
         }
     }
 }

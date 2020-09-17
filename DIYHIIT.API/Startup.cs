@@ -1,4 +1,3 @@
-using DIYHIIT.API.Auth;
 using DIYHIIT.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

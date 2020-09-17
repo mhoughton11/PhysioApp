@@ -20,9 +20,12 @@ namespace DIYHIIT.Library.Contracts
         DateTime? DateAdded { get; set; }
         DateTime? DateUsed { get; set; }
 
-        string ExerciseIDs { get; set; }
+        string ExerciseIds { get; set; }
+        List<Exercise> Exercises { get; set; }
 
         WorkoutType Type { get; set; }
+
+        int UserId { get; set; }
 
         // View Components
         string BackgroundImage { get; set; }

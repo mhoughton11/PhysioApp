@@ -17,5 +17,7 @@ namespace DIYHIIT.Library.Contracts
         double? Duration { get; set; }
 
         WorkoutType Type { get; set; }
+
+        int WorkoutId { get; set; }
     }
 }

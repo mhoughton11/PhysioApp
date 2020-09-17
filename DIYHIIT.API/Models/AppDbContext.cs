@@ -5,13 +5,13 @@ namespace DIYHIIT.API.Models
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
+        public DbSet<User> DB_Users { get; set; }
+        public DbSet<Workout> DB_Workouts { get; set; }
+        public DbSet<Exercise> DB_Exercises { get; set; }
+
+        public AppDbContext(DbContextOptions options)
+            :base(options)
         {
         }
-
-        public DbSet<Exercise> ExerciseCatalog { get; set; }
-        public DbSet<Workout> WorkoutCatalog { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

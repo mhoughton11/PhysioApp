@@ -27,10 +27,10 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignProvision>iOS Team Provisioning Profile: com.houghtonstudio.uk.DIY-HIIT.DIYHIIT</CodesignProvision>
     <CodesignKey>Apple Development: maxh1010@googlemail.com (X8YYKJDKNK)</CodesignKey>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>iOS Team Provisioning Profile: com.houghtonstudio.uk.DIY-HIIT.DIYHIIT</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -180,5 +180,8 @@
   <ItemGroup>
     <Folder Include="Assets.xcassets\ProfileIcon.imageset\" />
     <Folder Include="Authentication\" />
+  </ItemGroup>
+  <ItemGroup>
+    <LinkDescription Include="Resources\Linker.xml" />
   </ItemGroup>
 </Project>

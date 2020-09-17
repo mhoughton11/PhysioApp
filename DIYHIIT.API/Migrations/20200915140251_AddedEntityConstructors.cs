@@ -2,7 +2,7 @@
 
 namespace DIYHIIT.API.Migrations
 {
-    public partial class AddedModelBuilderForeignKey : Migration
+    public partial class AddedEntityConstructors : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

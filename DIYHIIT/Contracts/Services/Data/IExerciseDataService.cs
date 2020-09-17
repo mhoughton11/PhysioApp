@@ -8,8 +8,7 @@ namespace DIYHIIT.Contracts.Services.Data
 {
     public interface IExerciseDataService
     {
-        Task<IEnumerable<IExercise>> GetAllExercisesAsync(int? type = null);
-        Task<IEnumerable<IExercise>> GetExercisesFromList(string exerciseList);
-        Task<IExercise> GetExerciseById(int id);
+        Task<IEnumerable<Exercise>> GetAllExercisesAsync(int? type = null);
+        Task<IEnumerable<Exercise>> GetExercisesFromList(string ids);
     }
 }

@@ -19,7 +19,7 @@
         
             <Entry Placeholder="Password"
                    IsPassword="true"
-                   Text="{Binding UserEmail}"/>
+                   Text="{Binding UserPassword}"/>
         
             <Button Text="Register"
                     Command="{Binding RegisterCommand}"

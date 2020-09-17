@@ -28,32 +28,51 @@ namespace DIYHIIT.API.Controllers
         [Route("workouts")]
         public async Task<IActionResult> GetWorkouts()
         {
-            var items = await _appDbContext.WorkoutCatalog
+            var items = await _appDbContext.DB_Workouts
                                            .OrderBy(w => w.Id)
                                            .ToListAsync();
 
             return Ok(items);
         }
 
-        [HttpPost]
-        [Route("save")]
-        public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
+        [HttpGet]
+        [Route("userWorkouts")]
+        public async Task<ActionResult> GetUserWorkouts(int userId)
         {
-            await _appDbContext.WorkoutCatalog.AddAsync(workout);
-            await _appDbContext.SaveChangesAsync();
+            if (!_appDbContext.DB_Users.Any(u => u.Id == userId))
+            {
+                return NotFound();
+            }
 
+            var workouts = await _appDbContext.DB_Workouts.Where(w => w.UserId == userId).OrderBy(w => w.Name).ToListAsync();
+
+            return Ok(workouts);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateWorkout([FromBody] Workout workout)
+        {
+            _appDbContext.DB_Workouts.Update(workout);
+            await _appDbContext.SaveChangesAsync();
 
             return Ok(workout);
         }
 
         [HttpPost]
-        [Route("update")]
-        public async Task<IActionResult> UpdateWorkout([FromBody] Workout updatedWorkout)
+        [Route("save")]
+        public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
         {
-            _appDbContext.WorkoutCatalog.Update(updatedWorkout);
+            // If already contains workout, don't save.
+            if (_appDbContext.DB_Workouts.Any(w => w.Id == workout.Id))
+            {
+                return BadRequest();
+            }
+
+            _appDbContext.DB_Workouts.Add(workout);
             await _appDbContext.SaveChangesAsync();
 
-            return Ok(updatedWorkout);
+            return Ok(workout);
         }
     }
 }

@@ -89,15 +89,14 @@ namespace DIYHIIT.ViewModels.Workouts
 
         #region Public Methods
 
-        public override async Task InitializeAsync(object workout)
+        public override async Task InitializeAsync(object data)
         {
             _dialogService.ShowLoading("Loading workout...");
 
-            _workout = workout as Workout;
+            _workout = data as Workout;
+            var items = await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIds);
 
-            var items = (await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIDs)).ToList();
-
-            Exercises = new ObservableCollection<IExercise>();
+            Exercises = new ObservableCollection<IExercise>(items);
             
             Name = _workout.Name;
             ExerciseCount = _workout.ExerciseCount;
@@ -112,17 +111,19 @@ namespace DIYHIIT.ViewModels.Workouts
             };
 
             // Add rest behind all but last exercises.
-            for (int i = 0; i < items.Count()-1; i++)
+            for (int i = 0; i < Exercises.Count()-1; i++)
             {
-                items[i].Duration = _workout.ActiveInterval;
-                Exercises.Add(items[i]);
+                Exercises[i].Duration = _workout.ActiveInterval;
+                Exercises.Add(Exercises[i]);
                 Exercises.Add(_rest);
             }
 
-            items[items.Count - 1].Duration = _workout.ActiveInterval;
-            Exercises.Add(items[items.Count - 1]);
+            Exercises[Exercises.Count - 1].Duration = _workout.ActiveInterval;
+            Exercises.Add(Exercises[Exercises.Count - 1]);
 
             _dialogService.HideLoading();
+
+             base.InitializeAsync(data);
         }
 
         #endregion

@@ -16,10 +16,6 @@ namespace DIYHIIT.Services.Data
     {
         private readonly IGenericRepository _genericRepository;
 
-        public User CurrentUser { get; set; }
-
-        public User GetCurrentUser() => CurrentUser;
-
         public UserDataService(IGenericRepository genericRepository, IBlobCache blobCache = null)
             : base(blobCache)
         {
@@ -87,11 +83,78 @@ namespace DIYHIIT.Services.Data
 
         public async Task<User> SaveUser(User user)
         {
-            var path = ApiConstants.BaseApiUrl + ApiConstants.SaveUserEndpoint;
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.SaveUserEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.SaveUserEndpoint;
+                    break;
+            }
 
             await _genericRepository.PostAsync(path, user);
 
             return user;
+        }
+
+        public async Task<Workout> UpdateWorkout(Workout workout)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.UpdateWorkoutEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.UpdateWorkoutEndpoint;
+                    break;
+            }
+
+            if (workout.UserId == 0) { return null; }
+
+            return await _genericRepository.PostAsync(path, workout);
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.UpdateUserEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.UpdateUserEndpoint;
+                    break;
+            }
+
+            return await _genericRepository.PostAsync(path, user);
+        }
+
+        public async Task<Workout> SaveWorkout(Workout workout)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.SaveWorkoutEndpoint;
+                    break;
+
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.SaveWorkoutEndpoint;
+                    break;
+            }
+
+            return await _genericRepository.PostAsync(path, workout);
         }
     }
 }

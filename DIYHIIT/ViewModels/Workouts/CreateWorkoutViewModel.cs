@@ -24,14 +24,16 @@ namespace DIYHIIT.ViewModels.Workouts
     public class CreateWorkoutViewModel : BaseViewModel
     {
         public CreateWorkoutViewModel(object data,
+                                      IWorkoutDataService workoutDataService,
+                                      IUserDataService userDataService,
                                       INavigation navigation,
-                                      IDialogService dialogService,
-                                      IWorkoutDataService workoutDataService)
+                                      IDialogService dialogService)
             : base(navigation, dialogService)
         {
-            _workoutDataService = workoutDataService;
-
             InitializeAsync(data);
+
+            _workoutDataService = workoutDataService;
+            _userDataService = userDataService;
         }
 
         #region Private Fields
@@ -41,6 +43,7 @@ namespace DIYHIIT.ViewModels.Workouts
         private List<string> _workoutTypes;
         private ObservableCollection<Exercise> _exercises;
         private readonly IWorkoutDataService _workoutDataService;
+        private readonly IUserDataService _userDataService;
 
         #endregion
 
@@ -101,7 +104,10 @@ namespace DIYHIIT.ViewModels.Workouts
 
             MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, ExerciseAdded, (sender, arg) =>
             {
-                arg.Index = rand.Next(0, 0xFFFF);
+                // Check how many times this exercise already exists in workout
+                var count = _exercises.Where(e => e.Name == arg.Name).Count();
+                arg.Index = count;
+
                 Exercises.Add(arg);
             });
 
@@ -154,26 +160,24 @@ namespace DIYHIIT.ViewModels.Workouts
                 return;
             }
 
-            var Ids = new List<int>();
-            foreach (var ex in _exercises)
-            {
-                Ids.Add(ex.Id);
-            }
+            var ids = new List<string>();
+            foreach (var ex in _exercises) { ids.Add(ex.Id.ToString()); }
+
+            var name = await GetWorkoutName();
 
             // Create workout with the specified parameters/exercises.
-            var workout = new Workout
+            var workout = new Workout()
             {
+                Name = name,
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
-                ExerciseIDs = JsonConvert.SerializeObject(Ids),
                 Type = (WorkoutType)workoutType,
                 DateAdded = DateTime.Now,
-                BackgroundImage = _exercises[0].ImageURL
+                ExerciseIds = JsonConvert.SerializeObject(ids),
+                Duration = Helpers.GetWorkoutDuration(_exercises.ToList(), activeInterval, restInterval),
+                ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList()),
+                UserId = App.CurrentUser.Id
             };
-
-            workout.Duration = Helpers.GetWorkoutDuration(workout);
-            workout.ExerciseCount = Helpers.GetWorkoutCountString(workout);
-            workout = await GetWorkoutName(workout);
 
             await _workoutDataService.SaveWorkout(workout);
 
@@ -187,32 +191,34 @@ namespace DIYHIIT.ViewModels.Workouts
             await _navigation.PushAsync(new AddExerciseView());
         }
 
-        private async Task<Workout> GetWorkoutName(Workout workout)
+        private async Task<string> GetWorkoutName()
         {
-            var name = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
+            var getName = await _dialogService.ShowConfirmAsync("Workout name", "Do you wish to name your workout for easier reference?", "Yes", "No");
 
-            if (name)
+            var name = string.Empty;
+
+            if (getName)
             {
                 string input = await _dialogService.ShowPromptAsync("Workout Name", "Enter workout name below", "OK", "Cancel");
 
                 if (!string.IsNullOrWhiteSpace(input) || !string.IsNullOrEmpty(input))
                 {
-                    workout.Name = input;
+                    name = input;
                 }
                 else
                 {
                     _dialogService.Popup("Please type a workout name when prompted.");
                     var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
-                    workout.Name = t + " Workout";
+                    name = t + " Workout";
                 }
             }
             else
             {
                 var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
-                workout.Name =  t + " Workout";
+                name =  t + " Workout";
             }
 
-            return workout;
+            return name;
         }
 
         #endregion

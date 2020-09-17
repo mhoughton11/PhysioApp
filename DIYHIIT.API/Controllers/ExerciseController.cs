@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
+using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace DIYHIIT.Data.Controllers
         [Route("exercises")]
         public async Task<IActionResult> GetExercises()
         {
-            var items = await _appDbContext.ExerciseCatalog
+            var items = await _appDbContext.DB_Exercises
                                            .OrderBy(e => e.DisplayName)
                                            .ToListAsync();
 
@@ -36,16 +37,16 @@ namespace DIYHIIT.Data.Controllers
 
         [HttpGet]
         [Route("list")]
-        public async Task<IActionResult> GetExercisesFromList(string ids)
+        public async Task<IActionResult> GetFromString(string ids)
         {
             var exercises = new List<Exercise>();
-            var exerciseIds = JsonConvert.DeserializeObject<List<int>>(ids);
+            var _ids = JsonConvert.DeserializeObject<List<int>>(ids);
 
-            if (exerciseIds != null)
+            if (_ids != null && _ids.Count > 0)
             {
-                foreach (var id in exerciseIds)
+                foreach (var id in _ids)
                 {
-                    var ex = await _appDbContext.ExerciseCatalog
+                    var ex = await _appDbContext.DB_Exercises
                         .Where(e => e.Id == id)
                         .FirstOrDefaultAsync();
 
@@ -58,27 +59,6 @@ namespace DIYHIIT.Data.Controllers
             {
                 return NotFound();
             }
-            
-        }
-
-        [HttpGet]
-        [Route("exercise")]
-        public async Task<IActionResult> GetById(int? id)
-        {
-            if (id == null || id < 0)
-            {
-                return NotFound();
-            }
-            
-            var exercise = await _appDbContext.ExerciseCatalog
-                                              .Where(e => e.Id == id)
-                                              .SingleOrDefaultAsync();
-            if (exercise != null)
-            {
-                return Ok(exercise);
-            }
-
-            return NotFound();
         }
     }
 }

@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200907074840_RemovedExerciseWorkoutIds")]
-    partial class RemovedExerciseWorkoutIds
+    [Migration("20200917064413_SimplifiedSchemaWithExerciseString")]
+    partial class SimplifiedSchemaWithExerciseString
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -56,9 +56,14 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<int>("WorkoutId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseCatalog");
+                    b.HasIndex("WorkoutId");
+
+                    b.ToTable("DB_Exercises");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.User", b =>
@@ -74,13 +79,16 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Uid")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("DB_Users");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
@@ -108,7 +116,10 @@ namespace DIYHIIT.API.Migrations
                     b.Property<double?>("Effort")
                         .HasColumnType("float");
 
-                    b.Property<string>("ExerciseIDs")
+                    b.Property<string>("ExerciseCount")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExerciseIds")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -120,9 +131,32 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("WorkoutCatalog");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DB_Workouts");
+                });
+
+            modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
+                {
+                    b.HasOne("DIYHIIT.Library.Models.Workout", null)
+                        .WithMany("Exercises")
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
+                {
+                    b.HasOne("DIYHIIT.Library.Models.User", null)
+                        .WithMany("Workouts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

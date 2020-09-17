@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;
 using DIYHIIT.ViewModels.Workouts;
@@ -36,14 +38,14 @@ namespace DIYHIIT.ViewModels.Tabs
             });
 
             Task.Run(async () => await InitializeAsync(data));
+            _workoutDataService = workoutDataService;
         }
 
         #region Private Fields
 
-        private ObservableCollection<Workout> _workoutList;
+        private ObservableCollection<IWorkout> _workoutList;
         private bool _workoutsUpdated = true;
         private string _isRefreshing;
-        private Workout _selectedItem;
         private readonly IWorkoutDataService _workoutDataService;
         private readonly IExerciseDataService _exerciseDataService;
 
@@ -51,7 +53,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Public Members and Commands
 
-        public ObservableCollection<Workout> WorkoutList
+        public ObservableCollection<IWorkout> WorkoutList
         {
             get => _workoutList;
             set
@@ -82,25 +84,30 @@ namespace DIYHIIT.ViewModels.Tabs
         public override async Task InitializeAsync(object data)
         {
             IsBusy = true;
+            _dialogService.ShowLoading("Loading workouts...");
 
             if (_workoutsUpdated)
             {
                 try
                 {
-                    _dialogService.ShowLoading("Loading workouts...");
-                    WorkoutList = await _workoutDataService.GetWorkoutsAsync() as ObservableCollection<Workout>;
-                    _dialogService.HideLoading();
+                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.Id);
+                    WorkoutList = new ObservableCollection<IWorkout>(workouts);  
+
                 }
                 catch (Exception ex)
                 {
                     _dialogService.Popup("Loading workouts failed.");
+                    _dialogService.HideLoading();
                     Debug.WriteLine(ex);
                 }
             }
 
+            _dialogService.HideLoading();
             _workoutsUpdated = false;
 
             IsBusy = false;
+
+            await base.InitializeAsync(data);
         }
 
         #endregion

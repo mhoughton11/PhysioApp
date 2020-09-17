@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.Tabs.ProfileView">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Sign Out"
+     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Log out"
                      Command="{Binding LogoutCommand}"/>
     </ContentPage.ToolbarItems>
 

@@ -21,11 +21,9 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>13.6</string>
+	<string>12.4</string>
 	<key>CFBundleDisplayName</key>
 	<string>DIYHIIT</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.houghtonstudio.uk.DIY-HIIT.DIYHIIT</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -38,5 +36,7 @@
 	<array>
 		<string>fa-solid-900.tff</string>
 	</array>
+	<key>CFBundleIdentifier</key>
+	<string>com.houghtonstudio.uk.DIY-HIIT.DIYHIIT</string>
 </dict>
 </plist>

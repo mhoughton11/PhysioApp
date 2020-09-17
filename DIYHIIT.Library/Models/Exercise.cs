@@ -31,5 +31,7 @@ namespace DIYHIIT.Library.Models
 
         [Required]
         public WorkoutType Type { get; set; }
+
+        public int WorkoutId { get; set; }
     }
 }

@@ -17,9 +17,9 @@ namespace DIYHIIT.Views.Tabs
             InitializeComponent();
 
             var dialog = AppContainer.Container.Resolve<IDialogService>();
-            var workoutDataService = AppContainer.Container.Resolve<IWorkoutDataService>();
+            var userDataService = AppContainer.Container.Resolve<IUserDataService>();
 
-            BindingContext = viewModel = new HomeViewModel(workoutDataService, Navigation, dialog);
+            BindingContext = viewModel = new HomeViewModel(userDataService, Navigation, dialog);
         }
     }
 }

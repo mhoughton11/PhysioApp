@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Autofac;
+using Autofac.Core;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;

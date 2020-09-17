@@ -1,5 +1,11 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
+
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+
 using DIYHIIT.Library.Contracts;
 
 namespace DIYHIIT.Library.Models
@@ -7,7 +13,11 @@ namespace DIYHIIT.Library.Models
     // Principle Entity
     public class Workout : IWorkout
     {
-        // Principle Key
+        public Workout()
+        {
+            Exercises = new List<Exercise>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -23,9 +33,12 @@ namespace DIYHIIT.Library.Models
         public DateTime? DateAdded { get; set; }
         public DateTime? DateUsed { get; set; }
 
-        public string ExerciseIDs { get; set; }
-
         public WorkoutType Type { get; set; }
+
+        public string ExerciseIds { get; set; }
+        public List<Exercise> Exercises { get; set; }
+
+        public int UserId { get; set; }
 
         public string BackgroundImage { get; set; }
     }
