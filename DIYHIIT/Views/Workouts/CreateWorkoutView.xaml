@@ -57,6 +57,7 @@
                                    Margin="4"
                                    BackgroundColor="LightGray"
                                    CornerRadius="16"
+                                   IsClippedToBounds="True"
                                    HasShadow="False"
                                    HeightRequest="100">
                                 <Grid HorizontalOptions="FillAndExpand"

@@ -12,14 +12,6 @@ namespace DIYHIIT.Views.Authentication
 {
     public partial class SplashScreen : ContentPage
     {
-
-        public SplashScreen()
-        {
-            InitializeComponent();
-
-        private readonly IAuthenticationService _authenticationService;
-        private readonly IUserDataService _userDataService;
-
         public SplashScreen()
         {
             InitializeComponent();
@@ -27,8 +19,11 @@ namespace DIYHIIT.Views.Authentication
             _authenticationService = AppContainer.Container.Resolve<IAuthenticationService>();
             _userDataService = AppContainer.Container.Resolve<IUserDataService>();
 
-            AttemptAutoLogin();
+            //AttemptAutoLogin();
         }
+
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IUserDataService _userDataService;
 
         public async void AttemptAutoLogin()
         {
@@ -38,7 +33,7 @@ namespace DIYHIIT.Views.Authentication
 
                 if (!response.IsAuthenticated)
                 {
-                    Debug.WriteLine($"Auto login failed");
+                    Debug.WriteLine($"firebase auto-login failed");
                     App.Current.MainPage = new LoginView();
                     return;
                 }
@@ -57,10 +52,10 @@ namespace DIYHIIT.Views.Authentication
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Auto login failed");
                 Debug.WriteLine(e.Message);
             }
 
+            Debug.WriteLine($"DB user retrieval failed");
             App.Current.MainPage = new LoginView();
         }
     }

@@ -50,7 +50,7 @@ namespace DIYHIIT
 
                 if (!response.IsAuthenticated)
                 {
-                    Debug.WriteLine($"Auto login failed");
+                    Debug.WriteLine($"firebase auto-login failed");
                     MainPage = new LoginView();
                     return;
                 }
@@ -68,7 +68,7 @@ namespace DIYHIIT
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Auto login failed");
+                Debug.WriteLine("DB user retrieval failed");
                 Debug.WriteLine(e.Message);
             }
 

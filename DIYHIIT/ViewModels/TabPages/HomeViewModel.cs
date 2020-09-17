@@ -24,11 +24,6 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Members
 
-        // View Components
-        private string _recentWorkoutsLabel;
-        private string _welcomeText;
-        private List<Workout> _workoutList;
-
         // Services
         private readonly IUserDataService _userDataService;
 
@@ -36,35 +31,6 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Public Fields and Commands
 
-        public List<Workout> WorkoutList
-        {
-            get => _workoutList;
-            set
-            {
-                _workoutList = value;
-                RaisePropertyChanged(() => WorkoutList);
-            }
-        }
-        
-        public string RecentWorkoutsLabel
-        {
-            get => _recentWorkoutsLabel;
-            set
-            {
-                _recentWorkoutsLabel = value;
-                RaisePropertyChanged(() => RecentWorkoutsLabel);
-            }
-        }
-
-        public string WelcomeText
-        {
-            get => _welcomeText;
-            set
-            {
-                _welcomeText = value;
-                RaisePropertyChanged(() => WelcomeText);
-            }
-        }
 
         #endregion
 
@@ -72,11 +38,6 @@ namespace DIYHIIT.ViewModels.Tabs
 
         public override async Task InitializeAsync(object data)
         {
-            RecentWorkoutsLabel = "False";
-
-            WelcomeText = $"Welcome back, {App.CurrentUser.FirstName}";
-
-            WorkoutList = App.CurrentUser.Workouts.Where(w => w.DateUsed >= DateTime.Now).ToList();
             await base.InitializeAsync(data);
         }
 
