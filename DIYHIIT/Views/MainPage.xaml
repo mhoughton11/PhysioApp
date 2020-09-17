@@ -17,7 +17,7 @@
              <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="home.png" />
-                    <On Platform="Android" Value="home_icon.png" />
+                    <On Platform="Android" Value="home.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
         </NavigationPage>
@@ -30,7 +30,7 @@
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="dumbell.png" />
-                    <On Platform="Android" Value="home_icon.png" />
+                    <On Platform="Android" Value="dumbell.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
         </NavigationPage>
@@ -43,7 +43,7 @@
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="profile.png" />
-                    <On Platform="Android" Value="home_icon.png" />
+                    <On Platform="Android" Value="profile.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
         </NavigationPage>

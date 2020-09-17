@@ -82,8 +82,7 @@
 
                                     <Label Text="{Binding DisplayName}"
                                            Margin="6, 0"
-                                           FontSize="32"
-                                           MaxLines="1"
+                                           FontSize="25"
                                            TextColor="Black"
                                            VerticalOptions="CenterAndExpand"
                                            HorizontalOptions="CenterAndExpand"
