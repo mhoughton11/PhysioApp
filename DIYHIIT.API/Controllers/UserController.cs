@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
 using DIYHIIT.Library.Models;
-using DIYHIIT.Library.Persistance.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,8 +48,8 @@ namespace DIYHIIT.API.Controllers
 
             // Retrieve user workouts
             user.Workouts = await _appDbContext.DB_Workouts
-                                        .Where(w => w.UserId == user.Id)
-                                        .ToListAsync();
+                                               .Where(w => w.UserId == user.Id)
+                                               .ToListAsync();
 
             if (user != null)
             {

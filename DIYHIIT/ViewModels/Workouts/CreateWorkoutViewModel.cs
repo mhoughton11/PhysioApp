@@ -31,6 +31,7 @@ namespace DIYHIIT.ViewModels.Workouts
             : base(navigation, dialogService)
         {
             InitializeAsync(data);
+
             _workoutDataService = workoutDataService;
             _userDataService = userDataService;
         }
@@ -103,7 +104,10 @@ namespace DIYHIIT.ViewModels.Workouts
 
             MessagingCenter.Subscribe<AddExerciseViewModel, Exercise>(this, ExerciseAdded, (sender, arg) =>
             {
-                arg.Index = rand.Next(0, 0xFFFF);
+                // Check how many times this exercise already exists in workout
+                var count = _exercises.Where(e => e.Name == arg.Name).Count();
+                arg.Index = count;
+
                 Exercises.Add(arg);
             });
 
@@ -156,6 +160,9 @@ namespace DIYHIIT.ViewModels.Workouts
                 return;
             }
 
+            var ids = new List<string>();
+            foreach (var ex in _exercises) { ids.Add(ex.Id.ToString()); }
+
             var name = await GetWorkoutName();
 
             // Create workout with the specified parameters/exercises.
@@ -166,13 +173,12 @@ namespace DIYHIIT.ViewModels.Workouts
                 RestInterval = restInterval,
                 Type = (WorkoutType)workoutType,
                 DateAdded = DateTime.Now,
-                Exercises = _exercises.ToList(),
+                ExerciseIds = JsonConvert.SerializeObject(ids),
                 Duration = Helpers.GetWorkoutDuration(_exercises.ToList(), activeInterval, restInterval),
                 ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList()),
                 UserId = App.CurrentUser.Id
             };
 
-            //App.CurrentUser.Workouts.Add(workout);
             await _workoutDataService.SaveWorkout(workout);
 
             MessagingCenter.Send(this, WorkoutsUpdated);

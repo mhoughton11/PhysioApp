@@ -10,7 +10,6 @@ using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
-using DIYHIIT.Library.Persistance.Models;
 using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Services.Data
@@ -25,10 +24,10 @@ namespace DIYHIIT.Services.Data
             _genericRepository = genericRepository;
         }
 
-        public async Task<IEnumerable<DB_Exercise>> GetAllExercisesAsync(int? t = null)
+        public async Task<IEnumerable<Exercise>> GetAllExercisesAsync(int? t = null)
         {
             // If cache not empty, fetch from cache and return items.
-            var cacheExercises = await GetFromCache<List<DB_Exercise>>("Exercises");
+            var cacheExercises = await GetFromCache<List<Exercise>>("Exercises");
         
             if (cacheExercises != null)
             {
@@ -57,7 +56,7 @@ namespace DIYHIIT.Services.Data
                         break;
                 }
 
-                var ex = await _genericRepository.GetAsync<List<DB_Exercise>>(path);
+                var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
 
                 // If exercises null, return. If not, save to cache and return them.
                 if (ex == null) { return null; }
@@ -73,6 +72,26 @@ namespace DIYHIIT.Services.Data
                     return ex.Where(e => (int)e.Type == t);
                 }
             }
+        }
+
+        public async Task<IEnumerable<Exercise>> GetExercisesFromList(string ids)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesByListEndpoint;
+                    break;
+
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.ExercisesByListEndpoint;
+                    break;
+            }
+
+            var ex = await _genericRepository.GetAsync<List<Exercise>>(path);
+
+            return ex;
         }
     }
 }

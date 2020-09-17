@@ -2,7 +2,6 @@
 using AutoMapper;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Models;
-using DIYHIIT.Library.Persistance.Models;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
 
@@ -33,8 +32,7 @@ namespace DIYHIIT.ViewModels.Base
 
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<DB_Exercise, Exercise>();
-                cfg.CreateMap<Exercise, DB_Exercise>();
+                // Put any required mappings here
             });
 
             Mapper = config.CreateMapper();

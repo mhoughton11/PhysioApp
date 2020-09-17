@@ -50,7 +50,7 @@ namespace DIYHIIT.API.Controllers
         }
 
         [HttpPost]
-        [Route("updateWorkout")]
+        [Route("update")]
         public async Task<IActionResult> UpdateWorkout([FromBody] Workout workout)
         {
             _appDbContext.DB_Workouts.Update(workout);
@@ -60,7 +60,7 @@ namespace DIYHIIT.API.Controllers
         }
 
         [HttpPost]
-        [Route("saveWorkout")]
+        [Route("save")]
         public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
         {
             // If already contains workout, don't save.

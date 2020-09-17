@@ -18,7 +18,6 @@ namespace DIYHIIT.Library.Contracts
 
         WorkoutType Type { get; set; }
 
-        Workout Workout { get; set; }
         int WorkoutId { get; set; }
     }
 }

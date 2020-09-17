@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIYHIIT.Library.Models;
-using DIYHIIT.Library.Persistance.Models;
 
 namespace DIYHIIT.Contracts.Services.Data
 {

@@ -34,10 +34,9 @@ namespace DIYHIIT.Library.Models
 
         public WorkoutType Type { get; set; }
 
+        public string ExerciseIds { get; set; }
         public List<Exercise> Exercises { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User {get; set; }
         public int UserId { get; set; }
     }
 }

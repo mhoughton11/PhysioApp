@@ -8,7 +8,6 @@ using DIYHIIT.Constants;
 using DIYHIIT.Contracts;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Library.Models;
-using DIYHIIT.Library.Persistance.Models;
 using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Services.Data
@@ -117,7 +116,7 @@ namespace DIYHIIT.Services.Data
                     break;
             }
 
-            if (workout.User == null) { return null; }
+            if (workout.UserId == 0) { return null; }
 
             return await _genericRepository.PostAsync(path, workout);
         }

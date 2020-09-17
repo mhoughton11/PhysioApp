@@ -34,5 +34,31 @@ namespace DIYHIIT.Data.Controllers
 
             return Ok(items);
         }
+
+        [HttpGet]
+        [Route("list")]
+        public async Task<IActionResult> GetFromString(string ids)
+        {
+            var exercises = new List<Exercise>();
+            var _ids = JsonConvert.DeserializeObject<List<int>>(ids);
+
+            if (_ids != null && _ids.Count > 0)
+            {
+                foreach (var id in _ids)
+                {
+                    var ex = await _appDbContext.DB_Exercises
+                        .Where(e => e.Id == id)
+                        .FirstOrDefaultAsync();
+
+                    exercises.Add(ex);
+                }
+
+                return Ok(exercises);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }
