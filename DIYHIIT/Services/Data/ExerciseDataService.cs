@@ -81,11 +81,11 @@ namespace DIYHIIT.Services.Data
             switch (App.AppHostOptions)
             {
                 case HostOptions.Production:
-                    path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesByListEndpoint;
+                    path = ApiConstants.BaseApiUrl + ApiConstants.ExercisesByListEndpoint + $"?ids={ids}";
                     break;
 
                 case HostOptions.LocalHost:
-                    path = ApiConstants.BaseLocalHost + ApiConstants.ExercisesByListEndpoint;
+                    path = ApiConstants.BaseLocalHost + ApiConstants.ExercisesByListEndpoint + $"?ids={ids}";
                     break;
             }
 

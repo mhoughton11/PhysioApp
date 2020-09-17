@@ -94,9 +94,9 @@ namespace DIYHIIT.ViewModels.Workouts
             _dialogService.ShowLoading("Loading workout...");
 
             _workout = data as Workout;
-            var items = await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIds);
+            var items = (await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIds)).ToList();
 
-            Exercises = new ObservableCollection<IExercise>(items);
+            Exercises = new ObservableCollection<IExercise>();
             
             Name = _workout.Name;
             ExerciseCount = _workout.ExerciseCount;
@@ -111,15 +111,15 @@ namespace DIYHIIT.ViewModels.Workouts
             };
 
             // Add rest behind all but last exercises.
-            for (int i = 0; i < Exercises.Count()-1; i++)
+            for (int i = 0; i < items.Count-1; i++)
             {
-                Exercises[i].Duration = _workout.ActiveInterval;
-                Exercises.Add(Exercises[i]);
+                items[i].Duration = _workout.ActiveInterval;
+                Exercises.Add(items[i]);
                 Exercises.Add(_rest);
             }
 
-            Exercises[Exercises.Count - 1].Duration = _workout.ActiveInterval;
-            Exercises.Add(Exercises[Exercises.Count - 1]);
+            items[items.Count - 1].Duration = _workout.ActiveInterval;
+            Exercises.Add(items[items.Count - 1]);
 
             _dialogService.HideLoading();
 

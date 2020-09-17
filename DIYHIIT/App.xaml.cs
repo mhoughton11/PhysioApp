@@ -28,7 +28,7 @@ namespace DIYHIIT
 
             MainPage = new SplashScreen();
 
-            AttemptAutoLogin();
+            //AttemptAutoLogin();
         }
 
         private void InitializeApp(AppSetup setup)

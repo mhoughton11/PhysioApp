@@ -84,10 +84,11 @@ namespace DIYHIIT.ViewModels.Tabs
         public override async Task InitializeAsync(object data)
         {
             IsBusy = true;
-            _dialogService.ShowLoading("Loading workouts...");
 
             if (_workoutsUpdated)
             {
+                _dialogService.ShowLoading("Loading workouts...");
+
                 try
                 {
                     var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.Id);
@@ -100,9 +101,10 @@ namespace DIYHIIT.ViewModels.Tabs
                     _dialogService.HideLoading();
                     Debug.WriteLine(ex);
                 }
+
+                _dialogService.HideLoading();
             }
 
-            _dialogService.HideLoading();
             _workoutsUpdated = false;
 
             IsBusy = false;

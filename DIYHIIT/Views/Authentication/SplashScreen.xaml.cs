@@ -19,7 +19,7 @@ namespace DIYHIIT.Views.Authentication
             _authenticationService = AppContainer.Container.Resolve<IAuthenticationService>();
             _userDataService = AppContainer.Container.Resolve<IUserDataService>();
 
-            //AttemptAutoLogin();
+            AttemptAutoLogin();
         }
 
         private readonly IAuthenticationService _authenticationService;
@@ -37,7 +37,6 @@ namespace DIYHIIT.Views.Authentication
                     App.Current.MainPage = new LoginView();
                     return;
                 }
-
                 // Success
                 var user = await _userDataService.GetUser(response.UserUid);
 
@@ -52,10 +51,10 @@ namespace DIYHIIT.Views.Authentication
             }
             catch (Exception e)
             {
+                Debug.WriteLine("DB user retrieval failed");
                 Debug.WriteLine(e.Message);
             }
 
-            Debug.WriteLine($"DB user retrieval failed");
             App.Current.MainPage = new LoginView();
         }
     }

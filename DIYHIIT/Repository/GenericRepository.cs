@@ -29,7 +29,7 @@ namespace DIYHIIT.Repository
         {
             try
             {
-                Debug.WriteLine($"HTTP Get: {uri}");                    
+                // Debug.WriteLine($"HTTP Get: {uri}");                    
 
                 HttpClient client = CreateHttpClient(uri);
                 HttpResponseMessage responseMessage = await client.GetAsync(uri);
