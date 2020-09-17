@@ -14,33 +14,79 @@ namespace DIYHIIT.ViewModels.Tabs
 {
     public class ProfileViewModel : BaseViewModel
     {
-        private readonly IAuthenticationService _authenticationService;
-        private readonly IUserDataService _userDataService;
-        Random random;
-
-        public string TextLabel { get; set; }
-
         public ProfileViewModel(INavigation navigation,
                                 IDialogService dialogService,
                                 IAuthenticationService authenticationService,
                                 IUserDataService userDataService)
             : base(navigation, dialogService)
         {
-            TextLabel = "Profile";
             _authenticationService = authenticationService;
             _userDataService = userDataService;
-            random = new Random();
+
         }
+
+        #region Private Fields
+
+        // View Components
+        private string _userName;
+        private string _userImage;
+        private string _userEmail;
+
+        // Model Components
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IUserDataService _userDataService;
+
+        #endregion
+
+        #region Public Members and Commands
+
+        public string UserName
+        {
+            get => _userName;
+            set
+            {
+                _userName = value;
+                RaisePropertyChanged(() => UserName);
+            }
+        }
+
+        public string UserImage
+        {
+            get => _userImage;
+            set
+            {
+                _userImage = value;
+                RaisePropertyChanged(() => UserImage);
+            }
+        }
+
+        public string UserEmail
+        {
+            get => _userEmail;
+            set
+            {
+                _userEmail = value;
+                RaisePropertyChanged(() => UserEmail);
+            }
+        }
+
+        public ICommand LogoutCommand => new Command(OnLogoutCommand);
+
+        #endregion
+
+        #region Public Methods
 
         public override Task InitializeAsync(object data)
         {
-            random = new Random();
-            TextLabel = "Profile" + random.Next(0xFF);
+            UserName = App.CurrentUser.FirstName + " "
+                + App.CurrentUser.LastName;
+
+            UserImage = "";
 
             return base.InitializeAsync(data);
         }
 
-        public ICommand LogoutCommand => new Command(OnLogoutCommand);
+        #endregion
 
         #region Private Methods
 

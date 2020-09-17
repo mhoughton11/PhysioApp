@@ -36,7 +36,8 @@ namespace DIYHIIT.ViewModels.Exercises
         private readonly IExerciseDataService _exeriseDataService;
 
         private bool _indicatorEnabled;
-        private ObservableCollection<IExercise> _flowExercises;
+        private ObservableCollection<IExercise> _exercises;
+        private IExercise _selectedExercise;
         private List<string> _exerciseTypes;
         private int _selectedIndex;
 
@@ -57,13 +58,27 @@ namespace DIYHIIT.ViewModels.Exercises
             }
         }
 
-        public ObservableCollection<IExercise> FlowExercises 
+        public ObservableCollection<IExercise> Exercises 
         {
-            get => _flowExercises; 
+            get => _exercises; 
             set
             {
-                _flowExercises = value;
-                RaisePropertyChanged(() => FlowExercises);
+                _exercises = value;
+                RaisePropertyChanged(() => Exercises);
+            }
+        }
+
+        public IExercise SelectedExercise
+        {
+            get => _selectedExercise;
+            set
+            {
+                _selectedExercise = value;
+                RaisePropertyChanged(() => SelectedExercise);
+
+                OnExerciseTapped((Exercise)value);
+
+                //SelectedExercise = null;
             }
         }
  
@@ -76,7 +91,6 @@ namespace DIYHIIT.ViewModels.Exercises
                 RaisePropertyChanged(() => ExerciseTypes);
             }
         }
-
         
         public int SelectedIndex
         {
@@ -99,7 +113,7 @@ namespace DIYHIIT.ViewModels.Exercises
             _dialogService.ShowLoading("Loading exericses...");
 
             ExerciseTypes = Enum.GetNames(typeof(WorkoutType)).Cast<string>().ToList();
-            FlowExercises = new ObservableCollection<IExercise>();
+            Exercises = new ObservableCollection<IExercise>();
 
             SelectedIndex = 0;
             _dialogService.HideLoading();
@@ -123,7 +137,7 @@ namespace DIYHIIT.ViewModels.Exercises
                 return;
             }
 
-            FlowExercises = new ObservableCollection<IExercise>(items);
+            Exercises = new ObservableCollection<IExercise>(items);
 
             IndicatorEnabled = false;
         }
@@ -135,7 +149,10 @@ namespace DIYHIIT.ViewModels.Exercises
 
         private void OnExerciseTapped(Exercise selectedExercise)
         {
-            MessagingCenter.Send(this, ExerciseAdded, selectedExercise);
+            if (selectedExercise != null)
+            {
+                MessagingCenter.Send(this, ExerciseAdded, selectedExercise);
+            }   
         }
 
         #endregion

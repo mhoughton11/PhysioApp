@@ -47,6 +47,7 @@
                       Grid.ColumnSpan="2"
                       ItemsSource="{Binding Exercises}"
                       VerticalOptions="Start"
+                      BackgroundColor="Transparent"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
                       x:Name="ExerciseList">

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Helpers;
 using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;

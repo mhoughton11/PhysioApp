@@ -12,5 +12,7 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Settings\" />
+    <Folder Include="Contracts\ViewComponents\" />
+    <Folder Include="Models\ViewComponents\" />
   </ItemGroup>
 </Project>

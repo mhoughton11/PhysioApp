@@ -61,6 +61,8 @@
     <Folder Include="ViewModels\Exercises\" />
     <Folder Include="ViewModels\TabPages\" />
     <Folder Include="ViewModels\Workouts\" />
+    <Folder Include="Views\Profile\" />
+    <Folder Include="ViewModels\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIYHIIT.Library\DIYHIIT.Library.csproj" />

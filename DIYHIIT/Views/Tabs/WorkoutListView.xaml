@@ -12,7 +12,8 @@
 
     <ContentPage.Content>
         <StackLayout HorizontalOptions="FillAndExpand"
-                     VerticalOptions="FillAndExpand">
+                     VerticalOptions="FillAndExpand"
+                     BackgroundColor="Transparent">
 
             <ListView HasUnevenRows="True"
                       ItemsSource="{Binding WorkoutList}"

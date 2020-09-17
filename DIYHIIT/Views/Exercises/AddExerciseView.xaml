@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              x:Class="DIYHIIT.Views.Exercises.AddExerciseView"
              Title="Add Exercise">
 
@@ -17,41 +16,52 @@
                     HorizontalOptions="FillAndExpand">
             </Picker>
             
-            <flv:FlowListView SeparatorVisibility="None"
-                              IsVisible="{Binding IsFlowEnabled}"
-                              BackgroundColor="WhiteSmoke"
-                              FlowItemTappedCommand="{Binding ExerciseTapped}"
-                              FlowColumnCount="3"
-                              FlowItemsSource="{Binding FlowExercises}"
-                              HasUnevenRows="True"
-                              IsPullToRefreshEnabled="True"
-                              RefreshCommand="{Binding RefreshCommand}"
-                              IsRefreshing="{Binding IndicatorEnabled}">
+            <CollectionView ItemsSource="{Binding Exercises}"
+                            VerticalOptions="FillAndExpand"
+                            Margin="6"
+                            SelectionMode="Single"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            SelectedItem="{Binding SelectedExercise}"
+                            SelectionChangedCommand="{Binding ExerciseTapped}">
 
-                <flv:FlowListView.FlowColumnTemplate>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="3"
+                                     VerticalItemSpacing="4"
+                                     HorizontalItemSpacing="4"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="4"
+                        <Frame Margin="0"
                                Padding="0"
                                HasShadow="False"
-                               CornerRadius="10">
-                            <StackLayout>
+                               CornerRadius="10"
+                               IsClippedToBounds="True"
+                               BackgroundColor="Transparent">
+                            <StackLayout BackgroundColor="Transparent">
 
                                 <Image Aspect="AspectFill"
                                        HeightRequest="100"
+                                       Margin="0"
+                                       BackgroundColor="Transparent"
                                        Source="{Binding ImageURL}"/>
 
                                 <Label Text="{Binding DisplayName}"
-                                       FontSize="16"
-                                       LineBreakMode="WordWrap"
+                                       FontSize="15"
+                                       Margin="0"
+                                       Padding="0"
+                                       LineBreakMode="TailTruncation"
                                        TextColor="DarkBlue"
-                                       VerticalOptions="EndAndExpand"
+                                       BackgroundColor="Transparent"
+                                       VerticalOptions="CenterAndExpand"
                                        HorizontalOptions="CenterAndExpand"/>
 
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
-                </flv:FlowListView.FlowColumnTemplate>
-            </flv:FlowListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
         </StackLayout>
        

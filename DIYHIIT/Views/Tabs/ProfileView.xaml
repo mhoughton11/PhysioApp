@@ -1,17 +1,47 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DIYHIIT.Views.Tabs.ProfileView">
+             x:Class="DIYHIIT.Views.Tabs.ProfileView"
+             Title="My Profile">
+
      <ContentPage.ToolbarItems>
         <ToolbarItem Text="Log out"
                      Command="{Binding LogoutCommand}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="Center"
-                     VerticalOptions="CenterAndExpand">
+        <StackLayout>
 
-            <Label Text="Profile Page"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="John Smith"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"
+                       Padding="10"
+                       FontSize="25"/>
+
+                <Frame IsClippedToBounds="True"
+                       BackgroundColor="LightGray"
+                       Grid.Column="1"
+                       Margin="20"
+                       Padding="0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       HeightRequest="100"
+                       WidthRequest="100"
+                       HasShadow="False"
+                       CornerRadius="50">
+                    <Image Source="https://icons-for-free.com/iconfiles/png/512/neutral+user-131964784832104677.png"/>
+                </Frame>
+            </Grid>
+
+            <Label Text="john.smith@example.com"
+                   TextColor="Gray"
+                   Margin="10"/>
 
         </StackLayout>
     </ContentPage.Content>
