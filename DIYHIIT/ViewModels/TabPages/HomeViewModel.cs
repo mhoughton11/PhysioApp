@@ -9,11 +9,12 @@ using DIYHIIT.Library.Contracts.ViewComponents;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Library.Models.ViewComponents;
 using DIYHIIT.ViewModels.Base;
+using DIYHIIT.Library.Settings;
 using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels.Tabs
 {
-    public class HomeViewModel: BaseViewModel
+    public class HomeViewModel : BaseViewModel
     {
         public HomeViewModel(IUserDataService userDataService,
                              INavigation navigationService,
@@ -22,7 +23,7 @@ namespace DIYHIIT.ViewModels.Tabs
         {
             _userDataService = userDataService;
 
-            Task.Run(() => InitializeAsync(null));
+            InitializeAsync(null);
         }
 
         #region Private Members
@@ -51,18 +52,23 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Public Methods
 
-        public override async Task InitializeAsync(object data)
+        public override Task InitializeAsync(object data)
         {
             FeedItems = new ObservableCollection<IFeedItem>();
 
             var item = new FeedItem()
             {
-                User = App.CurrentUser
+                UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.LastName,
+                Title = "DIY HIIT 0.1!",
+                Message = "Welcome to DIY-HIIT pre-launch. Basic funtionality down, lots of improvements on the way.",
+                DateTime = DateTime.Now,
+                ImageURL = "https://api.time.com/wp-content/uploads/2020/03/gym-coronavirus.jpg?w=600&quality=85"
+                //FeedType = FeedItemTypes.Post
             };
 
             FeedItems.Add(item);
 
-            await base.InitializeAsync(data);
+            return base.InitializeAsync(data);
         }
 
         #endregion

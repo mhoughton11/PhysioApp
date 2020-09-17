@@ -4,8 +4,67 @@
              x:Class="DIYHIIT.Views.Tabs.HomeView"
              Title="Feed">
     <ContentPage.Content>
-        <TableView>
+        <ListView ItemsSource="{Binding FeedItems}"
+                  BackgroundColor="LightGray"
+                  HasUnevenRows="True"
+                  SeparatorVisibility="None"
+                  SelectionMode="None"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="10"
+                               BackgroundColor="White" Margin="5"
+                               HeightRequest="160">
 
-        </TableView>
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding ImageURL}"
+                                           Aspect="AspectFit"
+                                           Margin="0"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Grid.Column="1"
+                                           Text="{Binding UserName}"
+                                           FontSize="20"
+                                           BackgroundColor="Red"
+                                           TextColor="Black"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="StartAndExpand"/>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="1"
+                                           Text="{Binding DateTime}"
+                                           FontSize="15"
+                                           TextColor="Black"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="StartAndExpand"/>
+                                </Grid>
+
+                                <Label Text="{Binding Title}"
+                                       FontSize="30"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="StartAndExpand"/>
+
+                                <Label Text="{Binding Message}"
+                                       FontSize="12"
+                                       LineBreakMode="WordWrap"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="StartAndExpand"/>
+
+                            </StackLayout>
+                        </Frame>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>
