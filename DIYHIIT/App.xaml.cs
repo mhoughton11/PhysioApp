@@ -5,7 +5,6 @@ using DIYHIIT.DependencyInjection;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Views;
 using DIYHIIT.Views.Authentication;
-using DLToolkit.Forms.Controls;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -36,7 +35,6 @@ namespace DIYHIIT
             AppHostOptions = HostOptions.Production;
 
             AppContainer.Container = setup.CreateContainer();
-            FlowListView.Init();
         }
 
         private async void AttemptAutoLogin()

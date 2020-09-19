@@ -5,8 +5,8 @@
              Title="My Profile">
 
      <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Log out"
-                     Command="{Binding LogoutCommand}"/>
+        <ToolbarItem IconImageSource="settings.png"
+                     Command="{Binding SettingsTapped}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

@@ -1,5 +1,6 @@
 ﻿using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
+using DIYHIIT.Library.Models.ViewComponents;
 using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using DIYHIIT.ViewModels.Base;
@@ -35,6 +36,7 @@ namespace DIYHIIT.ViewModels.Workouts
         private string _imageName;
         private double _timeLeft;
         private string _nextExercise;
+        private double _exerciseProgress;
         private double _workoutProgress;
         private string _progressLabel;
         private string _timeLeftColour;
@@ -45,7 +47,7 @@ namespace DIYHIIT.ViewModels.Workouts
         double curTime;
         double totalTime = 0;
         double duration;
-
+        private WorkoutCountdown _countdown;
         private IWorkout _workout;
         int counter = 0;
 
@@ -110,13 +112,13 @@ namespace DIYHIIT.ViewModels.Workouts
             }
         }
         
-        public string ProgressLabel
+        public string WorkoutProgressLabel
         {
             get => _progressLabel;
             set
             {
                 _progressLabel = value;
-                RaisePropertyChanged(() => ProgressLabel);
+                RaisePropertyChanged(() => WorkoutProgressLabel);
             }
         }
         
@@ -150,13 +152,21 @@ namespace DIYHIIT.ViewModels.Workouts
             }
         }
 
+        public double ExerciseProgress
+        {
+            get => _exerciseProgress;
+            set
+            {
+                _exerciseProgress = value;
+                RaisePropertyChanged(() => ExerciseProgress);
+            }
+        }
+
         public double EffortSliderValue { get; set; }
 
         public ICommand DoneCommand => new Command(ExecuteDoneCommand);
 
         #endregion
-
-
 
         #region Public Methods
 
@@ -167,9 +177,12 @@ namespace DIYHIIT.ViewModels.Workouts
             EffortDetailEnabled = "False";
             TimeLabelEnabled = "True";
 
-            var active = _workout.ActiveInterval ?? 0;
+            _countdown.Duration = _workout.Duration.Value;
+            _countdown.Ticked += OnExerciseTimerTicked;
+
+            var active = _workout.ActiveInterval.Value;
             var count = _exercises.Count;
-            var rest = _workout.RestInterval ?? 0;
+            var rest = _workout.RestInterval.Value;
 
             duration = active * count + rest * count;
 
@@ -199,20 +212,25 @@ namespace DIYHIIT.ViewModels.Workouts
         {
             // Initialize the progress bar
             WorkoutProgress = 0.0;
-            ProgressLabel = "0";
+            WorkoutProgressLabel = "0";
             curTime = 0;
 
             // Start timer on background thread.
             await Task.Run(() => timer.Start());
 
-            timer.Elapsed += Timer_Elapsed;
+            timer.Elapsed += WorkoutTimerElapsed;
+
+            _countdown.Ticked += OnExerciseTimerTicked;
+            _countdown.Completed += OnExerciseTimerCompleted;
+
+            _countdown.Start(1);
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void WorkoutTimerElapsed(object sender, ElapsedEventArgs e)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                UpdateUI(counter, curTime);
+                UpdateUI(_exercises[counter], curTime);
             });
 
             if (curTime+1 > _exercises[counter].Duration)
@@ -228,29 +246,58 @@ namespace DIYHIIT.ViewModels.Workouts
             totalTime++;
         }
 
-        private void UpdateUI(int count, double timerValue)
+        private void OnExerciseTimerTicked()
         {
-            if (count == _exercises.Count)
-                return;
+            var remaining = _countdown.RemainingTime;
+            var total = _exercises[counter].Duration.Value;
 
+            ExerciseProgress = remaining / total;
+        }
+
+        private void OnExerciseTimerCompleted()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                UpdateUI(_exercises[counter], curTime);
+            });
+
+            if (curTime + 1 > _exercises[counter].Duration)
+            {
+                curTime = 0;
+                counter++;
+
+                if (counter == _exercises.Count)
+                {
+                    StopWorkout();
+                }
+            }
+
+            curTime++;
+            totalTime++;
+
+            _countdown.Start();
+        }
+
+        private void UpdateUI(IExercise curEx, double timerValue)
+        {
             // Update image
-            ImageName = _exercises[count].ImageURL;
+            ImageName = curEx.ImageURL;
 
             // Update timer
-            TimeLeft = (_exercises[count].Duration ?? 0) - timerValue + 1;
+            TimeLeft = (curEx.Duration.Value) - timerValue + 1;
 
             WorkoutProgress = totalTime / duration;
-            ProgressLabel = string.Format("{0:0}%", WorkoutProgress * 100);
+            WorkoutProgressLabel = string.Format("{0:0}%", WorkoutProgress * 100);
 
             // Update current exercise
-            CurrentExercise = _exercises[count].DisplayName;
+            CurrentExercise = curEx.DisplayName;
 
             if (CurrentExercise != "Rest")
             {
                 // Update next exercise
                 try
                 {
-                    NextExercise = _exercises[count + 2].DisplayName;
+                    NextExercise = _exercises[counter].DisplayName;
                 }
                 catch (Exception)
                 {
@@ -262,7 +309,7 @@ namespace DIYHIIT.ViewModels.Workouts
                 // Update next exercise
                 try
                 {
-                    NextExercise = _exercises[count + 1].DisplayName;
+                    NextExercise = _exercises[counter].DisplayName;
                 }
                 catch (Exception)
                 {

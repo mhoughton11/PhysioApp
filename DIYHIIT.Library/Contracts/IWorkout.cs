@@ -21,7 +21,6 @@ namespace DIYHIIT.Library.Contracts
         DateTime? DateUsed { get; set; }
 
         string ExerciseIds { get; set; }
-        List<Exercise> Exercises { get; set; }
 
         WorkoutType Type { get; set; }
 

@@ -216,8 +216,7 @@ namespace DIYHIIT.ViewModels.Workouts
             }
             else
             {
-                var t = Enum.GetName(typeof(WorkoutType), SelectedWorkoutType);
-                name =  t + " Workout";
+                name =  "My Workout";
             }
 
             return name;

@@ -15,7 +15,9 @@
                 <DataTemplate>
                     <ViewCell>
                         <Frame CornerRadius="10"
-                               BackgroundColor="White" Margin="5"
+                               BackgroundColor="White"
+                               Margin="5"
+                               HasShadow="False"
                                HeightRequest="160">
 
                             <StackLayout>

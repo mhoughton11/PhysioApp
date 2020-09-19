@@ -13,11 +13,6 @@ namespace DIYHIIT.Library.Models
     // Principle Entity
     public class Workout : IWorkout
     {
-        public Workout()
-        {
-            Exercises = new List<Exercise>();
-        }
-
         [Key]
         public int Id { get; set; }
 
@@ -36,7 +31,6 @@ namespace DIYHIIT.Library.Models
         public WorkoutType Type { get; set; }
 
         public string ExerciseIds { get; set; }
-        public List<Exercise> Exercises { get; set; }
 
         public int UserId { get; set; }
 

@@ -9,6 +9,7 @@ using DIYHIIT.Views.Authentication;
 using DIYHIIT.ViewModels.Base;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
+using DIYHIIT.Views.Profile;
 
 namespace DIYHIIT.ViewModels.Tabs
 {
@@ -70,7 +71,7 @@ namespace DIYHIIT.ViewModels.Tabs
             }
         }
 
-        public ICommand LogoutCommand => new Command(OnLogoutCommand);
+        public ICommand SettingsTapped => new Command(OnSettingsTapped);
 
         #endregion
 
@@ -90,12 +91,9 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Methods
 
-        private void OnLogoutCommand()
+        private async void OnSettingsTapped()
         {
-            _authenticationService.SignOut();
-
-            App.CurrentUser = null;
-            App.Current.MainPage = new LoginView();
+            await _navigation.PushAsync(new SettingsView());
         }
 
         #endregion
