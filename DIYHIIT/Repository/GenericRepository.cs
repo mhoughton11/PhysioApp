@@ -75,7 +75,6 @@ namespace DIYHIIT.Repository
                 Debug.WriteLine($"HTTP Post: {uri}");
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
-                Debug.WriteLine($"HTTP Post content: {await content.ReadAsStringAsync()}");
 
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace DIYHIIT.Library.Models.ViewComponents
 {
-    public class WorkoutCountdown : BindableObject
+    public class Countdown : BindableObject
     {
         double _remainingTime;
         double _currentTime = 0;
@@ -23,14 +24,16 @@ namespace DIYHIIT.Library.Models.ViewComponents
             }
         }
 
-        public void Start(int seconds = 1)
+        public void Start(double interval)
         {
-            Device.StartTimer(TimeSpan.FromSeconds(seconds), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(interval), () =>
             {
                 RemainingTime = Duration - _currentTime;
 
-                _currentTime += seconds;
+                _currentTime += interval;
                 var ticked = RemainingTime > 1;
+
+                Debug.WriteLine($"ticked. current time: {_currentTime}");
 
                 if (ticked)
                 {

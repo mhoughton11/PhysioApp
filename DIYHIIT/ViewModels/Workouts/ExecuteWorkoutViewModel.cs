@@ -23,18 +23,18 @@ namespace DIYHIIT.ViewModels.Workouts
                                        IDialogService dialogService)
             : base(navigationService, dialogService)
         {
-            _workout = workout;
             _exercises = exercises;
             _userDataService = userDataService;
+
             Task.Run(async() => await InitializeAsync(workout));
         }
 
         #region Private Fields
 
         // View Components
-        private string _currentExercise;
+        private string _currentExerciseName;
         private string _imageName;
-        private double _timeLeft;
+        private double _exerciseTimeLeft;
         private string _nextExercise;
         private double _exerciseProgress;
         private double _workoutProgress;
@@ -44,17 +44,20 @@ namespace DIYHIIT.ViewModels.Workouts
         private string _timeLabelEnabled;
 
         // Model Components
-        double curTime;
-        double totalTime = 0;
-        double duration;
-        private WorkoutCountdown _countdown;
+        double currentExerciseTime;     // Time spent in current ex
+        double totalTimeElapsed = 0;    // Total time spent in workout
+
+        double _workoutDuration;        // Time to be spent in total in workout
+        private Countdown _countdown;
+        private IExercise _currentExercise;
         private IWorkout _workout;
         int counter = 0;
 
-        Timer timer;
-
         private List<IExercise> _exercises;
         private readonly IUserDataService _userDataService;
+
+        public event Action Completed;
+        public event Action Ticked;
 
         #endregion
 
@@ -62,31 +65,31 @@ namespace DIYHIIT.ViewModels.Workouts
 
         public string CurrentExercise 
         {
-            get => _currentExercise;
+            get => _currentExerciseName;
             set
             {
-                _currentExercise = value;
+                _currentExerciseName = value;
                 RaisePropertyChanged(() => CurrentExercise);
             }
         }
         
-        public string ImageName
+        public string ImageURL
         {
             get => _imageName;
             set
             {
                 _imageName = value;
-                RaisePropertyChanged(() => ImageName);
+                RaisePropertyChanged(() => ImageURL);
             }
         }
         
-        public double TimeLeft 
+        public double ExerciseTimeLeft 
         {
-            get => _timeLeft;
+            get => _exerciseTimeLeft;
             set
             {
-                _timeLeft = value;
-                RaisePropertyChanged(() => TimeLeft);
+                _exerciseTimeLeft = value;
+                RaisePropertyChanged(() => ExerciseTimeLeft);
 
                 GetTimeLeftColour(value);
             }
@@ -172,170 +175,155 @@ namespace DIYHIIT.ViewModels.Workouts
 
         public override async Task InitializeAsync(object workout)
         {
-            timer = new Timer(1000);
+            _workout = workout as Workout;
 
-            EffortDetailEnabled = "False";
-            TimeLabelEnabled = "True";
-
-            _countdown.Duration = _workout.Duration.Value;
-            _countdown.Ticked += OnExerciseTimerTicked;
-
-            var active = _workout.ActiveInterval.Value;
-            var count = _exercises.Count;
-            var rest = _workout.RestInterval.Value;
-
-            duration = active * count + rest * count;
-
-            CurrentExercise = _exercises[0].DisplayName;
-            TimeLeft = _exercises[0].Duration ?? 0;
-            ImageName = _exercises[0].ImageURL;
-
-            try
-            {
-                NextExercise = _exercises[2].DisplayName;
-            }
-            catch (Exception)
-            {
-                NextExercise = "Finished!";
-            }
+            InitViewComponents();
 
             BeginWorkoutAsync();
 
             await base.InitializeAsync(workout);
         }
 
+        private void InitViewComponents()
+        {
+            // Progress bar is 0
+            currentExerciseTime = 0;
+
+            // Get exercise
+            var ex = _exercises[0];
+            // Set labels and images
+            SetExerciseViews(ex);
+            // Set progress bars
+            SetProgressBars();
+
+            // Init labels
+            EffortDetailEnabled = "False";
+            TimeLabelEnabled = "True";
+            TimeLeftColour = "White";
+
+            foreach (var _ex in _exercises)
+            {
+                _workoutDuration += _ex.Duration.GetValueOrDefault();
+            }
+            _workoutDuration += _exercises.Count-1;
+
+            GetNextExercise(0);
+        }
+
         #endregion
 
         #region Private Methods
 
-        private async void BeginWorkoutAsync()
-        {
-            // Initialize the progress bar
-            WorkoutProgress = 0.0;
-            WorkoutProgressLabel = "0";
-            curTime = 0;
+        private void BeginWorkoutAsync()
+        {            
+            var timeSpan = new TimeSpan(0, 0, 0, 1);
 
-            // Start timer on background thread.
-            await Task.Run(() => timer.Start());
+            bool stopping = true;
 
-            timer.Elapsed += WorkoutTimerElapsed;
-
-            _countdown.Ticked += OnExerciseTimerTicked;
-            _countdown.Completed += OnExerciseTimerCompleted;
-
-            _countdown.Start(1);
-        }
-
-        private void WorkoutTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            Device.BeginInvokeOnMainThread(() =>
+            Device.StartTimer(timeSpan, () =>
             {
-                UpdateUI(_exercises[counter], curTime);
-            });
-
-            if (curTime+1 > _exercises[counter].Duration)
-            {
-                curTime = 0;
-                counter++;
-
-                if (counter == _exercises.Count)
-                    StopWorkout();
-            }
-
-            curTime++;
-            totalTime++;
-        }
-
-        private void OnExerciseTimerTicked()
-        {
-            var remaining = _countdown.RemainingTime;
-            var total = _exercises[counter].Duration.Value;
-
-            ExerciseProgress = remaining / total;
-        }
-
-        private void OnExerciseTimerCompleted()
-        {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                UpdateUI(_exercises[counter], curTime);
-            });
-
-            if (curTime + 1 > _exercises[counter].Duration)
-            {
-                curTime = 0;
-                counter++;
-
-                if (counter == _exercises.Count)
+                // Update the UI every second
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    StopWorkout();
-                }
-            }
+                    // Interact with UI elements
+                    currentExerciseTime++;
+                    totalTimeElapsed++;
 
-            curTime++;
-            totalTime++;
+                    IExercise ex;
 
-            _countdown.Start();
+                    try
+                    {
+                        ex = _exercises[counter];
+                    }
+                    catch
+                    {
+                        stopping = false;
+                        StopWorkout();
+                        return;
+                    }
+
+                    SetProgressBars();
+                    SetExerciseViews(ex);
+                    GetTimeLeftColour(currentExerciseTime);
+
+                    if (currentExerciseTime > ex.Duration)
+                    {
+                        currentExerciseTime = 0;
+                        counter++;
+
+                        GetNextExercise(counter);
+
+                        try
+                        {
+                            ex = _exercises[counter];
+                        }
+                        catch (Exception)
+                        {
+                            stopping = false;
+                            StopWorkout();
+                            return;
+                        }
+                    }
+                });
+                return stopping;
+            });
         }
 
-        private void UpdateUI(IExercise curEx, double timerValue)
+        private void SetProgressBars()
         {
-            // Update image
-            ImageName = curEx.ImageURL;
-
-            // Update timer
-            TimeLeft = (curEx.Duration.Value) - timerValue + 1;
-
-            WorkoutProgress = totalTime / duration;
+            WorkoutProgress = totalTimeElapsed / _workoutDuration;
             WorkoutProgressLabel = string.Format("{0:0}%", WorkoutProgress * 100);
-
-            // Update current exercise
-            CurrentExercise = curEx.DisplayName;
-
-            if (CurrentExercise != "Rest")
-            {
-                // Update next exercise
-                try
-                {
-                    NextExercise = _exercises[counter].DisplayName;
-                }
-                catch (Exception)
-                {
-                    NextExercise = "Finished!";
-                }
-            }
-            else
-            {
-                // Update next exercise
-                try
-                {
-                    NextExercise = _exercises[counter].DisplayName;
-                }
-                catch (Exception)
-                {
-                    NextExercise = "Finished!";
-                }
-            }
         }
 
-        private void GetTimeLeftColour(double time)
+        private void SetExerciseViews(IExercise ex)
+        {
+            ExerciseTimeLeft = (ex.Duration.Value) - currentExerciseTime + 1;
+            CurrentExercise = ex.DisplayName;
+            ImageURL = ex.ImageURL;
+            TimeLeftColour = GetTimeLeftColour(ExerciseTimeLeft);
+        }
+
+        private string GetTimeLeftColour(double time)
         {
             if (time > 5)
-                TimeLeftColour = "White";
+                return "White";
             else
-                TimeLeftColour = "Red";
+                return "Red";
+        }
+
+        private void GetNextExercise(int count)
+        {
+            try
+            {
+                var next = _exercises[count];
+
+                if (next.Name == "Rest")
+                {
+                    // Update next exercise
+                    NextExercise = _exercises[count + 1].DisplayName;
+                }
+                else
+                {
+                    NextExercise = _exercises[count + 2].DisplayName;
+                }
+            }
+            catch
+            {
+                NextExercise = "Finished!";
+            }         
         }
 
         private void StopWorkout()
         {
             Debug.WriteLine("Stopping workout.");
-            timer.Stop();
 
             EffortDetailEnabled = "True";
             TimeLabelEnabled = "False";
 
-            TimeLeft = 0;
+            ExerciseTimeLeft = 0;
             CurrentExercise = "Finished!";
+
+            ImageURL = "https://media.istockphoto.com/videos/just-finished-a-great-workout-at-the-gym-video-id827888858?s=640x640";
 
             NextExercise = "";
         }

@@ -18,8 +18,13 @@ namespace DIYHIIT.Views.Authentication
 
             _authenticationService = AppContainer.Container.Resolve<IAuthenticationService>();
             _userDataService = AppContainer.Container.Resolve<IUserDataService>();
+        }
 
+        protected override void OnAppearing()
+        {
             AttemptAutoLogin();
+
+            base.OnAppearing();
         }
 
         private readonly IAuthenticationService _authenticationService;

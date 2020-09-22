@@ -21,7 +21,7 @@
                              Margin="18"
                              ProgressColor="Blue"/>
 
-                <Label Text="{Binding ProgressLabel}"
+                <Label Text="{Binding WorkoutProgressLabel}"
                        Margin="18"
                        TextColor="Gray"
                        HorizontalOptions="StartAndExpand"
@@ -30,7 +30,7 @@
 
             <Image Aspect="AspectFit"
                    HeightRequest="200"
-                   Source="{Binding ImageName}"/>
+                   Source="{Binding ImageURL}"/>
 
             <Label Text="{Binding CurrentExercise}"
                    Margin="20"
@@ -39,7 +39,7 @@
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="Start"/>
 
-            <Label Text="{Binding TimeLeft, StringFormat='{0:0}'}"
+            <Label Text="{Binding ExerciseTimeLeft, StringFormat='{0:0}'}"
                    Margin="12"
                    FontSize="48"
                    TextColor="{Binding TimeLeftColour}"

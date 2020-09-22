@@ -13,6 +13,8 @@ namespace DIYHIIT.Droid.Authentication
         {
             if (FirebaseAuth.Instance.CurrentUser != null)
             {
+                Debug.WriteLine("Firebase auto-login failed.");
+
                 return new AuthenticationResponse
                 {
                     UserUid = FirebaseAuth.Instance.CurrentUser.Uid,

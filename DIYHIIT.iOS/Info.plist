@@ -37,6 +37,8 @@
 		<string>fa-solid-900.tff</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.houghtonstudio.uk.DIY-HIIT.DIYHIIT</string>
+	<string>com.houghtonstudio.uk.DIY-HIIT.DIY-HIIT</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
