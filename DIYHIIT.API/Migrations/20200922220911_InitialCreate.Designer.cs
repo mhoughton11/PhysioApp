@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200917064413_SimplifiedSchemaWithExerciseString")]
-    partial class SimplifiedSchemaWithExerciseString
+    [Migration("20200922220911_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,8 +61,6 @@ namespace DIYHIIT.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutId");
-
                     b.ToTable("DB_Exercises");
                 });
 
@@ -91,6 +89,44 @@ namespace DIYHIIT.API.Migrations
                     b.ToTable("DB_Users");
                 });
 
+            modelBuilder.Entity("DIYHIIT.Library.Models.ViewComponents.FeedItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BackgroundColour")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FeedType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WorkoutId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkoutId");
+
+                    b.ToTable("FeedItems");
+                });
+
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
                 {
                     b.Property<int>("Id")
@@ -100,6 +136,9 @@ namespace DIYHIIT.API.Migrations
 
                     b.Property<double?>("ActiveInterval")
                         .HasColumnType("float");
+
+                    b.Property<string>("BackgroundImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BodyFocus")
                         .HasColumnType("nvarchar(max)");
@@ -141,13 +180,11 @@ namespace DIYHIIT.API.Migrations
                     b.ToTable("DB_Workouts");
                 });
 
-            modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
+            modelBuilder.Entity("DIYHIIT.Library.Models.ViewComponents.FeedItem", b =>
                 {
-                    b.HasOne("DIYHIIT.Library.Models.Workout", null)
-                        .WithMany("Exercises")
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("DIYHIIT.Library.Models.Workout", "Workout")
+                        .WithMany()
+                        .HasForeignKey("WorkoutId");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>

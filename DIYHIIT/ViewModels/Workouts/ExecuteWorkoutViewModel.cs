@@ -48,16 +48,11 @@ namespace DIYHIIT.ViewModels.Workouts
         double totalTimeElapsed = 0;    // Total time spent in workout
 
         double _workoutDuration;        // Time to be spent in total in workout
-        private Countdown _countdown;
-        private IExercise _currentExercise;
         private IWorkout _workout;
         int counter = 0;
 
         private List<IExercise> _exercises;
         private readonly IUserDataService _userDataService;
-
-        public event Action Completed;
-        public event Action Ticked;
 
         #endregion
 

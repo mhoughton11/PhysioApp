@@ -1,20 +1,23 @@
 ﻿using System;
-using DIYHIIT.Library.Settings;
+using DIYHIIT.Library.Models;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Contracts.ViewComponents
 {
-    public interface IFeedItem
+    public interface IFeedItem : IEntity
     {
         string UserName { get; set; }
-        DateTime DateTime { get; set; }
+        DateTime Date { get; set; }
 
-        //FeedItemType FeedType { get; set; }
+        FeedItemType FeedType { get; set; }
 
         string ImageURL { get; set; }
 
         string Title { get; set; }
         string Message { get; set; }
 
-        IWorkout Workout { get; set; }
+        string BackgroundColour { get; set; }
+
+        Workout Workout { get; set; }
     }
 }

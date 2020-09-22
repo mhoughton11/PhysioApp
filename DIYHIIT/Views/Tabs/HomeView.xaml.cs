@@ -18,8 +18,9 @@ namespace DIYHIIT.Views.Tabs
 
             var dialog = AppContainer.Container.Resolve<IDialogService>();
             var userDataService = AppContainer.Container.Resolve<IUserDataService>();
+            var feedItemService = AppContainer.Container.Resolve<IFeedItemService>();
 
-            BindingContext = viewModel = new HomeViewModel(userDataService, Navigation, dialog);
+            BindingContext = viewModel = new HomeViewModel(userDataService, feedItemService, Navigation, dialog);
         }
     }
 }

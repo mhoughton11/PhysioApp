@@ -13,7 +13,6 @@ namespace DIYHIIT.Constants
         public const string ExercisesByListEndpoint = "exercise/list";
         public const string ExerciseByIdEndpoint = "exercise/exercises";
 
-
         // Workouts
         public const string SaveWorkoutEndpoint = "workout/save";
         public const string GetWorkoutsEndpoint = "workout/workouts";
@@ -25,5 +24,8 @@ namespace DIYHIIT.Constants
         public const string GetUserEndpoint = "user/user";
         public const string SaveUserEndpoint = "user/save";
         public const string UpdateUserEndpoint = "user/update";
+
+        // Feed Items
+        public const string FeedItemsEndpoint = "feed/all";
     }
 }

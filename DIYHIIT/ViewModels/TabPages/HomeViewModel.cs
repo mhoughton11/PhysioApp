@@ -17,11 +17,13 @@ namespace DIYHIIT.ViewModels.Tabs
     public class HomeViewModel : BaseViewModel
     {
         public HomeViewModel(IUserDataService userDataService,
+                             IFeedItemService feedItemService,
                              INavigation navigationService,
                              IDialogService dialogService)
             : base(navigationService, dialogService)
         {
             _userDataService = userDataService;
+            _feedItemService = feedItemService;
 
             InitializeAsync(null);
         }
@@ -30,6 +32,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
         // Services
         private readonly IUserDataService _userDataService;
+        private readonly IFeedItemService _feedItemService;
 
         // View Components
         private ObservableCollection<IFeedItem> _feedItems;
@@ -52,23 +55,25 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Public Methods
 
-        public override Task InitializeAsync(object data)
+        public override async Task InitializeAsync(object data)
         {
-            FeedItems = new ObservableCollection<IFeedItem>();
+            var items = await _feedItemService.GetAllItems();
+
+            FeedItems = new ObservableCollection<IFeedItem>(items);
 
             var item = new FeedItem()
             {
                 UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.LastName,
                 Title = "DIY HIIT 0.1!",
                 Message = "Welcome to DIY-HIIT pre-launch. Basic funtionality down, lots of improvements on the way.",
-                DateTime = DateTime.Now,
+                Date = DateTime.Now,
                 ImageURL = "https://api.time.com/wp-content/uploads/2020/03/gym-coronavirus.jpg?w=600&quality=85"
                 //FeedType = FeedItemTypes.Post
             };
 
             FeedItems.Add(item);
 
-            return base.InitializeAsync(data);
+            await base.InitializeAsync(data);
         }
 
         #endregion

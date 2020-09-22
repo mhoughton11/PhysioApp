@@ -14,7 +14,8 @@ namespace DIYHIIT.Library.Settings
         {
             Workout = 1,
             Post = 2,
-            Exercise = 3
+            Exercise = 3,
+            Update = 4
         };
     }
 }
