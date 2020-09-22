@@ -19,6 +19,7 @@ namespace DIYHIIT.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             FirebaseApp.InitializeApp(Application.Context);
             UserDialogs.Init(this);
             

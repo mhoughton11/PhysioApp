@@ -33,6 +33,7 @@ namespace DIYHIIT.ViewModels.Workouts
 
         private string _workoutLength;
         private string _exerciseCount;
+        private string _backgroundImage;
         private string _name;
         private Exercise _rest;
         private Workout _workout;
@@ -50,6 +51,16 @@ namespace DIYHIIT.ViewModels.Workouts
             {
                 _exercises = value;
                 RaisePropertyChanged(() => Exercises);
+            }
+        }
+
+        public string BackgroundImage
+        {
+            get => _backgroundImage;
+            set
+            {
+                _backgroundImage = value;
+                RaisePropertyChanged(() => BackgroundImage);
             }
         }
 
@@ -97,7 +108,8 @@ namespace DIYHIIT.ViewModels.Workouts
             var items = (await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIds)).ToList();
 
             Exercises = new ObservableCollection<IExercise>();
-            
+
+            BackgroundImage = items[0].ImageURL;
             Name = _workout.Name;
             ExerciseCount = _workout.ExerciseCount;
             WorkoutLength = $"{_workout.Duration ?? 0} Minutes";

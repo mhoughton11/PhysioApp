@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.Workouts.ExecuteWorkoutView"
+             xmlns:controls="clr-namespace:DIYHIIT.Controls"
+             xmlns:ffloadingimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              Title="Execute Workout">
 
     <ContentPage.Content>
@@ -28,9 +31,25 @@
                        Grid.Column="1"/>
             </Grid>
 
-            <Image Aspect="AspectFit"
-                   HeightRequest="200"
-                   Source="{Binding ImageURL}"/>
+            <Grid Grid.Row="1">
+                <ffloadingimage:CachedImage Margin="12"
+                                            HeightRequest="300"
+                                            WidthRequest="300"
+                                            Aspect="AspectFit"
+                                            DownsampleToViewSize="True"
+                                            Source="{Binding ImageURL}">
+
+                    <ffloadingimage:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation/>
+                    </ffloadingimage:CachedImage.Transformations>
+
+                </ffloadingimage:CachedImage>
+
+                <controls:CircleCountdown Progress="{Binding ExerciseProgress}"
+                                          ProgressStartColor="White"
+                                          ProgressEndColor="Black"
+                                          StrokeWidth="10"/>
+            </Grid>
 
             <Label Text="{Binding CurrentExercise}"
                    Margin="20"

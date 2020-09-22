@@ -194,7 +194,7 @@ namespace DIYHIIT.ViewModels.Workouts
             // Set labels and images
             SetExerciseViews(ex);
             // Set progress bars
-            SetProgressBars();
+            SetProgressBars(ex);
 
             // Init labels
             EffortDetailEnabled = "False";
@@ -242,7 +242,7 @@ namespace DIYHIIT.ViewModels.Workouts
                         return;
                     }
 
-                    SetProgressBars();
+                    SetProgressBars(ex);
                     SetExerciseViews(ex);
                     GetTimeLeftColour(currentExerciseTime);
 
@@ -269,10 +269,12 @@ namespace DIYHIIT.ViewModels.Workouts
             });
         }
 
-        private void SetProgressBars()
+        private void SetProgressBars(IExercise ex)
         {
             WorkoutProgress = totalTimeElapsed / _workoutDuration;
             WorkoutProgressLabel = string.Format("{0:0}%", WorkoutProgress * 100);
+
+            ExerciseProgress = currentExerciseTime / ex.Duration.Value;
         }
 
         private void SetExerciseViews(IExercise ex)

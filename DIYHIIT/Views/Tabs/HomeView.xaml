@@ -2,7 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.Tabs.HomeView"
+             xmlns:ffloadingimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              Title="Feed">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Create"
+                     Command="{Binding CreatePost}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <ListView ItemsSource="{Binding FeedItems}"
                   BackgroundColor="LightGray"
@@ -27,16 +35,26 @@
                                         <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Source="{Binding ImageURL}"
-                                           Aspect="AspectFit"
-                                           Margin="0"
-                                           VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <ffloadingimage:CachedImage Source="{Binding ImageURL}"
+                                                                Aspect="AspectFit"
+                                                                Margin="0"
+                                                                Grid.RowSpan="2"
+                                                                VerticalOptions="FillAndExpand"
+                                                                HorizontalOptions="FillAndExpand">
+                                        <ffloadingimage:CachedImage.Transformations>
+                                            <fftransformations:CircleTransformation/>
+                                        </ffloadingimage:CachedImage.Transformations>
+
+                                    </ffloadingimage:CachedImage>
 
                                     <Label Grid.Column="1"
                                            Text="{Binding UserName}"
-                                           FontSize="20"
-                                           BackgroundColor="Red"
+                                           FontSize="30"
                                            TextColor="Black"
                                            VerticalOptions="CenterAndExpand"
                                            HorizontalOptions="StartAndExpand"/>
@@ -46,17 +64,18 @@
                                            Text="{Binding DateTime}"
                                            FontSize="15"
                                            TextColor="Black"
-                                           VerticalOptions="CenterAndExpand"
+                                           VerticalOptions="Start"
                                            HorizontalOptions="StartAndExpand"/>
                                 </Grid>
 
                                 <Label Text="{Binding Title}"
                                        FontSize="30"
+                                       Margin="6"
                                        VerticalOptions="CenterAndExpand"
                                        HorizontalOptions="StartAndExpand"/>
 
                                 <Label Text="{Binding Message}"
-                                       FontSize="12"
+                                       FontSize="14"
                                        LineBreakMode="WordWrap"
                                        VerticalOptions="CenterAndExpand"
                                        HorizontalOptions="StartAndExpand"/>

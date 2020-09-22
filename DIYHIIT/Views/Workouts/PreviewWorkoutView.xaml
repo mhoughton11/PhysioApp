@@ -1,31 +1,49 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DIYHIIT.Views.Workouts.PreviewWorkoutView">
+             x:Class="DIYHIIT.Views.Workouts.PreviewWorkoutView"
+             Title="Preview">
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
+        <StackLayout>
 
-            <Label Text="{Binding Name}"
-                   HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand"
-                   Margin="15"
-                   FontSize="36"
-                   TextColor="Black"
-                   LineBreakMode="WordWrap"/>
+            <Grid HeightRequest="240">
 
-            <Grid HeightRequest="120">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.ColumnSpan="2"
+                       Grid.RowSpan="2"
+                       Margin="0"
+                       Opacity="0.25"
+                       VerticalOptions="FillAndExpand"
+                       HorizontalOptions="FillAndExpand"
+                       Source="{Binding BackgroundImage}"
+                       Aspect="AspectFill"/>
+
+                <Label Text="{Binding Name}"
+                       Grid.ColumnSpan="2"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="EndAndExpand"
+                       Margin="15"
+                       FontSize="36"
+                       TextColor="Black"
+                       LineBreakMode="WordWrap"/>
+
                 <Label Text="{Binding ExerciseCount}"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="CenterAndExpand"
-                       Margin="10"
+                       Grid.Row="1"
                        FontSize="24"/>
 
                 <Label Text="{Binding WorkoutLength}"
                        Grid.Column="1"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="CenterAndExpand"
-                       Margin="10"
+                       Padding="10"
+                       Grid.Row="1"
                        FontSize="24"/>
             </Grid>
 
