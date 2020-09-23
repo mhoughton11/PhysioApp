@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DIYHIIT.Views.Tabs.ProfileView"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              Title="My Profile">
 
      <ContentPage.ToolbarItems>
@@ -12,36 +14,43 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
 
-            <Grid>
+            <Grid VerticalOptions="StartAndExpand"
+                  Margin="8"
+                  Padding="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="1.5*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Text="John Smith"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="{Binding UserName}"
                        VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand"
-                       Padding="10"
+                       HorizontalOptions="FillAndExpand"
                        FontSize="25"/>
 
-                <Frame IsClippedToBounds="True"
-                       BackgroundColor="LightGray"
-                       Grid.Column="1"
-                       Margin="20"
-                       Padding="0"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"
-                       HeightRequest="100"
-                       WidthRequest="100"
-                       HasShadow="False"
-                       CornerRadius="50">
-                    <Image Source="https://icons-for-free.com/iconfiles/png/512/neutral+user-131964784832104677.png"/>
-                </Frame>
-            </Grid>
+                <ffimageloading:CachedImage Source="{Binding UserImage}"
+                                            Grid.Column="1"
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Grid.RowSpan="2"
+                                            Aspect="AspectFit"
+                                            HeightRequest="200">
+                    <ffimageloading:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation/>
+                    </ffimageloading:CachedImage.Transformations>
+                </ffimageloading:CachedImage>
 
-            <Label Text="john.smith@example.com"
-                   TextColor="Gray"
-                   Margin="10"/>
+                <Label Text="{Binding UserEmail}"
+                       Grid.Row="1"
+                       FontSize="20"
+                       VerticalOptions="StartAndExpand"
+                       HorizontalOptions="StartAndExpand"
+                       TextColor="Gray"/>
+            </Grid>
 
         </StackLayout>
     </ContentPage.Content>

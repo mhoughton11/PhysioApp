@@ -24,6 +24,7 @@ namespace DIYHIIT.ViewModels.Tabs
             _authenticationService = authenticationService;
             _userDataService = userDataService;
 
+            Task.Run(async () => await InitializeAsync(null));
         }
 
         #region Private Fields
@@ -79,10 +80,9 @@ namespace DIYHIIT.ViewModels.Tabs
 
         public override Task InitializeAsync(object data)
         {
-            UserName = App.CurrentUser.FirstName + " "
-                + App.CurrentUser.Surname;
-
-            UserImage = "";
+            UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.Surname;
+            UserImage = "https://icons-for-free.com/iconfiles/png/512/neutral+user-131964784832104677.png";
+            UserEmail = App.CurrentUser.Username;
 
             return base.InitializeAsync(data);
         }
