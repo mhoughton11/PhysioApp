@@ -39,5 +39,25 @@ namespace DIYHIIT.Services.Data
 
             return ex;
         }
+
+        public async Task<FeedItem> PostFeedItem(FeedItem item)
+        {
+            var path = string.Empty;
+
+            switch (App.AppHostOptions)
+            {
+                case HostOptions.Production:
+                    path = ApiConstants.BaseApiUrl + ApiConstants.PostFeedItemEndpoint;
+                    break;
+
+                case HostOptions.LocalHost:
+                    path = ApiConstants.BaseLocalHost + ApiConstants.PostFeedItemEndpoint;
+                    break;
+            }
+
+            var ex = await _genericRepository.PostAsync<FeedItem>(path, item);
+
+            return ex;
+        }
     }
 }

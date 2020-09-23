@@ -8,6 +8,7 @@ using DIYHIIT.Library.Contracts;
 using DIYHIIT.Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using DIYHIIT.Library.Models.ViewComponents;
 using Newtonsoft.Json;
 
 namespace DIYHIIT.Data.Controllers
@@ -26,13 +27,28 @@ namespace DIYHIIT.Data.Controllers
 
         [HttpGet]
         [Route("all")]
-        public async Task<IActionResult> GetExercises()
+        public async Task<IActionResult> GetItems()
         {
             var items = await _appDbContext.FeedItems
                                            .OrderBy(e => e.Date)
                                            .ToListAsync();
 
             return Ok(items);
+        }
+
+        [HttpPost]
+        [Route("post")]
+        public async Task<IActionResult> PostItem([FromBody]FeedItem feedItem)
+        {
+            if (feedItem == null)
+            {
+                return BadRequest();
+            }
+
+            _appDbContext.Add(feedItem);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

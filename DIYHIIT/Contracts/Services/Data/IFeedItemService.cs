@@ -10,5 +10,6 @@ namespace DIYHIIT.Contracts.Services.Data
     public interface IFeedItemService
     {
         Task<IEnumerable<FeedItem>> GetAllItems();
+        Task<FeedItem> PostFeedItem(FeedItem item);
     }
 }

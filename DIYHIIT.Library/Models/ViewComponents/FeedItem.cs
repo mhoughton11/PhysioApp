@@ -9,6 +9,11 @@ namespace DIYHIIT.Library.Models.ViewComponents
 {
     public class FeedItem : IFeedItem
     {
+        public FeedItem()
+        {
+            Date = DateTime.Now;
+        }
+
         public int Id { get; set; }
 
         public string UserName { get; set; }

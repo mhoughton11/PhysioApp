@@ -27,5 +27,6 @@ namespace DIYHIIT.Constants
 
         // Feed Items
         public const string FeedItemsEndpoint = "feed/all";
+        public const string PostFeedItemEndpoint = "feed/post";
     }
 }

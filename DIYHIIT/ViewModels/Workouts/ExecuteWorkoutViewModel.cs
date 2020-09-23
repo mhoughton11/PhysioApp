@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using Xamarin.Forms;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.ViewModels.Workouts
 {
@@ -18,6 +19,7 @@ namespace DIYHIIT.ViewModels.Workouts
     {
         public ExecuteWorkoutViewModel(Workout workout,
                                        List<IExercise> exercises,
+                                       IFeedItemService feedItemService,
                                        IUserDataService userDataService,
                                        INavigation navigationService,
                                        IDialogService dialogService)
@@ -25,8 +27,9 @@ namespace DIYHIIT.ViewModels.Workouts
         {
             _exercises = exercises;
             _userDataService = userDataService;
+            _feedItemService = feedItemService;
 
-            Task.Run(async() => await InitializeAsync(workout));
+            Task.Run(async () => await InitializeAsync(workout));
         }
 
         #region Private Fields
@@ -42,6 +45,7 @@ namespace DIYHIIT.ViewModels.Workouts
         private string _timeLeftColour;
         private string _effortDetailEnabled;
         private string _timeLabelEnabled;
+        private bool _postToFeed;
 
         // Model Components
         double currentExerciseTime;     // Time spent in current ex
@@ -53,6 +57,7 @@ namespace DIYHIIT.ViewModels.Workouts
 
         private List<IExercise> _exercises;
         private readonly IUserDataService _userDataService;
+        private readonly IFeedItemService _feedItemService;
 
         #endregion
 
@@ -160,6 +165,16 @@ namespace DIYHIIT.ViewModels.Workouts
             }
         }
 
+        public bool PostToFeed
+        {
+            get => _postToFeed;
+            set
+            {
+                _postToFeed = value;
+                RaisePropertyChanged(() => PostToFeed);
+            }
+        }
+
         public double EffortSliderValue { get; set; }
 
         public ICommand DoneCommand => new Command(ExecuteDoneCommand);
@@ -183,6 +198,8 @@ namespace DIYHIIT.ViewModels.Workouts
         {
             // Progress bar is 0
             currentExerciseTime = 0;
+
+            PostToFeed = false;
 
             // Get exercise
             var ex = _exercises[0];
@@ -332,6 +349,20 @@ namespace DIYHIIT.ViewModels.Workouts
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
             await _userDataService.UpdateWorkout(_workout as Workout);
+
+            var item = new FeedItem()
+            {
+                UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.LastName,
+                Title = "Workout completed!",
+                Message = $"I just completed {_workout.Name}. Effout out of 10: {_workout.Effort}",
+                ImageURL = "https://api.time.com/wp-content/uploads/2020/03/gym-coronavirus.jpg?w=600&quality=85",
+                FeedType = FeedItemType.Post,
+                BackgroundColour = "Light Gray"
+            };
+
+            await _feedItemService.PostFeedItem(item);
+
+            MessagingCenter.Send(this, "WorkoutPosted");
 
             await _navigation.PopAsync();
         }

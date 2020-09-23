@@ -7,6 +7,7 @@ using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.Library.Contracts.ViewComponents;
 using DIYHIIT.Library.Models;
+using DIYHIIT.ViewModels.Workouts;
 using DIYHIIT.Library.Models.ViewComponents;
 using DIYHIIT.ViewModels.Base;
 using DIYHIIT.Library.Settings;
@@ -35,6 +36,7 @@ namespace DIYHIIT.ViewModels.Tabs
         private readonly IFeedItemService _feedItemService;
 
         // View Components
+        private bool _feedUpdated;
         private ObservableCollection<IFeedItem> _feedItems;
 
         #endregion
@@ -57,21 +59,12 @@ namespace DIYHIIT.ViewModels.Tabs
 
         public override async Task InitializeAsync(object data)
         {
-            var items = await _feedItemService.GetAllItems();
+            GetFeedItems();
 
-            FeedItems = new ObservableCollection<IFeedItem>(items);
-
-            var item = new FeedItem()
+            MessagingCenter.Subscribe<ExecuteWorkoutViewModel>(this, () =>
             {
-                UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.LastName,
-                Title = "DIY HIIT 0.1!",
-                Message = "Welcome to DIY-HIIT pre-launch. Basic funtionality down, lots of improvements on the way.",
-                Date = DateTime.Now,
-                ImageURL = "https://api.time.com/wp-content/uploads/2020/03/gym-coronavirus.jpg?w=600&quality=85"
-                //FeedType = FeedItemTypes.Post
-            };
-
-            FeedItems.Add(item);
+                GetFeedItems();
+            });
 
             await base.InitializeAsync(data);
         }
@@ -80,7 +73,11 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Methods
 
-        
+        private async void GetFeedItems()
+        {
+            var items = await _feedItemService.GetAllItems();
+            FeedItems = new ObservableCollection<IFeedItem>(items);
+        }
 
         #endregion
     }
