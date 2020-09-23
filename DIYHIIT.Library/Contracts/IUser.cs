@@ -10,7 +10,10 @@ namespace DIYHIIT.Library.Contracts
         string Username { get; set; }
 
         string FirstName { get; set; }
-        string LastName { get; set; }
+        string Surname { get; set; }
+
+        double? Height { get; set; }
+        double? Weight { get; set; }
 
         ICollection<Workout> Workouts { get; set; }
     }

@@ -20,8 +20,10 @@ namespace DIYHIIT.Library.Models
         public string Username { get; set; }
 
         public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Surname { get; set; }
 
         public ICollection<Workout> Workouts { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
     }
 }
