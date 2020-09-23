@@ -17,17 +17,21 @@
                     <EntryCell Label="Height:" 
                                Placeholder="Enter your Height Here" 
                                Text="{Binding Height}" 
-                               Keyboard="Numberic"/>
+                               Keyboard="Numeric"/>
                     <EntryCell Label="Weight:" 
                                Placeholder="Enter Your Weight Here"
                                Text="{Binding Weight}" 
-                               Keyboard="Numberic"/>
+                               Keyboard="Numeric"/>
                 </TableSection>
 
                 <TableSection Title="My settings">
                     <EntryCell Label="Name:" Placeholder="Enter Your First Name Here" Text="{Binding FirstName}"/>
                     <SwitchCell Text="Show my name" On="true"/>
                     <SwitchCell Text="Update app automatically"/>
+                </TableSection>
+
+                <TableSection>
+                    
                 </TableSection>
 
             </TableRoot>

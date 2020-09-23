@@ -80,7 +80,7 @@ namespace DIYHIIT.ViewModels.Tabs
         public override Task InitializeAsync(object data)
         {
             UserName = App.CurrentUser.FirstName + " "
-                + App.CurrentUser.LastName;
+                + App.CurrentUser.Surname;
 
             UserImage = "";
 

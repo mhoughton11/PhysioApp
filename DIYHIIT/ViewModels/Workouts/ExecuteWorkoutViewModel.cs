@@ -348,21 +348,24 @@ namespace DIYHIIT.ViewModels.Workouts
             _workout.DateUsed = DateTime.Now;
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
+            PostToFeed = true;
+
             await _userDataService.UpdateWorkout(_workout as Workout);
 
-            var item = new FeedItem()
+            if (PostToFeed)
             {
-                UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.LastName,
-                Title = "Workout completed!",
-                Message = $"I just completed {_workout.Name}. Effout out of 10: {_workout.Effort}",
-                ImageURL = "https://api.time.com/wp-content/uploads/2020/03/gym-coronavirus.jpg?w=600&quality=85",
-                FeedType = FeedItemType.Post,
-                BackgroundColour = "Light Gray"
-            };
+                var item = new FeedItem()
+                {
+                    UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.Surname,
+                    Title = "Workout completed!",
+                    Message = $"I just completed {_workout.Name}. Effout out of 10: {_workout.Effort}",
+                    ImageURL = "https://api.time.com/wp-content/uploads/2020/03/gym-coronavirus.jpg?w=600&quality=85",
+                    FeedType = FeedItemType.Post
+                };
 
-            await _feedItemService.PostFeedItem(item);
-
-            MessagingCenter.Send(this, "WorkoutPosted");
+                await _feedItemService.PostFeedItem(item);
+                MessagingCenter.Send(this, "WorkoutPosted");
+            }
 
             await _navigation.PopAsync();
         }

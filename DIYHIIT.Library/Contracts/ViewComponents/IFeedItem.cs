@@ -16,7 +16,7 @@ namespace DIYHIIT.Library.Contracts.ViewComponents
         string Title { get; set; }
         string Message { get; set; }
 
-        string BackgroundColour { get; set; }
+        string BackgroundColour { get; }
 
         Workout Workout { get; set; }
     }

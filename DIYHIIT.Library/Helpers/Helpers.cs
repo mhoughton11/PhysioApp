@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using DIYHIIT.Library.Models;
+using static DIYHIIT.Library.Settings.Settings;
 using Newtonsoft.Json;
 
 namespace DIYHIIT.Library.Helpers
@@ -27,6 +28,32 @@ namespace DIYHIIT.Library.Helpers
                 return "1 Move";
 
             return $"{exercises.Count} Moves";
+        }
+
+        public static string GetFeedItemBackgroundColour(FeedItemType type)
+        {
+            var colour = string.Empty;
+
+            switch (type)
+            {
+                case FeedItemType.Exercise:
+                    colour = "#cceeff";
+                    break;
+
+                case FeedItemType.Post:
+                    colour = "#ffffff";
+                    break;
+
+                case FeedItemType.Update:
+                    colour = "#d1e0e0";
+                    break;
+
+                case FeedItemType.Workout:
+                    colour = "#adc2eb";
+                    break;
+            }
+
+            return colour;
         }
     }
 }

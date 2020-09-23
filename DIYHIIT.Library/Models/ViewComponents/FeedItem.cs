@@ -4,6 +4,7 @@ using DIYHIIT.Library.Settings;
 using DIYHIIT.Library.Models;
 using DIYHIIT.Library.Contracts.ViewComponents;
 using static DIYHIIT.Library.Settings.Settings;
+using static DIYHIIT.Library.Helpers.Helpers;
 
 namespace DIYHIIT.Library.Models.ViewComponents
 {
@@ -23,7 +24,7 @@ namespace DIYHIIT.Library.Models.ViewComponents
 
         public FeedItemType FeedType { get; set; }
 
-        public string BackgroundColour { get; set; }
+        public string BackgroundColour => GetFeedItemBackgroundColour(FeedType);
 
         public string Title { get; set; }
         public string Message { get; set; }

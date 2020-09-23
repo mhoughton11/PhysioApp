@@ -26,6 +26,11 @@ namespace DIYHIIT.ViewModels.Tabs
             _userDataService = userDataService;
             _feedItemService = feedItemService;
 
+            MessagingCenter.Subscribe<ExecuteWorkoutViewModel>(this, "WorkoutPosted", async (sender) =>
+            {
+                await GetFeedItems();
+            });
+
             InitializeAsync(null);
         }
 
@@ -59,12 +64,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
         public override async Task InitializeAsync(object data)
         {
-            GetFeedItems();
-
-            MessagingCenter.Subscribe<ExecuteWorkoutViewModel>(this, () =>
-            {
-                GetFeedItems();
-            });
+            await GetFeedItems();
 
             await base.InitializeAsync(data);
         }
@@ -73,10 +73,10 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Methods
 
-        private async void GetFeedItems()
+        private async Task GetFeedItems()
         {
             var items = await _feedItemService.GetAllItems();
-            FeedItems = new ObservableCollection<IFeedItem>(items);
+            FeedItems = new ObservableCollection<IFeedItem>(items.OrderByDescending(i => i.Date));
         }
 
         #endregion

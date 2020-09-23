@@ -81,12 +81,16 @@ namespace DIYHIIT.ViewModels.Profile
 
         private async void OnSaveChanges()
         {
+            _dialogService.ShowLoading("Saving changes...");
+
             App.CurrentUser.FirstName = FirstName;
             App.CurrentUser.Surname = Surname;
             App.CurrentUser.Weight = double.Parse(Weight);
             App.CurrentUser.Height = double.Parse(Height);
 
-            await _userDataService
+            await _userDataService.UpdateUser(App.CurrentUser);
+
+            _dialogService.HideLoading();
         }
 
         #endregion

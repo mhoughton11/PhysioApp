@@ -23,10 +23,9 @@
                 <DataTemplate>
                     <ViewCell>
                         <Frame CornerRadius="10"
-                               BackgroundColor="White"
+                               BackgroundColor="{Binding BackgroundColour}"
                                Margin="5"
-                               HasShadow="False"
-                               HeightRequest="160">
+                               HasShadow="False">
 
                             <StackLayout>
                                 <Grid>
@@ -61,7 +60,7 @@
 
                                     <Label Grid.Column="1"
                                            Grid.Row="1"
-                                           Text="{Binding DateTime}"
+                                           Text="{Binding Date}"
                                            FontSize="15"
                                            TextColor="Black"
                                            VerticalOptions="Start"
