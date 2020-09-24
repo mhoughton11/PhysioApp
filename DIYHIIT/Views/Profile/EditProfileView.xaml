@@ -1,5 +1,35 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="DIYHIIT.Views.Profile.EditProfileView">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DIYHIIT.Views.Profile.EditProfileView"
+             Title="Edit Profile">
     <ContentPage.Content>
+        <TableView Intent="Settings">
+            <TableRoot>
+                <TableSection Title="My Details">
+                    <EntryCell Label="Name:" 
+                               Placeholder="Enter Your First Name Here" 
+                               Text="{Binding FirstName}"/>
+                    <EntryCell Label="Surname:" 
+                               Placeholder="Enter Your Last Name Here" 
+                               Text="{Binding Surname}"/>
+                    <EntryCell Label="Height:" 
+                               Placeholder="Enter your Height Here" 
+                               Text="{Binding Height}" 
+                               Keyboard="Numeric"/>
+                    <EntryCell Label="Weight:" 
+                               Placeholder="Enter Your Weight Here"
+                               Text="{Binding Weight}" 
+                               Keyboard="Numeric"/>
+                </TableSection>
+
+                
+
+                <TableSection>
+                    
+                </TableSection>
+
+            </TableRoot>
+        </TableView>
     </ContentPage.Content>
 </ContentPage>

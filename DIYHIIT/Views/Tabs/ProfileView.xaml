@@ -6,53 +6,69 @@
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              Title="My Profile">
 
-     <ContentPage.ToolbarItems>
+    <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="settings.png"
                      Command="{Binding SettingsTapped}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
+        <TableView Intent="Data"
+                   HasUnevenRows="True">
+            <TableRoot>
+                <TableSection>
+                    <ViewCell>
+                        <Grid VerticalOptions="StartAndExpand"
+                              Margin="8"
+                              Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-            <Grid VerticalOptions="StartAndExpand"
-                  Margin="8"
-                  Padding="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                            <Label Text="{Binding UserName}"
+                                   BackgroundColor="LightBlue"
+                                   VerticalOptions="CenterAndExpand"
+                                   HorizontalOptions="FillAndExpand"
+                                   FontSize="25"/>
 
-                <Label Text="{Binding UserName}"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="FillAndExpand"
-                       FontSize="25"/>
+                            <ffimageloading:CachedImage Source="{Binding UserImage}"
+                                                        Grid.Column="1"
+                                                        BackgroundColor="LightCoral"
+                                                        VerticalOptions="FillAndExpand"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Grid.RowSpan="2"
+                                                        Aspect="AspectFit"
+                                                        HeightRequest="200">
+                                <ffimageloading:CachedImage.Transformations>
+                                    <fftransformations:CircleTransformation/>
+                                </ffimageloading:CachedImage.Transformations>
+                            </ffimageloading:CachedImage>
 
-                <ffimageloading:CachedImage Source="{Binding UserImage}"
-                                            Grid.Column="1"
-                                            VerticalOptions="CenterAndExpand"
-                                            HorizontalOptions="CenterAndExpand"
-                                            Grid.RowSpan="2"
-                                            Aspect="AspectFit"
-                                            HeightRequest="200">
-                    <ffimageloading:CachedImage.Transformations>
-                        <fftransformations:CircleTransformation/>
-                    </ffimageloading:CachedImage.Transformations>
-                </ffimageloading:CachedImage>
+                            <Label Text="{Binding UserEmail}"
+                                   Grid.Row="1"
+                                   FontSize="20"
+                                   BackgroundColor="LightCyan"
+                                   VerticalOptions="FillAndExpand"
+                                   HorizontalOptions="FillAndExpand"
+                                   TextColor="Gray"/>
+                        </Grid>
+                    </ViewCell>
+                </TableSection>
 
-                <Label Text="{Binding UserEmail}"
-                       Grid.Row="1"
-                       FontSize="20"
-                       VerticalOptions="StartAndExpand"
-                       HorizontalOptions="StartAndExpand"
-                       TextColor="Gray"/>
-            </Grid>
+                <TableSection >
+                    <ViewCell>
+                        <Grid>
 
-        </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
     </ContentPage.Content>
 
 </ContentPage>

@@ -4,34 +4,22 @@
              x:Class="DIYHIIT.Views.Profile.SettingsView"
              Title="Settings">
     <ContentPage.Content>
-        <TableView Intent="Settings">
+        <TableView Intent="Data"
+                   HasUnevenRows="True">
             <TableRoot>
 
-                <TableSection Title="My Details">
-                    <EntryCell Label="Name:" 
-                               Placeholder="Enter Your First Name Here" 
-                               Text="{Binding FirstName}"/>
-                    <EntryCell Label="Surname:" 
-                               Placeholder="Enter Your Last Name Here" 
-                               Text="{Binding Surname}"/>
-                    <EntryCell Label="Height:" 
-                               Placeholder="Enter your Height Here" 
-                               Text="{Binding Height}" 
-                               Keyboard="Numeric"/>
-                    <EntryCell Label="Weight:" 
-                               Placeholder="Enter Your Weight Here"
-                               Text="{Binding Weight}" 
-                               Keyboard="Numeric"/>
-                </TableSection>
-
-                <TableSection Title="My settings">
-                    <EntryCell Label="Name:" Placeholder="Enter Your First Name Here" Text="{Binding FirstName}"/>
-                    <SwitchCell Text="Show my name" On="true"/>
-                    <SwitchCell Text="Update app automatically"/>
+                <TableSection>
+                    <ViewCell>
+                        <Label Text="Edit Profile"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="StartAndExpand"
+                                Padding="10"/>
+                        
+                    </ViewCell>
                 </TableSection>
 
                 <TableSection>
-                    
+                    <SwitchCell Text="Automatically post to feed" On="false"/>
                 </TableSection>
 
             </TableRoot>

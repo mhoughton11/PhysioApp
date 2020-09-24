@@ -56,10 +56,13 @@ namespace DIYHIIT.API.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateWorkout([FromBody] Workout workout)
         {
-            _appDbContext.Workouts.Update(workout);
+
+            var entity = _appDbContext.Workouts.Attach(workout);
+            entity.State = EntityState.Modified;
+
             await _appDbContext.SaveChangesAsync();
 
-            return Ok(workout);
+            return Ok(entity);
         }
 
         [HttpPost]
