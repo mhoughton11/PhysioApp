@@ -22,8 +22,15 @@ namespace DIYHIIT.Views.Workouts
             var dialog = AppContainer.Container.Resolve<IDialogService>();
             var userDataService = AppContainer.Container.Resolve<IUserDataService>();
             var feedItemService = AppContainer.Container.Resolve<IFeedItemService>();
+            var workoutDataService = AppContainer.Container.Resolve<IWorkoutDataService>();
 
-            BindingContext = viewModel = new ExecuteWorkoutViewModel(workout, exercises, feedItemService, userDataService, Navigation, dialog);
+            BindingContext = viewModel = new ExecuteWorkoutViewModel(workout,
+                    exercises,
+                    feedItemService,
+                    workoutDataService,
+                    userDataService,
+                    Navigation,
+                    dialog);
         }
     }
 }

@@ -53,7 +53,8 @@
 
             <Label Text="{Binding CurrentExercise}"
                    Margin="20"
-                   FontSize="64"
+                   FontSize="48"
+                   MaxLines="1"
                    TextColor="White"
                    HorizontalOptions="CenterAndExpand"
                    VerticalOptions="Start"/>

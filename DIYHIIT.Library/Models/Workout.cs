@@ -17,8 +17,6 @@ namespace DIYHIIT.Library.Models
         public Workout()
         {
             DateAdded = DateTime.Now;
-
-            Exercises = new HashSet<Exercise>();
         }
 
         [Key]

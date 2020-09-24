@@ -36,7 +36,7 @@ namespace DIYHIIT.API.Controllers
         }
 
         [HttpGet]
-        [Route("userWorkouts")]
+        [Route("user")]
         public async Task<ActionResult> GetUserWorkouts(int userId)
         {
             if (!_appDbContext.Users.Any(u => u.UserKey == userId))
@@ -44,10 +44,10 @@ namespace DIYHIIT.API.Controllers
                 return NotFound();
             }
 
-            var workouts = await _appDbContext.Workouts
-                .Where(w => w.UserKey == userId)
-                .OrderBy(w => w.Name)
-                .ToListAsync();
+            var workouts = await _appDbContext.Workouts.Where(w => w.UserKey == userId)
+                                                       .OrderBy(w => w.Name)
+                                                       .Include("Exercises")
+                                                       .ToListAsync();
 
             return Ok(workouts);
         }

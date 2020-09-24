@@ -20,6 +20,7 @@ namespace DIYHIIT.ViewModels.Workouts
     { 
         public PreviewWorkoutViewModel(Workout workout,
                                        IExerciseDataService exerciseDataService,
+                                       
                                        INavigation navigation,
                                        IDialogService dialogService)
             : base(navigation, dialogService)
@@ -35,7 +36,6 @@ namespace DIYHIIT.ViewModels.Workouts
         private string _exerciseCount;
         private string _backgroundImage;
         private string _name;
-        private Exercise _rest;
         private Workout _workout;
         private ObservableCollection<IExercise> _exercises;
         private readonly IExerciseDataService _exerciseDataService;
@@ -114,7 +114,7 @@ namespace DIYHIIT.ViewModels.Workouts
             ExerciseCount = _workout.ExerciseCount;
             WorkoutLength = $"{_workout.Duration ?? 0} Minutes";
 
-            _rest = new Exercise()
+            var rest = new Exercise()
             {
                 Name = "Rest",
                 DisplayName = "Rest",
@@ -127,7 +127,7 @@ namespace DIYHIIT.ViewModels.Workouts
             {
                 items[i].Duration = _workout.ActiveInterval;
                 Exercises.Add(items[i]);
-                Exercises.Add(_rest);
+                Exercises.Add(rest);
             }
 
             items[items.Count - 1].Duration = _workout.ActiveInterval;

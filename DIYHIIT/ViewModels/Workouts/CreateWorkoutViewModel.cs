@@ -175,13 +175,16 @@ namespace DIYHIIT.ViewModels.Workouts
                 Type = (WorkoutType)workoutType,
                 BackgroundImage = _exercises[0].ImageURL,
                 DateAdded = DateTime.Now,
+                //Exercises = _exercises,
                 ExerciseIds = JsonConvert.SerializeObject(ids),
                 Duration = Helpers.GetWorkoutDuration(_exercises.ToList(), activeInterval, restInterval),
                 ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList()),
-                UserKey = App.CurrentUser.UserKey
             };
 
-            await _workoutDataService.SaveWorkout(workout);
+            //await _workoutDataService.SaveWorkout(workout);
+
+            App.CurrentUser.Workouts.Add(workout);
+            await _userDataService.UpdateUser(App.CurrentUser);
 
             MessagingCenter.Send(this, WorkoutsUpdated);
 

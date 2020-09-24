@@ -30,7 +30,7 @@ namespace DIYHIIT
 
         private void InitializeApp(AppSetup setup)
         {
-            AppHostOptions = HostOptions.LocalHost;
+            AppHostOptions = HostOptions.Production;
 
             AppContainer.Container = setup.CreateContainer();
         }

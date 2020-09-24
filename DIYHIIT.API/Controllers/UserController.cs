@@ -44,7 +44,6 @@ namespace DIYHIIT.API.Controllers
             // Retrieve user
             var user = await _appDbContext.Users
                                           .Where(u => u.Uid == uid)
-                                          //.Include("Workouts")
                                           .SingleOrDefaultAsync();
 
             // Retrieve user workouts

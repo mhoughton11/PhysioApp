@@ -43,9 +43,13 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Fields
 
+        // View Components
         private ObservableCollection<IWorkout> _workoutList;
-        private bool _workoutsUpdated = true;
         private string _isRefreshing;
+
+        // Model Components
+        private bool _workoutsUpdated = true;
+        
         private readonly IWorkoutDataService _workoutDataService;
         private readonly IExerciseDataService _exerciseDataService;
 

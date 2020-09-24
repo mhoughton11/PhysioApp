@@ -20,6 +20,7 @@ namespace DIYHIIT.ViewModels.Workouts
         public ExecuteWorkoutViewModel(Workout workout,
                                        List<IExercise> exercises,
                                        IFeedItemService feedItemService,
+                                       IWorkoutDataService workoutDataService,
                                        IUserDataService userDataService,
                                        INavigation navigationService,
                                        IDialogService dialogService)
@@ -28,6 +29,7 @@ namespace DIYHIIT.ViewModels.Workouts
             _exercises = exercises;
             _userDataService = userDataService;
             _feedItemService = feedItemService;
+            _workoutDataService = workoutDataService;
 
             Task.Run(async () => await InitializeAsync(workout));
         }
@@ -58,6 +60,7 @@ namespace DIYHIIT.ViewModels.Workouts
         private List<IExercise> _exercises;
         private readonly IUserDataService _userDataService;
         private readonly IFeedItemService _feedItemService;
+        private readonly IWorkoutDataService _workoutDataService;
 
         #endregion
 
@@ -359,7 +362,7 @@ namespace DIYHIIT.ViewModels.Workouts
             });
 
             await _userDataService.UpdateUser(App.CurrentUser);
-            await _userDataService.UpdateWorkout(_workout as Workout);
+            await _workoutDataService.UpdateWorkout(_workout);
 
             if (PostToFeed)
             {
