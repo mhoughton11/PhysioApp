@@ -18,5 +18,7 @@ namespace DIYHIIT.Library.Contracts
         double? Weight { get; set; }
 
         ICollection<Workout> Workouts { get; set; }
+
+        UserSettings UserSettings { get; set; }
     }
 }

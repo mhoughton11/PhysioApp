@@ -27,5 +27,7 @@ namespace DIYHIIT.Library.Models
         public virtual ICollection<AuditTrail> WorkoutAuditTrails { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
+
+        public virtual UserSettings UserSettings { get; set; }
     }
 }
