@@ -91,7 +91,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
                 try
                 {
-                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.Id);
+                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.UserKey);
                     WorkoutList = new ObservableCollection<IWorkout>(workouts);  
 
                 }

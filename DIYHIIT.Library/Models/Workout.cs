@@ -7,14 +7,22 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using DIYHIIT.Library.Contracts;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Models
 {
     // Principle Entity
     public class Workout : IWorkout
     {
+        public Workout()
+        {
+            DateAdded = DateTime.Now;
+
+            Exercises = new HashSet<Exercise>();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public int WorkoutKey { get; set; }
 
         public string Name { get; set; }
         public string BodyFocus { get; set; }
@@ -32,7 +40,10 @@ namespace DIYHIIT.Library.Models
 
         public string ExerciseIds { get; set; }
 
-        public int UserId { get; set; }
+        public virtual ICollection<Exercise> Exercises { get; set; }
+
+        public int UserKey { get; set; }
+        public virtual User User { get; set; }
 
         public string BackgroundImage { get; set; }
     }

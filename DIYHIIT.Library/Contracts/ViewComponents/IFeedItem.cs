@@ -4,8 +4,10 @@ using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Contracts.ViewComponents
 {
-    public interface IFeedItem : IEntity
+    public interface IFeedItem
     {
+        int FeedItemKey { get; set; }
+
         string UserName { get; set; }
         DateTime Date { get; set; }
 

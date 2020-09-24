@@ -17,5 +17,16 @@ namespace DIYHIIT.Library.Settings
             Exercise = 3,
             Update = 4
         };
+
+        public enum WorkoutType
+        {
+            All = 0,
+            Calisthenics,
+            HIIT,
+            Pilates,
+            Yoga,
+            Stretches,
+            Mobility
+        };
     }
 }

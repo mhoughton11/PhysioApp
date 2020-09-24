@@ -28,7 +28,8 @@ namespace DIYHIIT.Data.Controllers
         [Route("exercises")]
         public async Task<IActionResult> GetExercises()
         {
-            var items = await _appDbContext.DB_Exercises
+            var items = await _appDbContext.Exercises
+                                           .Where(e => e.WorkoutKey == 1)
                                            .OrderBy(e => e.DisplayName)
                                            .ToListAsync();
 
@@ -46,8 +47,8 @@ namespace DIYHIIT.Data.Controllers
             {
                 foreach (var id in _ids)
                 {
-                    var ex = await _appDbContext.DB_Exercises
-                        .Where(e => e.Id == id)
+                    var ex = await _appDbContext.Exercises
+                        .Where(e => e.ExerciseKey == id)
                         .FirstOrDefaultAsync();
 
                     exercises.Add(ex);

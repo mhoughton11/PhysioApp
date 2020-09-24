@@ -5,6 +5,7 @@ using DIYHIIT.Library.Models;
 using DIYHIIT.Library.Contracts.ViewComponents;
 using static DIYHIIT.Library.Settings.Settings;
 using static DIYHIIT.Library.Helpers.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace DIYHIIT.Library.Models.ViewComponents
 {
@@ -15,7 +16,8 @@ namespace DIYHIIT.Library.Models.ViewComponents
             Date = DateTime.Now;
         }
 
-        public int Id { get; set; }
+        [Key]
+        public int FeedItemKey { get; set; }
 
         public string UserName { get; set; }
         public DateTime Date { get; set; }

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DIYHIIT.Library.Models;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Contracts
 {
-    public interface IWorkout : IEntity
+    public interface IWorkout
     {
+        int WorkoutKey { get; set; }
         // Data
         string Name { get; set; }
         string BodyFocus { get; set; }
@@ -23,8 +25,6 @@ namespace DIYHIIT.Library.Contracts
         string ExerciseIds { get; set; }
 
         WorkoutType Type { get; set; }
-
-        int UserId { get; set; }
 
         // View Components
         string BackgroundImage { get; set; }

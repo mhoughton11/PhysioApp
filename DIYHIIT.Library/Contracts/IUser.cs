@@ -3,8 +3,10 @@ using DIYHIIT.Library.Models;
 
 namespace DIYHIIT.Library.Contracts
 {
-    public interface IUser : IEntity
+    public interface IUser
     {
+        int UserKey { get; set; }
+
         string Uid { get; set; }
 
         string Username { get; set; }

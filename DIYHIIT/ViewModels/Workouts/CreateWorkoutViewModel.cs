@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 using Xamarin.Forms;
 
 using static DIYHIIT.Constants.Messages;
-
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.ViewModels.Workouts
 {
@@ -162,7 +162,7 @@ namespace DIYHIIT.ViewModels.Workouts
             }
 
             var ids = new List<string>();
-            foreach (var ex in _exercises) { ids.Add(ex.Id.ToString()); }
+            foreach (var ex in _exercises) { ids.Add(ex.ExerciseKey.ToString()); }
 
             var name = await GetWorkoutName();
 
@@ -178,7 +178,7 @@ namespace DIYHIIT.ViewModels.Workouts
                 ExerciseIds = JsonConvert.SerializeObject(ids),
                 Duration = Helpers.GetWorkoutDuration(_exercises.ToList(), activeInterval, restInterval),
                 ExerciseCount = Helpers.GetWorkoutCountString(_exercises.ToList()),
-                UserId = App.CurrentUser.Id
+                UserKey = App.CurrentUser.UserKey
             };
 
             await _workoutDataService.SaveWorkout(workout);

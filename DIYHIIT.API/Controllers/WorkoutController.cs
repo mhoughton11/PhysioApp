@@ -28,8 +28,8 @@ namespace DIYHIIT.API.Controllers
         [Route("workouts")]
         public async Task<IActionResult> GetWorkouts()
         {
-            var items = await _appDbContext.DB_Workouts
-                                           .OrderBy(w => w.Id)
+            var items = await _appDbContext.Workouts
+                                           .OrderBy(w => w.WorkoutKey)
                                            .ToListAsync();
 
             return Ok(items);
@@ -39,12 +39,15 @@ namespace DIYHIIT.API.Controllers
         [Route("userWorkouts")]
         public async Task<ActionResult> GetUserWorkouts(int userId)
         {
-            if (!_appDbContext.DB_Users.Any(u => u.Id == userId))
+            if (!_appDbContext.Users.Any(u => u.UserKey == userId))
             {
                 return NotFound();
             }
 
-            var workouts = await _appDbContext.DB_Workouts.Where(w => w.UserId == userId).OrderBy(w => w.Name).ToListAsync();
+            var workouts = await _appDbContext.Workouts
+                .Where(w => w.UserKey == userId)
+                .OrderBy(w => w.Name)
+                .ToListAsync();
 
             return Ok(workouts);
         }
@@ -53,7 +56,7 @@ namespace DIYHIIT.API.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateWorkout([FromBody] Workout workout)
         {
-            _appDbContext.DB_Workouts.Update(workout);
+            _appDbContext.Workouts.Update(workout);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(workout);
@@ -64,12 +67,12 @@ namespace DIYHIIT.API.Controllers
         public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
         {
             // If already contains workout, don't save.
-            if (_appDbContext.DB_Workouts.Any(w => w.Id == workout.Id))
+            if (_appDbContext.Workouts.Any(w => w.WorkoutKey == workout.WorkoutKey))
             {
                 return BadRequest();
             }
 
-            _appDbContext.DB_Workouts.Add(workout);
+            _appDbContext.Workouts.Add(workout);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(workout);

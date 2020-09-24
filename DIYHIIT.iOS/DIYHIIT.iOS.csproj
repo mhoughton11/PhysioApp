@@ -30,7 +30,7 @@
     <CodesignKey>Apple Development: maxh1010@googlemail.com (X8YYKJDKNK)</CodesignKey>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>iOS Team Provisioning Profile: com.houghtonstudio.uk.DIY-HIIT.DIYHIIT</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: com.houghtonstudio.uk.DIY-HIIT.DIY-HIIT</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>

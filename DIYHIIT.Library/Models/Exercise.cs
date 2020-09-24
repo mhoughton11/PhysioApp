@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Windows.Input;
 using DIYHIIT.Library.Contracts;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Models
 {
@@ -11,7 +12,7 @@ namespace DIYHIIT.Library.Models
     public class Exercise : IExercise
     {
         [Key]
-        public int Id { get; set; }
+        public int ExerciseKey { get; set; }
 
         public int? Index { get; set; }
 
@@ -24,14 +25,14 @@ namespace DIYHIIT.Library.Models
 
         [StringLength(500)]
         public string Description { get; set; }
-        public string BodyFocus { get; set; }
         public string ImageURL { get; set; }
 
         public double? Duration { get; set; }
 
+        public virtual Workout Workout { get; set; }
+        public int WorkoutKey { get; set; }
+
         [Required]
         public WorkoutType Type { get; set; }
-
-        public int WorkoutId { get; set; }
     }
 }

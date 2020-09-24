@@ -116,7 +116,7 @@ namespace DIYHIIT.Services.Data
                     break;
             }
 
-            if (workout.UserId == 0) { return null; }
+            if (workout.UserKey == 0) { return null; }
 
             return await _genericRepository.PostAsync(path, workout);
         }

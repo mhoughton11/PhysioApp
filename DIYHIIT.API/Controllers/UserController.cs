@@ -25,7 +25,7 @@ namespace DIYHIIT.API.Controllers
         [Route("users")]
         public async Task<IActionResult> Get()
         {
-            var items = await _appDbContext.DB_Users
+            var items = await _appDbContext.Users
                                            .OrderBy(u => u.Username)
                                            .ToListAsync();
 
@@ -42,13 +42,14 @@ namespace DIYHIIT.API.Controllers
             }
 
             // Retrieve user
-            var user = await _appDbContext.DB_Users
+            var user = await _appDbContext.Users
                                           .Where(u => u.Uid == uid)
+                                          //.Include("Workouts")
                                           .SingleOrDefaultAsync();
 
             // Retrieve user workouts
-            user.Workouts = await _appDbContext.DB_Workouts
-                                               .Where(w => w.UserId == user.Id)
+            user.Workouts = await _appDbContext.Workouts
+                                               .Where(w => w.UserKey == user.UserKey)
                                                .ToListAsync();
 
             if (user != null)
@@ -66,12 +67,12 @@ namespace DIYHIIT.API.Controllers
             if (user == null) { return NoContent(); }
 
             // Check if username already exists.
-            if (_appDbContext.DB_Users.Any(u => u.Uid == user.Uid))
+            if (_appDbContext.Users.Any(u => u.Uid == user.Uid))
             {
                 return Forbid();
             }
 
-            _appDbContext.DB_Users.Add(user);
+            _appDbContext.Users.Add(user);
             await _appDbContext.SaveChangesAsync();
 
             return Ok(user);
@@ -81,13 +82,22 @@ namespace DIYHIIT.API.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateUser([FromBody]User user)
         {
-            var _user = _appDbContext.DB_Users.Find(user.Id);
-            _user = user;
+            if (user == null)
+            {
+                return BadRequest();
+            }
 
-            _appDbContext.DB_Users.Update(_user);
+            if (!_appDbContext.Users.Any(u => u.Username == user.Username))
+            {
+                return NotFound();
+            }
+
+            var entity = _appDbContext.Users.Attach(user);
+            entity.State = EntityState.Modified;
+
             await _appDbContext.SaveChangesAsync();
 
-            return Ok(_user);
+            return Ok(user);
         }
     }
 }

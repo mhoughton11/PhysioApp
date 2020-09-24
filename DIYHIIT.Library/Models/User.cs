@@ -9,11 +9,12 @@ namespace DIYHIIT.Library.Models
     {
         public User()
         {
-            Workouts = new List<Workout>();
+            Workouts = new HashSet<Workout>();
+            WorkoutAuditTrails = new HashSet<AuditTrail>();
         }
 
         [Key]
-        public int Id { get; set; }
+        public int UserKey { get; set; }
         public string Uid { get; set; }
 
         [Required]
@@ -22,7 +23,8 @@ namespace DIYHIIT.Library.Models
         public string FirstName { get; set; }
         public string Surname { get; set; }
 
-        public ICollection<Workout> Workouts { get; set; }
+        public virtual ICollection<Workout> Workouts { get; set; }
+        public virtual ICollection<AuditTrail> WorkoutAuditTrails { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
     }

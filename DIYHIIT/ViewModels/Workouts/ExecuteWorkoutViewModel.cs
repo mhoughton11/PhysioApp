@@ -344,12 +344,21 @@ namespace DIYHIIT.ViewModels.Workouts
 
         private async void ExecuteDoneCommand()
         {
+            _dialogService.ShowLoading("Syncing...");
+
             // Make a copy and the recently used date and effort of the workout.
             _workout.DateUsed = DateTime.Now;
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
             PostToFeed = true;
 
+            App.CurrentUser.WorkoutAuditTrails.Add( new AuditTrail()
+            {
+                AuditWorkout = _workout as Workout,
+                Notes = $"{App.CurrentUser.Username} completed workout {_workout.Name}"
+            });
+
+            await _userDataService.UpdateUser(App.CurrentUser);
             await _userDataService.UpdateWorkout(_workout as Workout);
 
             if (PostToFeed)
@@ -366,6 +375,8 @@ namespace DIYHIIT.ViewModels.Workouts
                 await _feedItemService.PostFeedItem(item);
                 MessagingCenter.Send(this, "WorkoutPosted");
             }
+
+            _dialogService.HideLoading();
 
             await _navigation.PopAsync();
         }
