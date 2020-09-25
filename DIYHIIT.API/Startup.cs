@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
-namespace DIYHIIT.Data
+namespace DIYHIIT.API
 {
     public class Startup
     {

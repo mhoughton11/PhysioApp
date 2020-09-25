@@ -135,7 +135,7 @@ namespace DIYHIIT.ViewModels.Workouts
 
             _dialogService.HideLoading();
 
-             base.InitializeAsync(data);
+             await base.InitializeAsync(data);
         }
 
         #endregion

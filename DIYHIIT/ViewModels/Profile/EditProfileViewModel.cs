@@ -7,9 +7,9 @@ using Xamarin.Forms;
 
 namespace DIYHIIT.ViewModels.Profile
 {
-    public class SettingsViewModel : BaseViewModel
+    public class EditProfileViewModel : BaseViewModel
     {
-        public SettingsViewModel(IUserDataService userDataService,
+        public EditProfileViewModel(IUserDataService userDataService,
                                  INavigation navigation,
                                  IDialogService dialogService)
             : base (navigation, dialogService)

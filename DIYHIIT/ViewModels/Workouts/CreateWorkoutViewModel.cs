@@ -174,7 +174,6 @@ namespace DIYHIIT.ViewModels.Workouts
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
                 Type = (WorkoutType)workoutType,
-                BackgroundImage = _exercises[0].ImageURL,
                 DateAdded = DateTime.Now,
                 //Exercises = _exercises,
                 ExerciseIds = JsonConvert.SerializeObject(ids),

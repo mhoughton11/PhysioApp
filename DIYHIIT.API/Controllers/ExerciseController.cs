@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace DIYHIIT.Data.Controllers
+namespace DIYHIIT.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

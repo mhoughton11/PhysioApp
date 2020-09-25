@@ -24,11 +24,11 @@ namespace DIYHIIT.Views.Tabs
             BindingContext = viewModel = new WorkoutListViewModel(0, workoutDataService, exerciseDataService, Navigation, dialogService);
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            viewModel.InitializeAsync(null);
+            await viewModel.InitializeAsync(null);
         }
     }
 }

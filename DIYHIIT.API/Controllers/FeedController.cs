@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using DIYHIIT.Library.Models.ViewComponents;
 using Newtonsoft.Json;
 
-namespace DIYHIIT.Data.Controllers
+namespace DIYHIIT.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -49,6 +49,28 @@ namespace DIYHIIT.Data.Controllers
             await _appDbContext.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateItem([FromBody] FeedItem updatedItem)
+        {
+            if (updatedItem == null)
+            {
+                return BadRequest();
+            }
+
+            if (!_appDbContext.FeedItems.Any(i => i.FeedItemKey == updatedItem.FeedItemKey))
+            {
+                return NotFound();
+            }
+
+            var entity = _appDbContext.FeedItems.Attach(updatedItem);
+            entity.State = EntityState.Modified;
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(entity);
         }
     }
 }

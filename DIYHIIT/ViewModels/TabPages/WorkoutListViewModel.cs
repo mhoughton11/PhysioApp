@@ -32,13 +32,7 @@ namespace DIYHIIT.ViewModels.Tabs
             _workoutDataService = workoutDataService;
             _exerciseDataService = exerciseDataService;
 
-            MessagingCenter.Subscribe<CreateWorkoutViewModel>(this, WorkoutsUpdated, (sender) =>
-            {
-                _workoutsUpdated = true;
-            });
-
             Task.Run(async () => await InitializeAsync(data));
-            _workoutDataService = workoutDataService;
         }
 
         #region Private Fields
@@ -87,31 +81,14 @@ namespace DIYHIIT.ViewModels.Tabs
 
         public override async Task InitializeAsync(object data)
         {
-            IsBusy = true;
-
-            if (_workoutsUpdated)
+            MessagingCenter.Subscribe<CreateWorkoutViewModel>(this, WorkoutsUpdated, (sender) =>
             {
-                _dialogService.ShowLoading("Loading workouts...");
+                GetWorkouts();
+            });
 
-                try
-                {
-                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.UserKey);
-                    WorkoutList = new ObservableCollection<IWorkout>(workouts);  
-
-                }
-                catch (Exception ex)
-                {
-                    _dialogService.Popup("Loading workouts failed.");
-                    _dialogService.HideLoading();
-                    Debug.WriteLine(ex);
-                }
-
-                _dialogService.HideLoading();
-            }
+            GetWorkouts();
 
             _workoutsUpdated = false;
-
-            IsBusy = false;
 
             await base.InitializeAsync(data);
         }
@@ -139,6 +116,25 @@ namespace DIYHIIT.ViewModels.Tabs
             await InitializeAsync(null);
 
             IsRefreshing = "False";
+        }
+
+        private async void GetWorkouts()
+        {
+            _dialogService.ShowLoading("Loading workouts...");
+
+                try
+                {
+                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.UserKey);
+                    WorkoutList = new ObservableCollection<IWorkout>(workouts);  
+
+                }
+                catch (Exception ex)
+                {
+                    _dialogService.Popup("Loading workouts failed.");
+                    Debug.WriteLine(ex);
+                }
+
+                _dialogService.HideLoading();
         }
 
         #endregion

@@ -31,7 +31,7 @@ namespace DIYHIIT.ViewModels.Tabs
                 await GetFeedItems();
             });
 
-            InitializeAsync(null);
+            Task.Run(() => InitializeAsync(null));
         }
 
         #region Private Members
