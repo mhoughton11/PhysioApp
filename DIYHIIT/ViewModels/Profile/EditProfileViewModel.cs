@@ -10,8 +10,8 @@ namespace DIYHIIT.ViewModels.Profile
     public class EditProfileViewModel : BaseViewModel
     {
         public EditProfileViewModel(IUserDataService userDataService,
-                                 INavigation navigation,
-                                 IDialogService dialogService)
+                                    INavigation navigation,
+                                    IDialogService dialogService)
             : base (navigation, dialogService)
         {
             _userDataService = userDataService;

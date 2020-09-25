@@ -23,10 +23,17 @@
                                Keyboard="Numeric"/>
                 </TableSection>
 
-                
-
                 <TableSection>
-                    
+                    <ViewCell>
+                        <ContentView BackgroundColor="White">
+                            <Button Text="Save"
+                                    Command="{Binding SaveChanges}"
+                                    TextColor="Red"
+                                    FontSize="20"
+                                    VerticalOptions="CenterAndExpand"
+                                    HorizontalOptions="CenterAndExpand"/>
+                        </ContentView>
+                    </ViewCell>
                 </TableSection>
 
             </TableRoot>
