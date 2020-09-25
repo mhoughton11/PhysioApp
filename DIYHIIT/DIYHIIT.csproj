@@ -48,6 +48,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.2" />
     <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="18.2.0.59" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />

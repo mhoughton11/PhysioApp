@@ -27,6 +27,7 @@ namespace DIYHIIT.iOS
 
             Firebase.Core.App.Configure();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            Syncfusion.XForms.iOS.ProgressBar.SfLinearProgressBarRenderer.Init();
 
             LoadApplication(new App(new Setup()));
 

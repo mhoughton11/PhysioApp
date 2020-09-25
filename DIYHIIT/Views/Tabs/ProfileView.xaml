@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:DIYHIIT.CustomRenderers"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
              Title="My Profile">
 
     <ContentPage.ToolbarItems>
@@ -13,62 +14,53 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <local:ProfileTableView Intent="Menu"
-                                HasUnevenRows="True">
+        <TableView Intent="Menu"
+                   HasUnevenRows="True">
             <TableRoot>
                 <TableSection>
                     <ViewCell>
-                        <Frame HasShadow="False"
-                               CornerRadius="20"
-                               Margin="0, -10">
-                            <Grid VerticalOptions="StartAndExpand"
-                                  Padding="5"
-                                  Margin="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                        <ContentView BackgroundColor="White">
+                            <StackLayout Padding="10">
+                                <Grid VerticalOptions="StartAndExpand"
+                                      Padding="5"
+                                      Margin="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                                <Label Text="{Binding UserName}"
-                                       VerticalOptions="StartAndExpand"
-                                       HorizontalOptions="FillAndExpand"
-                                       FontAttributes="Bold"
-                                       FontSize="25"/>
+                                    <Label Text="{Binding UserName}"
+                                           VerticalOptions="StartAndExpand"
+                                           HorizontalOptions="FillAndExpand"
+                                           FontAttributes="Bold"
+                                           FontSize="25"/>
 
-                                <ffimageloading:CachedImage Source="{Binding UserImage}"
-                                                            Grid.Column="1"
-                                                            VerticalOptions="FillAndExpand"
-                                                            HorizontalOptions="FillAndExpand"
-                                                            Grid.RowSpan="2"
-                                                            Aspect="AspectFit"
-                                                            HeightRequest="200">
-                                    <ffimageloading:CachedImage.Transformations>
-                                        <fftransformations:CircleTransformation/>
-                                    </ffimageloading:CachedImage.Transformations>
-                                </ffimageloading:CachedImage>
+                                    <ffimageloading:CachedImage Source="{Binding UserImage}"
+                                                                Grid.Column="1"
+                                                                VerticalOptions="FillAndExpand"
+                                                                HorizontalOptions="FillAndExpand"
+                                                                Grid.RowSpan="2"
+                                                                Aspect="AspectFit"
+                                                                HeightRequest="200">
+                                        <ffimageloading:CachedImage.Transformations>
+                                            <fftransformations:CircleTransformation/>
+                                        </ffimageloading:CachedImage.Transformations>
+                                    </ffimageloading:CachedImage>
 
-                                <Label Text="{Binding UserEmail}"
-                                       Grid.Row="1"
-                                       FontSize="20"
-                                       VerticalOptions="FillAndExpand"
-                                       HorizontalOptions="FillAndExpand"
-                                       TextColor="Gray"/>
-                            </Grid>
-                        </Frame>
-                    </ViewCell>
-                </TableSection>
-
-                <TableSection>
-                    <ViewCell>
-                        <Frame HasShadow="False"
-                               CornerRadius="20">
-                            <StackLayout>
-                                <Grid>
+                                    <Label Text="{Binding UserEmail}"
+                                           Grid.Row="1"
+                                           FontSize="20"
+                                           VerticalOptions="FillAndExpand"
+                                           HorizontalOptions="FillAndExpand"
+                                           TextColor="Gray"/>
+                                </Grid>
+   
+                                <Grid Margin="0, 10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="4*"/>
                                         <ColumnDefinition Width="*"/>
@@ -87,15 +79,28 @@
                                 <Label Text="My Workout History:"
                                        Margin="0, 5"/>
 
-                                <BoxView Margin="0, 5"
-                                         Color="BlueViolet"
-                                         HorizontalOptions="FillAndExpand"
-                                         VerticalOptions="CenterAndExpand"
-                                         Grid.ColumnSpan="2"
-                                         CornerRadius="3"
-                                         HeightRequest="6"/>
+                                <progressBar:SfLinearProgressBar Progress="100"
+                                                                 CornerRadius="3"
+                                                                 Margin="10"
+                                                                 HeightRequest="6"
+                                                                 VerticalOptions="CenterAndExpand"
+                                                                 HorizontalOptions="CenterAndExpand">
+
+                                    <progressBar:SfLinearProgressBar.RangeColors>
+                                        <progressBar:RangeColorCollection>
+                                            <progressBar:RangeColor Color="Gray" Start="{Binding EmptyStart}" End="{Binding EmptyEnd}"/>
+                                            <progressBar:RangeColor Color="Red" Start="{Binding HIITStart}" End="{Binding HIITEnd}"/>
+                                            <progressBar:RangeColor Color="Gold" Start="{Binding CaliStart}" End="{Binding CaliEnd}"/>
+                                            <progressBar:RangeColor Color="Blue" Start="{Binding YogaStart}" End="{Binding YogaEnd}"/>
+                                            <progressBar:RangeColor Color="LightBlue" Start="{Binding PilaStart}" End="{Binding PilaEnd}"/>
+                                            <progressBar:RangeColor Color="Pink" Start="{Binding MobStart}" End="{Binding MobEnd}"/>
+                                            <progressBar:RangeColor Color="Green" Start="{Binding StretchStart}" End="{Binding StretchEnd}"/>
+                                        </progressBar:RangeColorCollection>
+                                    </progressBar:SfLinearProgressBar.RangeColors>
+                                    
+                                </progressBar:SfLinearProgressBar>
                                 
-                                <Grid>
+                                <Grid Margin="2">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="0.67*"/>
@@ -121,7 +126,7 @@
                                            VerticalOptions="CenterAndExpand"
                                            Grid.Column="2"
                                            HorizontalTextAlignment="Center"/>
-                                    <BoxView Color="Blue"
+                                    <BoxView Color="Gold"
                                              Margin="2"
                                              HorizontalOptions="FillAndExpand"
                                              VerticalOptions="CenterAndExpand"
@@ -133,7 +138,7 @@
                                            Grid.Column="4"
                                            VerticalOptions="Center"
                                            HorizontalTextAlignment="Center"/>
-                                    <BoxView Color="Gold"
+                                    <BoxView Color="Blue"
                                              Margin="2"
                                              HorizontalOptions="FillAndExpand"
                                              VerticalOptions="CenterAndExpand"
@@ -146,7 +151,7 @@
                                            FontSize="13"
                                            VerticalOptions="CenterAndExpand"
                                            HorizontalTextAlignment="Center"/>
-                                    <BoxView Color="Gray"
+                                    <BoxView Color="Pink"
                                              Margin="5"
                                              HorizontalOptions="FillAndExpand"
                                              VerticalOptions="CenterAndExpand"
@@ -197,12 +202,30 @@
 
                             </StackLayout>
                             
-                        </Frame>
+                        </ContentView>
+                    </ViewCell>
+                </TableSection>
+
+                <TableSection>
+                    <ViewCell>
+                        <ContentView BackgroundColor="White"
+                                     HeightRequest="40">
+                            <Label Text="Calender to go here"/>
+                        </ContentView>
+                    </ViewCell>
+                </TableSection>
+
+                <TableSection>
+                    <ViewCell>
+                        <ContentView BackgroundColor="White"
+                                     HeightRequest="40">
+                            <Label Text="Goals and Acheivements"/>
+                        </ContentView>
                     </ViewCell>
                 </TableSection>
 
             </TableRoot>
-        </local:ProfileTableView>
+        </TableView>
     </ContentPage.Content>
 
 </ContentPage>

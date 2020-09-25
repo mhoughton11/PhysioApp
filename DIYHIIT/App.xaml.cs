@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using static DIYHIIT.Constants.CacheNameConstants;
 using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT
@@ -31,6 +32,9 @@ namespace DIYHIIT
 
         private void InitializeApp(AppSetup setup)
         {
+            //Register Syncfusion license
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(SyncfusionLicense);
+
             AppHostOptions = HostOptions.Production;
 
             AppContainer.Container = setup.CreateContainer();

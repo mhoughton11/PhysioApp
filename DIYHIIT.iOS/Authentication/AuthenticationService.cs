@@ -34,6 +34,7 @@ namespace DIYHIIT.iOS.Authentication
         public void SignOut()
         {
             NSError error;
+            //Auth.DefaultInstance.CurrentUser = null;
             Auth.DefaultInstance.SignOut(out error);
         }
 

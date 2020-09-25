@@ -39,7 +39,9 @@ namespace DIYHIIT.Views.Authentication
                 if (!response.IsAuthenticated)
                 {
                     Debug.WriteLine($"firebase auto-login failed");
+                    App.CurrentUser = null;
                     App.Current.MainPage = new LoginView();
+
                     return;
                 }
                 // Success
@@ -51,6 +53,14 @@ namespace DIYHIIT.Views.Authentication
 
                     App.CurrentUser = user;
                     App.Current.MainPage = new MainPage();
+                    return;
+                }
+                else
+                {
+                    Debug.WriteLine("Firebase succeeded, db login failed.");
+
+                    App.CurrentUser = null;
+                    App.Current.MainPage = new LoginView();
                     return;
                 }
             }

@@ -16,6 +16,7 @@
                      BackgroundColor="Transparent">
 
             <ListView HasUnevenRows="True"
+                      VerticalOptions="FillAndExpand"
                       ItemsSource="{Binding WorkoutList}"
                       SeparatorVisibility="None"
                       IsPullToRefreshEnabled="True"

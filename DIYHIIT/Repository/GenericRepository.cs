@@ -29,7 +29,7 @@ namespace DIYHIIT.Repository
         {
             try
             {
-                // Debug.WriteLine($"HTTP Get: {uri}");                    
+                Debug.Write($"HTTP Get: {uri} ...");                    
 
                 HttpClient client = CreateHttpClient(uri);
                 HttpResponseMessage responseMessage = await client.GetAsync(uri);
@@ -41,6 +41,7 @@ namespace DIYHIIT.Repository
                     string message = await responseMessage.Content.ReadAsStringAsync();
 
                     var result = JsonConvert.DeserializeObject<T>(message);
+                    Debug.Write(" success!");
                     return result;
                 }
 
@@ -53,7 +54,7 @@ namespace DIYHIIT.Repository
                     //throw new ServiceAuthenticationException(content);
                 }
 
-                Debug.WriteLine($"Error getting data from uri: {uri}");
+                Debug.Write(" failed");
 
                 return default;
                 //throw new HttpRequestExceptionEx(responseMessage.StatusCode, content);
@@ -72,7 +73,7 @@ namespace DIYHIIT.Repository
             {
                 HttpClient client = CreateHttpClient(uri);
 
-                Debug.WriteLine($"HTTP Post: {uri}");
+                Debug.Write($"HTTP Post: {uri} ...");
 
                 var content = new StringContent(JsonConvert.SerializeObject(data));
 
@@ -86,6 +87,7 @@ namespace DIYHIIT.Repository
                 {
                     jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                    Debug.Write(" success!");
                     return json;
                 }
 
@@ -95,7 +97,7 @@ namespace DIYHIIT.Repository
                     //throw new ServiceAuthenticationException(jsonResult);
                 }
 
-                Debug.WriteLine($"Http Post failed. Response:");
+                Debug.Write(" failed");
                 Debug.WriteLine(responseMessage);
                 return default;
             }

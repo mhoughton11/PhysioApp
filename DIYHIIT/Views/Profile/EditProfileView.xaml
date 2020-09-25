@@ -5,10 +5,10 @@
              x:Class="DIYHIIT.Views.Profile.EditProfileView"
              Title="Edit Profile">
     <ContentPage.Content>
-        <local:ProfileTableView Intent="Settings">
+        <TableView Intent="Settings">
             <TableRoot>
                 <TableSection Title="My Details">
-                    <EntryCell Label="Name:" 
+                    <EntryCell Label="Name:"
                                Placeholder="First Name" 
                                Text="{Binding FirstName}"/>
                     <EntryCell Label="Surname:" 
@@ -31,6 +31,6 @@
                 </TableSection>
 
             </TableRoot>
-        </local:ProfileTableView>
+        </TableView>
     </ContentPage.Content>
 </ContentPage>
