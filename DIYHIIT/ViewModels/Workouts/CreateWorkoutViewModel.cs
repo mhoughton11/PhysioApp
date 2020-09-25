@@ -170,6 +170,7 @@ namespace DIYHIIT.ViewModels.Workouts
             var workout = new Workout()
             {
                 Name = name,
+                BackgroundImage = _exercises[0].ImageURL,
                 ActiveInterval = activeInterval,
                 RestInterval = restInterval,
                 Type = (WorkoutType)workoutType,
