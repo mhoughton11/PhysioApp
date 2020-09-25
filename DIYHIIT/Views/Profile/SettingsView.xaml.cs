@@ -19,8 +19,9 @@ namespace DIYHIIT.Views.Profile
 
             var dialog = AppContainer.Container.Resolve<IDialogService>();
             var userDataService = AppContainer.Container.Resolve<IUserDataService>();
+            var authenticationService = AppContainer.Container.Resolve<IAuthenticationService>();
 
-            BindingContext = viewModel = new SettingsViewModel(userDataService, Navigation, dialog);
+            BindingContext = viewModel = new SettingsViewModel(userDataService, authenticationService, Navigation, dialog);
         }
     }
 }

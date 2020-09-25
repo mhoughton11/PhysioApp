@@ -70,6 +70,7 @@
     <Folder Include="Views\Profile\" />
     <Folder Include="ViewModels\Profile\" />
     <Folder Include="Controls\" />
+    <Folder Include="Custom Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DIYHIIT.Library\DIYHIIT.Library.csproj" />

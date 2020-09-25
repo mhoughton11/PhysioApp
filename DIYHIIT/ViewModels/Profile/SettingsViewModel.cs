@@ -4,6 +4,7 @@ using System.Windows.Input;
 using DIYHIIT.Contracts.Services.Data;
 using DIYHIIT.Contracts.Services.General;
 using DIYHIIT.ViewModels.Base;
+using DIYHIIT.Views.Authentication;
 using DIYHIIT.Views.Profile;
 using Xamarin.Forms;
 
@@ -12,11 +13,13 @@ namespace DIYHIIT.ViewModels.Profile
     public class SettingsViewModel : BaseViewModel
     {
         public SettingsViewModel(IUserDataService userDataService,
+                                 IAuthenticationService authenticationService,
                                  INavigation navigation,
                                  IDialogService dialogService)
             : base (navigation, dialogService)
         {
             _userDataService = userDataService;
+            _authenticationService = authenticationService;
         }
 
         #region Private Fields
@@ -26,6 +29,7 @@ namespace DIYHIIT.ViewModels.Profile
 
         // Model Components
         private readonly IUserDataService _userDataService;
+        private readonly IAuthenticationService _authenticationService;
 
         #endregion
 
@@ -42,6 +46,7 @@ namespace DIYHIIT.ViewModels.Profile
         }
 
         public ICommand EditProfileTapped => new Command(OnEditProfileTapped);
+        public ICommand LogOut => new Command(OnLogOut);
         public ICommand SaveChanges => new Command(OnSaveChanges);
 
         #endregion
@@ -77,6 +82,19 @@ namespace DIYHIIT.ViewModels.Profile
             _dialogService.HideLoading();
 
             await _navigation.PopToRootAsync();
+        }
+
+        private async void OnLogOut(object obj)
+        {
+            var logout = await _dialogService.ShowConfirmAsync("Log out", "Are you sure you want to log out?");
+
+            if (logout)
+            {
+                _authenticationService.SignOut();
+
+                App.CurrentUser = null;
+                App.Current.MainPage = new LoginView();
+            }
         }
 
         #endregion

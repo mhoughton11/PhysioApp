@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DIYHIIT.CustomRenderers"
              x:Class="DIYHIIT.Views.Profile.EditProfileView"
              Title="Edit Profile">
     <ContentPage.Content>
-        <TableView Intent="Settings">
+        <local:ProfileTableView Intent="Settings">
             <TableRoot>
                 <TableSection Title="My Details">
                     <EntryCell Label="Name:" 
@@ -30,6 +31,6 @@
                 </TableSection>
 
             </TableRoot>
-        </TableView>
+        </local:ProfileTableView>
     </ContentPage.Content>
 </ContentPage>

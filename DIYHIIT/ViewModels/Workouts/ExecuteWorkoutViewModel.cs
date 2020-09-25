@@ -353,8 +353,6 @@ namespace DIYHIIT.ViewModels.Workouts
             _workout.DateUsed = DateTime.Now;
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
-            PostToFeed = true;
-
             App.CurrentUser.WorkoutAuditTrails.Add( new AuditTrail()
             {
                 AuditWorkout = _workout as Workout,
@@ -364,7 +362,7 @@ namespace DIYHIIT.ViewModels.Workouts
             await _userDataService.UpdateUser(App.CurrentUser);
             await _workoutDataService.UpdateWorkout(_workout);
 
-            if (PostToFeed)
+            if (App.CurrentUser.UserSettings.PostToFeed)
             {
                 var item = new FeedItem()
                 {

@@ -28,7 +28,7 @@ namespace DIYHIIT.ViewModels.Profile
         private string _surname;
         private string _height;
         private string _weight;
-        
+        private string _username;
 
         // Model Components
         private readonly IUserDataService _userDataService;
@@ -75,7 +75,7 @@ namespace DIYHIIT.ViewModels.Profile
                 _weight = value;
                 RaisePropertyChanged(() => Weight);
             }
-        } 
+        }
 
         public ICommand SaveChanges => new Command(OnSaveChanges);
 
