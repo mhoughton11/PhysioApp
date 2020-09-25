@@ -10,6 +10,9 @@ using DIYHIIT.ViewModels.Base;
 using MvvmCross.ViewModels;
 using Xamarin.Forms;
 using DIYHIIT.Views.Profile;
+using DIYHIIT.ViewModels.Profile;
+
+using static DIYHIIT.Constants.Messages;
 
 namespace DIYHIIT.ViewModels.Tabs
 {
@@ -80,9 +83,12 @@ namespace DIYHIIT.ViewModels.Tabs
 
         public override Task InitializeAsync(object data)
         {
-            UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.Surname;
-            UserImage = "https://icons-for-free.com/iconfiles/png/512/neutral+user-131964784832104677.png";
-            UserEmail = App.CurrentUser.Username;
+            MessagingCenter.Subscribe<EditProfileViewModel>(this, ProfileUpdated, (sender) =>
+            {
+                GetProfile();
+            });
+
+            GetProfile();
 
             return base.InitializeAsync(data);
         }
@@ -91,9 +97,16 @@ namespace DIYHIIT.ViewModels.Tabs
 
         #region Private Methods
 
+        private void GetProfile()
+        {
+            UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.Surname;
+            UserImage = "https://icons-for-free.com/iconfiles/png/512/neutral+user-131964784832104677.png";
+            UserEmail = App.CurrentUser.Username;
+        }
+
         private async void OnSettingsTapped()
         {
-            await _navigation.PushAsync(new SettingsView());
+            await _navigation.PushAsync(new SettingsView(), true);
         }
 
         #endregion

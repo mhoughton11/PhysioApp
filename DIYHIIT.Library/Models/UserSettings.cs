@@ -6,6 +6,12 @@ namespace DIYHIIT.Library.Models
 {
     public class UserSettings : IUserSettings
     {
+        public UserSettings()
+        {
+            // Default settings
+            PostToFeed = false;
+        }
+
         [Key]
         public int Id { get; set; }
 

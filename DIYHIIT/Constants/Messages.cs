@@ -5,5 +5,7 @@ namespace DIYHIIT.Constants
     {
         public const string WorkoutsUpdated = "WorkoutsUpdated";
         public const string ExerciseAdded = "ExerciseAdded";
+
+        public const string ProfileUpdated = "ProfileUpdated";
     }
 }

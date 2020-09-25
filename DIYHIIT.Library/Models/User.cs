@@ -9,6 +9,8 @@ namespace DIYHIIT.Library.Models
     {
         public User()
         {
+            UserSettings = new UserSettings();
+
             Workouts = new HashSet<Workout>();
             WorkoutAuditTrails = new HashSet<AuditTrail>();
         }

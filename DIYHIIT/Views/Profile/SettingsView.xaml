@@ -4,22 +4,18 @@
              x:Class="DIYHIIT.Views.Profile.SettingsView"
              Title="Settings">
     <ContentPage.Content>
-        <TableView Intent="Data"
-                   HasUnevenRows="True">
+        <TableView HasUnevenRows="True"
+                   Intent="Settings">
             <TableRoot>
 
                 <TableSection>
-                    <ViewCell>
-                        <Label Text="Edit Profile"
-                                VerticalOptions="CenterAndExpand"
-                                HorizontalOptions="StartAndExpand"
-                                Padding="10"/>
-                        
-                    </ViewCell>
+                    <TextCell Text="Edit Profile"
+                              Command="{Binding EditProfileTapped}"/>
                 </TableSection>
 
                 <TableSection>
-                    <SwitchCell Text="Automatically post to feed" On="false"/>
+                    <SwitchCell Text="Automatically post to feed"
+                                On="{Binding PostToFeed}"/>
                 </TableSection>
 
             </TableRoot>

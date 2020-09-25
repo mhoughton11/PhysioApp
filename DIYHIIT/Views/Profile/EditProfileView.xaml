@@ -8,32 +8,25 @@
             <TableRoot>
                 <TableSection Title="My Details">
                     <EntryCell Label="Name:" 
-                               Placeholder="Enter Your First Name Here" 
+                               Placeholder="First Name" 
                                Text="{Binding FirstName}"/>
                     <EntryCell Label="Surname:" 
-                               Placeholder="Enter Your Last Name Here" 
+                               Placeholder="Last Name" 
                                Text="{Binding Surname}"/>
                     <EntryCell Label="Height:" 
-                               Placeholder="Enter your Height Here" 
+                               Placeholder="Height (cm)" 
                                Text="{Binding Height}" 
                                Keyboard="Numeric"/>
                     <EntryCell Label="Weight:" 
-                               Placeholder="Enter Your Weight Here"
+                               Placeholder="Weight (weight)"
                                Text="{Binding Weight}" 
                                Keyboard="Numeric"/>
                 </TableSection>
 
                 <TableSection>
-                    <ViewCell>
-                        <ContentView BackgroundColor="White">
-                            <Button Text="Save"
-                                    Command="{Binding SaveChanges}"
-                                    TextColor="Red"
-                                    FontSize="20"
-                                    VerticalOptions="CenterAndExpand"
-                                    HorizontalOptions="CenterAndExpand"/>
-                        </ContentView>
-                    </ViewCell>
+                    <TextCell Text="Save Changes"
+                              TextColor="Red"
+                              Command="{Binding SaveChanges}"/>
                 </TableSection>
 
             </TableRoot>

@@ -18,6 +18,7 @@ namespace DIYHIIT
     {
         public static HostOptions AppHostOptions;
         public static User CurrentUser;
+        public static UserSettings Settings;
 
         public App(AppSetup setup)
         {
