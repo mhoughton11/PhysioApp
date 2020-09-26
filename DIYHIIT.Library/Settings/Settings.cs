@@ -20,7 +20,6 @@ namespace DIYHIIT.Library.Settings
 
         public enum WorkoutType
         {
-            All = 0,
             Calisthenics,
             HIIT,
             Pilates,

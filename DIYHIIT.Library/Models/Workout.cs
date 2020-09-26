@@ -16,11 +16,12 @@ namespace DIYHIIT.Library.Models
         }
 
         [Key]
-        public int WorkoutKey { get; set; }
+        public int ID { get; set; }
 
         public string Name { get; set; }
         public string BodyFocus { get; set; }
         public string ExerciseCount { get; set; }
+        public string BackgroundImage { get; set; }
 
         public double? RestInterval { get; set; }
         public double? ActiveInterval { get; set; }
@@ -34,11 +35,11 @@ namespace DIYHIIT.Library.Models
 
         public string ExerciseIds { get; set; }
 
+        public int UserID { get; set; }
+
+        public virtual User User { get; set; }
         public virtual ICollection<Exercise> Exercises { get; set; }
 
-        public int UserKey { get; set; }
-        public virtual User User { get; set; }
-
-        public string BackgroundImage { get; set; }
+       
     }
 }

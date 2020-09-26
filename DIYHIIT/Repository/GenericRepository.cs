@@ -41,7 +41,7 @@ namespace DIYHIIT.Repository
                     string message = await responseMessage.Content.ReadAsStringAsync();
 
                     var result = JsonConvert.DeserializeObject<T>(message);
-                    Debug.Write(" success!");
+                    Debug.WriteLine(" success!");
                     return result;
                 }
 
@@ -54,7 +54,7 @@ namespace DIYHIIT.Repository
                     //throw new ServiceAuthenticationException(content);
                 }
 
-                Debug.Write(" failed");
+                Debug.WriteLine(" failed");
 
                 return default;
                 //throw new HttpRequestExceptionEx(responseMessage.StatusCode, content);
@@ -87,7 +87,7 @@ namespace DIYHIIT.Repository
                 {
                     jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var json = JsonConvert.DeserializeObject<T>(jsonResult);
-                    Debug.Write(" success!");
+                    Debug.WriteLine(" success!");
                     return json;
                 }
 
@@ -97,7 +97,7 @@ namespace DIYHIIT.Repository
                     //throw new ServiceAuthenticationException(jsonResult);
                 }
 
-                Debug.Write(" failed");
+                Debug.WriteLine(" failed");
                 Debug.WriteLine(responseMessage);
                 return default;
             }

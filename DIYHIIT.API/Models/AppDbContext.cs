@@ -11,7 +11,6 @@ namespace DIYHIIT.API.Models
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<FeedItem> FeedItems { get; set; }
         public DbSet<AuditTrail> AuditTrails { get; set; }
-        public DbSet<UserSettings> UserSettings { get; set; }
 
         public AppDbContext(DbContextOptions options)
             :base(options)
@@ -23,24 +22,19 @@ namespace DIYHIIT.API.Models
             builder.Entity<User>()
                 .HasMany(u => u.WorkoutAuditTrails)
                 .WithOne(e => e.User)
-                .HasForeignKey(e => e.UserKey)
+                .HasForeignKey(e => e.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<User>()
                 .HasMany(u => u.Workouts)
                 .WithOne(w => w.User)
-                .HasForeignKey(w => w.UserKey)
+                .HasForeignKey(w => w.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<User>()
-                .HasOne(u => u.UserSettings)
-                .WithOne(s => s.User)
-                .HasForeignKey<UserSettings>(s => s.UserKey);
 
             builder.Entity<Workout>()
                 .HasMany(w => w.Exercises)
                 .WithOne(e => e.Workout)
-                .HasForeignKey(e => e.WorkoutKey)
+                .HasForeignKey(e => e.WorkoutID)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

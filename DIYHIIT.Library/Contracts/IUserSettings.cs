@@ -3,11 +3,8 @@ using DIYHIIT.Library.Models;
 
 namespace DIYHIIT.Library.Contracts
 {
-    public interface IUserSettings : IEntity
+    public interface IUserSettings
     {
         bool PostToFeed { get; set; }
-
-        User User { get; set; }
-        int UserKey { get; set; }
     }
 }

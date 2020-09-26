@@ -3,10 +3,8 @@ using DIYHIIT.Library.Models;
 
 namespace DIYHIIT.Library.Contracts
 {
-    public interface IUser
+    public interface IUser : IEntity
     {
-        int UserKey { get; set; }
-
         string Uid { get; set; }
 
         string Username { get; set; }
@@ -18,7 +16,6 @@ namespace DIYHIIT.Library.Contracts
         double? Weight { get; set; }
 
         ICollection<Workout> Workouts { get; set; }
-
-        UserSettings UserSettings { get; set; }
+        ICollection<AuditTrail> WorkoutAuditTrails { get; set; }
     }
 }

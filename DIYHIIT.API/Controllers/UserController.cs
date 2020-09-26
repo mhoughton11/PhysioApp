@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
 using DIYHIIT.Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
+using static DIYHIIT.API.Extensions.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +30,6 @@ namespace DIYHIIT.API.Controllers
         public async Task<IActionResult> Get()
         {
             var items = await _appDbContext.Users
-                                           .OrderBy(u => u.Username)
                                            .ToListAsync();
 
             return Ok(items);
@@ -44,12 +47,9 @@ namespace DIYHIIT.API.Controllers
             // Retrieve user
             var user = await _appDbContext.Users
                                           .Where(u => u.Uid == uid)
+                                          .Include(u => u.Workouts)
+                                          .Include(u => u.WorkoutAuditTrails)
                                           .SingleOrDefaultAsync();
-
-            // Retrieve user workouts
-            user.Workouts = await _appDbContext.Workouts
-                                               .Where(w => w.UserKey == user.UserKey)
-                                               .ToListAsync();
 
             if (user != null)
             {
@@ -91,10 +91,8 @@ namespace DIYHIIT.API.Controllers
                 return NotFound();
             }
 
-            var entity = _appDbContext.Users.Attach(user);
-            entity.State = EntityState.Modified;
-
-            await _appDbContext.SaveChangesAsync();
+            _appDbContext.DetatchLocal(user, user.ID);
+            _appDbContext.SaveChanges();
 
             return Ok(user);
         }

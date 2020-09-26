@@ -14,13 +14,16 @@ namespace DIYHIIT.Library.Models
         [Key]
         public int Id { get; set; }
 
+        [StringLength(100)]
         public string Notes { get; set; }
 
-        public int UserKey { get; set; }
-        public virtual User User { get; set; }
+        public int UserID { get; set; }
 
         public DateTime DOE { get; set; }
 
         public Workout AuditWorkout { get; set; }
+
+        // Navigation Properties
+        public virtual User User { get; set; }
     }
 }

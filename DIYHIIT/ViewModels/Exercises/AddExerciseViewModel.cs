@@ -76,9 +76,11 @@ namespace DIYHIIT.ViewModels.Exercises
                 _selectedExercise = value;
                 RaisePropertyChanged(() => SelectedExercise);
 
-                OnExerciseTapped((Exercise)value);
-
-                //SelectedExercise = null;
+                if (value != null)
+                {
+                    OnExerciseTapped((Exercise)value);
+                    SelectedExercise = null;
+                }
             }
         }
  

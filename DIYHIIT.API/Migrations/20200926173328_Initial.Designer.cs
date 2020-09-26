@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200917082630_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200926173328_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,15 +21,41 @@ namespace DIYHIIT.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
+            modelBuilder.Entity("DIYHIIT.Library.Models.AuditTrail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BodyFocus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("AuditWorkoutID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DOE")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuditWorkoutID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("AuditTrails");
+                });
+
+            modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(500)")
@@ -56,19 +82,19 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkoutId")
+                    b.Property<int>("WorkoutID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("WorkoutId");
+                    b.HasIndex("WorkoutID");
 
-                    b.ToTable("DB_Exercises");
+                    b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -76,24 +102,66 @@ namespace DIYHIIT.API.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<double?>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Uid")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<double?>("Weight")
+                        .HasColumnType("float");
 
-                    b.ToTable("DB_Users");
+                    b.HasKey("ID");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DIYHIIT.Library.Models.ViewComponents.FeedItem", b =>
+                {
+                    b.Property<int>("FeedItemKey")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FeedType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WorkoutID")
+                        .HasColumnType("int");
+
+                    b.HasKey("FeedItemKey");
+
+                    b.HasIndex("WorkoutID");
+
+                    b.ToTable("FeedItems");
                 });
 
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -134,30 +202,50 @@ namespace DIYHIIT.API.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("DB_Workouts");
+                    b.ToTable("Workouts");
                 });
 
-            modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
+            modelBuilder.Entity("DIYHIIT.Library.Models.AuditTrail", b =>
                 {
-                    b.HasOne("DIYHIIT.Library.Models.Workout", null)
-                        .WithMany("Exercises")
-                        .HasForeignKey("WorkoutId")
+                    b.HasOne("DIYHIIT.Library.Models.Workout", "AuditWorkout")
+                        .WithMany()
+                        .HasForeignKey("AuditWorkoutID");
+
+                    b.HasOne("DIYHIIT.Library.Models.User", "User")
+                        .WithMany("WorkoutAuditTrails")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DIYHIIT.Library.Models.Exercise", b =>
+                {
+                    b.HasOne("DIYHIIT.Library.Models.Workout", "Workout")
+                        .WithMany("Exercises")
+                        .HasForeignKey("WorkoutID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DIYHIIT.Library.Models.ViewComponents.FeedItem", b =>
+                {
+                    b.HasOne("DIYHIIT.Library.Models.Workout", "Workout")
+                        .WithMany()
+                        .HasForeignKey("WorkoutID");
+                });
+
             modelBuilder.Entity("DIYHIIT.Library.Models.Workout", b =>
                 {
-                    b.HasOne("DIYHIIT.Library.Models.User", null)
+                    b.HasOne("DIYHIIT.Library.Models.User", "User")
                         .WithMany("Workouts")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

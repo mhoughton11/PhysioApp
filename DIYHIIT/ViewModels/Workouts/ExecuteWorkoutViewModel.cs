@@ -22,12 +22,14 @@ namespace DIYHIIT.ViewModels.Workouts
                                        IFeedItemService feedItemService,
                                        IWorkoutDataService workoutDataService,
                                        IUserDataService userDataService,
+                                       IAuditTrailDataService auditTrailDataService,
                                        INavigation navigationService,
                                        IDialogService dialogService)
             : base(navigationService, dialogService)
         {
             _exercises = exercises;
             _userDataService = userDataService;
+            _auditTrailDataService = auditTrailDataService;
             _feedItemService = feedItemService;
             _workoutDataService = workoutDataService;
 
@@ -59,6 +61,7 @@ namespace DIYHIIT.ViewModels.Workouts
 
         private List<IExercise> _exercises;
         private readonly IUserDataService _userDataService;
+        private readonly IAuditTrailDataService _auditTrailDataService;
         private readonly IFeedItemService _feedItemService;
         private readonly IWorkoutDataService _workoutDataService;
 
@@ -353,16 +356,18 @@ namespace DIYHIIT.ViewModels.Workouts
             _workout.DateUsed = DateTime.Now;
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
-            App.CurrentUser.WorkoutAuditTrails.Add( new AuditTrail()
+            var audit = new AuditTrail
             {
+                UserID = App.CurrentUser.ID,
                 AuditWorkout = _workout as Workout,
                 Notes = $"{App.CurrentUser.Username} completed workout {_workout.Name}"
             });
 
             await _userDataService.UpdateUser(App.CurrentUser);
+
             await _workoutDataService.UpdateWorkout(_workout);
 
-            if (App.CurrentUser.UserSettings.PostToFeed)
+            if (PostToFeed)
             {
                 var item = new FeedItem()
                 {

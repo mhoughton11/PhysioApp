@@ -12,7 +12,7 @@ namespace DIYHIIT.Library.Models
     public class Exercise : IExercise
     {
         [Key]
-        public int ExerciseKey { get; set; }
+        public int ID { get; set; }
 
         public int? Index { get; set; }
 
@@ -28,11 +28,13 @@ namespace DIYHIIT.Library.Models
         public string ImageURL { get; set; }
 
         public double? Duration { get; set; }
-
-        public virtual Workout Workout { get; set; }
-        public int WorkoutKey { get; set; }
+        
+        public int WorkoutID { get; set; }
 
         [Required]
         public WorkoutType Type { get; set; }
+
+        // Navigation Properties
+        public virtual Workout Workout { get; set; }
     }
 }

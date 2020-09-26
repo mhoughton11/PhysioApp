@@ -29,8 +29,8 @@ namespace DIYHIIT.API.Controllers
         public async Task<IActionResult> GetExercises()
         {
             var items = await _appDbContext.Exercises
-                                           .Where(e => e.WorkoutKey == 1)
-                                           .OrderBy(e => e.DisplayName)
+                                           .Where(e => e.Name == "AdminWorkout")
+                                           .OrderBy(e => e.Name)
                                            .ToListAsync();
 
             return Ok(items);
@@ -48,7 +48,7 @@ namespace DIYHIIT.API.Controllers
                 foreach (var id in _ids)
                 {
                     var ex = await _appDbContext.Exercises
-                        .Where(e => e.ExerciseKey == id)
+                        .Where(e => e.ID == id)
                         .FirstOrDefaultAsync();
 
                     exercises.Add(ex);
@@ -58,7 +58,7 @@ namespace DIYHIIT.API.Controllers
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
     }

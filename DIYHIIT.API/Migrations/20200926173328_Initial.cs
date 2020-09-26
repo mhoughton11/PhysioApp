@@ -11,9 +11,9 @@ namespace DIYHIIT.API.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserKey = table.Column<int>(nullable: false)
+                    ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Uid = table.Column<string>(nullable: true),
+                    Uid = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
@@ -22,18 +22,19 @@ namespace DIYHIIT.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserKey);
+                    table.PrimaryKey("PK_Users", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Workouts",
                 columns: table => new
                 {
-                    WorkoutKey = table.Column<int>(nullable: false)
+                    ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     BodyFocus = table.Column<string>(nullable: true),
                     ExerciseCount = table.Column<string>(nullable: true),
+                    BackgroundImage = table.Column<string>(nullable: true),
                     RestInterval = table.Column<double>(nullable: true),
                     ActiveInterval = table.Column<double>(nullable: true),
                     Effort = table.Column<double>(nullable: true),
@@ -42,17 +43,16 @@ namespace DIYHIIT.API.Migrations
                     DateUsed = table.Column<DateTime>(nullable: true),
                     Type = table.Column<int>(nullable: false),
                     ExerciseIds = table.Column<string>(nullable: true),
-                    UserKey = table.Column<int>(nullable: false),
-                    BackgroundImage = table.Column<string>(nullable: true)
+                    UserID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workouts", x => x.WorkoutKey);
+                    table.PrimaryKey("PK_Workouts", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Workouts_Users_UserKey",
-                        column: x => x.UserKey,
+                        name: "FK_Workouts_Users_UserID",
+                        column: x => x.UserID,
                         principalTable: "Users",
-                        principalColumn: "UserKey",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -62,25 +62,25 @@ namespace DIYHIIT.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Notes = table.Column<string>(nullable: true),
-                    UserKey = table.Column<int>(nullable: false),
+                    Notes = table.Column<string>(maxLength: 100, nullable: true),
+                    UserID = table.Column<int>(nullable: false),
                     DOE = table.Column<DateTime>(nullable: false),
-                    AuditWorkoutWorkoutKey = table.Column<int>(nullable: true)
+                    AuditWorkoutID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AuditTrails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AuditTrails_Workouts_AuditWorkoutWorkoutKey",
-                        column: x => x.AuditWorkoutWorkoutKey,
+                        name: "FK_AuditTrails_Workouts_AuditWorkoutID",
+                        column: x => x.AuditWorkoutID,
                         principalTable: "Workouts",
-                        principalColumn: "WorkoutKey",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AuditTrails_Users_UserKey",
-                        column: x => x.UserKey,
+                        name: "FK_AuditTrails_Users_UserID",
+                        column: x => x.UserID,
                         principalTable: "Users",
-                        principalColumn: "UserKey",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -88,7 +88,7 @@ namespace DIYHIIT.API.Migrations
                 name: "Exercises",
                 columns: table => new
                 {
-                    ExerciseKey = table.Column<int>(nullable: false)
+                    ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Index = table.Column<int>(nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
@@ -96,17 +96,17 @@ namespace DIYHIIT.API.Migrations
                     Description = table.Column<string>(maxLength: 500, nullable: true),
                     ImageURL = table.Column<string>(nullable: true),
                     Duration = table.Column<double>(nullable: true),
-                    WorkoutKey = table.Column<int>(nullable: false),
+                    WorkoutID = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercises", x => x.ExerciseKey);
+                    table.PrimaryKey("PK_Exercises", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Exercises_Workouts_WorkoutKey",
-                        column: x => x.WorkoutKey,
+                        name: "FK_Exercises_Workouts_WorkoutID",
+                        column: x => x.WorkoutID,
                         principalTable: "Workouts",
-                        principalColumn: "WorkoutKey",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -122,43 +122,43 @@ namespace DIYHIIT.API.Migrations
                     FeedType = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Message = table.Column<string>(nullable: true),
-                    WorkoutKey = table.Column<int>(nullable: true)
+                    WorkoutID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FeedItems", x => x.FeedItemKey);
                     table.ForeignKey(
-                        name: "FK_FeedItems_Workouts_WorkoutKey",
-                        column: x => x.WorkoutKey,
+                        name: "FK_FeedItems_Workouts_WorkoutID",
+                        column: x => x.WorkoutID,
                         principalTable: "Workouts",
-                        principalColumn: "WorkoutKey",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuditTrails_AuditWorkoutWorkoutKey",
+                name: "IX_AuditTrails_AuditWorkoutID",
                 table: "AuditTrails",
-                column: "AuditWorkoutWorkoutKey");
+                column: "AuditWorkoutID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuditTrails_UserKey",
+                name: "IX_AuditTrails_UserID",
                 table: "AuditTrails",
-                column: "UserKey");
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercises_WorkoutKey",
+                name: "IX_Exercises_WorkoutID",
                 table: "Exercises",
-                column: "WorkoutKey");
+                column: "WorkoutID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeedItems_WorkoutKey",
+                name: "IX_FeedItems_WorkoutID",
                 table: "FeedItems",
-                column: "WorkoutKey");
+                column: "WorkoutID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workouts_UserKey",
+                name: "IX_Workouts_UserID",
                 table: "Workouts",
-                column: "UserKey");
+                column: "UserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

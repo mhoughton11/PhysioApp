@@ -29,7 +29,8 @@ namespace DIYHIIT.API.Controllers
         public async Task<IActionResult> GetWorkouts()
         {
             var items = await _appDbContext.Workouts
-                                           .OrderBy(w => w.WorkoutKey)
+                                           .OrderBy(w => w.Name)
+                                           .Include(w => w.Exercises)
                                            .ToListAsync();
 
             return Ok(items);
@@ -39,14 +40,14 @@ namespace DIYHIIT.API.Controllers
         [Route("user")]
         public async Task<ActionResult> GetUserWorkouts(int userId)
         {
-            if (!_appDbContext.Users.Any(u => u.UserKey == userId))
+            if (!_appDbContext.Users.Any(u => u.ID == userId))
             {
                 return NotFound();
             }
 
-            var workouts = await _appDbContext.Workouts.Where(w => w.UserKey == userId)
-                                                       .OrderBy(w => w.Name)
-                                                       .Include("Exercises")
+            var workouts = await _appDbContext.Workouts.Where(w => w.UserID == userId)
+                                                       .OrderByDescending(w => w.DateAdded)
+                                                       .Include(w => w.Exercises)
                                                        .ToListAsync();
 
             return Ok(workouts);
@@ -70,7 +71,7 @@ namespace DIYHIIT.API.Controllers
         public async Task<IActionResult> SaveWorkout([FromBody] Workout workout)
         {
             // If already contains workout, don't save.
-            if (_appDbContext.Workouts.Any(w => w.WorkoutKey == workout.WorkoutKey))
+            if (_appDbContext.Workouts.Any(w => w.ID == workout.ID))
             {
                 return BadRequest();
             }

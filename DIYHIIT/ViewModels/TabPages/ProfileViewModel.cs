@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using DIYHIIT.Views.Profile;
 using DIYHIIT.ViewModels.Profile;
 
+using static DIYHIIT.Library.Settings.Settings;
 using static DIYHIIT.Constants.Messages;
 using System.Collections.ObjectModel;
 using Syncfusion.XForms.ProgressBar;
@@ -257,26 +258,86 @@ namespace DIYHIIT.ViewModels.Tabs
             });
 
             GetProfile();
-
-            HIITStart = 0;
-            HIITEnd = 25;
-
-            CaliStart = 25;
-            CaliEnd = 50;
-
-            YogaStart = 50;
-            YogaEnd = 60;
-
-            PilaStart = 60;
-            PilaEnd = 75;
-
-            MobStart = 75;
-            MobEnd = 95;
-
-            StretchStart = 95;
-            StretchEnd = 100;
+            GetAuditWorkouts();
+            
 
             return base.InitializeAsync(data);
+        }
+
+        private void GetAuditWorkouts()
+        {
+            int total = App.CurrentUser.WorkoutAuditTrails.Count;
+        
+            if (total == 0)
+            {
+                EmptyStart = 0.1;
+                EmptyEnd = 100;
+
+                HIITStart = 0;
+                HIITEnd = 0;
+
+                CaliStart = 0;
+                CaliEnd = 0;
+
+                YogaStart = 0;
+                YogaEnd = 0;
+
+                PilaStart = 0;
+                PilaEnd = 0;
+
+                MobStart = 0;
+                MobEnd = 0;
+
+                StretchStart = 0;
+                StretchEnd = 0;
+            }
+            else
+            {
+                GetWorkoutProportions(total);
+            }
+        }
+
+        private void GetWorkoutProportions(int total)
+        {
+            int cali = 0;
+            int yoga = 0;
+            int stretch = 0;
+            int pila = 0;
+            int hiit = 0;
+            int mob = 0;
+            int unknown = 0;
+
+            foreach (var workout in App.CurrentUser.WorkoutAuditTrails)
+            {
+                if (workout.AuditWorkout.Type == WorkoutType.Calisthenics) { cali++; }
+                else if (workout.AuditWorkout.Type == WorkoutType.HIIT) { hiit++; }
+                else if (workout.AuditWorkout.Type == WorkoutType.Yoga) { yoga++; }
+                else if (workout.AuditWorkout.Type == WorkoutType.Mobility) { mob++; }
+                else if (workout.AuditWorkout.Type == WorkoutType.Stretches) { stretch++; }
+                else if (workout.AuditWorkout.Type == WorkoutType.Pilates) { pila++; }
+                else { unknown++; }
+            }
+
+            EmptyStart = 0;
+            EmptyEnd = 0;
+
+            HIITStart = 0;
+            HIITEnd = (hiit / total) * 100;
+
+            CaliStart = HIITEnd;
+            CaliEnd = CaliStart + (cali / total) * 100;
+
+            YogaStart = CaliEnd;
+            YogaEnd = YogaStart + (yoga / total) * 100;
+
+            PilaStart = YogaEnd;
+            PilaEnd = PilaStart + (pila / total) * 100;
+
+            MobStart = PilaEnd;
+            MobEnd = MobStart + (mob / total) * 100;
+
+            StretchStart = MobEnd;
+            StretchEnd = StretchStart + (stretch / total) * 100;
         }
 
         #endregion

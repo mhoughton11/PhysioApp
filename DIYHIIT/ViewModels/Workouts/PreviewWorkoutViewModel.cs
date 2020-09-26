@@ -105,7 +105,7 @@ namespace DIYHIIT.ViewModels.Workouts
             _dialogService.ShowLoading("Loading workout...");
 
             _workout = data as Workout;
-            var items = (await _exerciseDataService.GetExercisesFromList(_workout.ExerciseIds)).ToList();
+            var items = _workout.Exercises.ToList();
 
             Exercises = new ObservableCollection<IExercise>();
 

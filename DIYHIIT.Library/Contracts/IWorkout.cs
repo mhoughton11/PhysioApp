@@ -6,9 +6,8 @@ using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Contracts
 {
-    public interface IWorkout
+    public interface IWorkout : IEntity
     {
-        int WorkoutKey { get; set; }
         // Data
         string Name { get; set; }
         string BodyFocus { get; set; }

@@ -45,6 +45,7 @@ namespace DIYHIIT.DependencyInjection
             builder.RegisterType<WorkoutDataService>().As<IWorkoutDataService>();
             builder.RegisterType<UserDataService>().As<IUserDataService>();
             builder.RegisterType<FeedItemService>().As<IFeedItemService>();
+            builder.RegisterType<AuditTrailDataService>().As<IAuditTrailDataService>();
 
             // Services - General
             builder.RegisterType<DialogService>().As<IDialogService>();

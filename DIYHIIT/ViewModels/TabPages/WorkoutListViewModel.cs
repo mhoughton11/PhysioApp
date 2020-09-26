@@ -113,7 +113,7 @@ namespace DIYHIIT.ViewModels.Tabs
         {
             IsRefreshing = "True";
 
-            await InitializeAsync(null);
+            GetWorkouts();
 
             IsRefreshing = "False";
         }
@@ -124,7 +124,7 @@ namespace DIYHIIT.ViewModels.Tabs
 
                 try
                 {
-                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.UserKey);
+                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.ID);
                     WorkoutList = new ObservableCollection<IWorkout>(workouts);  
 
                 }
@@ -134,7 +134,7 @@ namespace DIYHIIT.ViewModels.Tabs
                     Debug.WriteLine(ex);
                 }
 
-                _dialogService.HideLoading();
+            _dialogService.HideLoading();
         }
 
         #endregion

@@ -4,9 +4,8 @@ using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Contracts
 {
-    public interface IExercise
+    public interface IExercise : IEntity
     {
-        int ExerciseKey { get; set; }
         int? Index { get; set; }
 
         string Name { get; set; }

@@ -55,7 +55,7 @@ namespace DIYHIIT.ViewModels.Profile
 
         public override Task InitializeAsync(object data)
         {
-            PostToFeed = App.CurrentUser.UserSettings.PostToFeed;
+            PostToFeed = true;
 
             return base.InitializeAsync(data);
         }
@@ -74,10 +74,10 @@ namespace DIYHIIT.ViewModels.Profile
             _dialogService.ShowLoading("Saving changes...");
 
             // Save selected options into 
-            App.CurrentUser.UserSettings.PostToFeed = PostToFeed;
+            //App.CurrentUser.UserSettings.PostToFeed = PostToFeed;
 
             // Update user database
-            await _userDataService.UpdateUser(App.CurrentUser);
+            //await _userDataService.UpdateUser(App.CurrentUser);
 
             _dialogService.HideLoading();
 
