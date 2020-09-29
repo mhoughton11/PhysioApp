@@ -18,6 +18,12 @@ namespace DIYHIIT.Library.Settings
             Update = 4
         };
 
+        public enum AuditType
+        {
+            Workout = 1,
+            ProfileUpdate = 2
+        }
+
         public enum WorkoutType
         {
             Calisthenics,

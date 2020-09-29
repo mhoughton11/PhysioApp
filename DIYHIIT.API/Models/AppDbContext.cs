@@ -22,7 +22,7 @@ namespace DIYHIIT.API.Models
             builder.Entity<User>()
                 .HasMany(u => u.WorkoutAuditTrails)
                 .WithOne(e => e.User)
-                .HasForeignKey(e => e.UserID)
+                .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<User>()

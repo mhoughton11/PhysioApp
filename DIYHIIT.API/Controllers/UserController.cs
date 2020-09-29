@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using DIYHIIT.API.Models;
@@ -91,8 +90,10 @@ namespace DIYHIIT.API.Controllers
                 return NotFound();
             }
 
-            _appDbContext.DetatchLocal(user, user.ID);
-            _appDbContext.SaveChanges();
+            var entity = _appDbContext.Users.Attach(user);
+            entity.State = EntityState.Modified;
+
+            await _appDbContext.SaveChangesAsync();
 
             return Ok(user);
         }

@@ -30,7 +30,6 @@ namespace DIYHIIT.API.Controllers
         {
             var items = await _appDbContext.Workouts
                                            .OrderBy(w => w.Name)
-                                           .Include(w => w.Exercises)
                                            .ToListAsync();
 
             return Ok(items);
@@ -46,7 +45,6 @@ namespace DIYHIIT.API.Controllers
             }
 
             var workouts = await _appDbContext.Workouts.Where(w => w.UserID == userId)
-                                                       .OrderByDescending(w => w.DateAdded)
                                                        .Include(w => w.Exercises)
                                                        .ToListAsync();
 
@@ -57,6 +55,15 @@ namespace DIYHIIT.API.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateWorkout([FromBody] Workout workout)
         {
+            if (workout == null)
+            {
+                return BadRequest();
+            }
+
+            if (!_appDbContext.Workouts.Any(w => w.ID == workout.ID))
+            {
+                return NotFound();
+            }
 
             var entity = _appDbContext.Workouts.Attach(workout);
             entity.State = EntityState.Modified;

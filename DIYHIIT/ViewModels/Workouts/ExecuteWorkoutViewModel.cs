@@ -352,22 +352,22 @@ namespace DIYHIIT.ViewModels.Workouts
         {
             _dialogService.ShowLoading("Syncing...");
 
+            var audit = new AuditTrail()
+            {
+                UserId = App.CurrentUser.ID,
+                Type = _workout.Type,
+                Notes = $"{App.CurrentUser.Username} completed workout {_workout.Name}"
+            };
+
+            await _auditTrailDataService.PostAuditTrail(audit);
+
             // Make a copy and the recently used date and effort of the workout.
             _workout.DateUsed = DateTime.Now;
             _workout.Effort = Math.Round(EffortSliderValue, 1);
 
-            var audit = new AuditTrail
-            {
-                UserID = App.CurrentUser.ID,
-                AuditWorkout = _workout as Workout,
-                Notes = $"{App.CurrentUser.Username} completed workout {_workout.Name}"
-            });
+            //await _workoutDataService.UpdateWorkout(_workout);
 
-            await _userDataService.UpdateUser(App.CurrentUser);
-
-            await _workoutDataService.UpdateWorkout(_workout);
-
-            if (PostToFeed)
+            if (true)
             {
                 var item = new FeedItem()
                 {
@@ -379,7 +379,7 @@ namespace DIYHIIT.ViewModels.Workouts
                 };
 
                 await _feedItemService.PostFeedItem(item);
-                MessagingCenter.Send(this, "WorkoutPosted");
+                //MessagingCenter.Send(this, "WorkoutPosted");
             }
 
             _dialogService.HideLoading();

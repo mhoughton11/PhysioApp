@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using DIYHIIT.Library.Contracts;
+using static DIYHIIT.Library.Settings.Settings;
 
 namespace DIYHIIT.Library.Models
 {
@@ -17,11 +19,13 @@ namespace DIYHIIT.Library.Models
         [StringLength(100)]
         public string Notes { get; set; }
 
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         public DateTime DOE { get; set; }
 
-        public Workout AuditWorkout { get; set; }
+        public WorkoutType? Type { get; set; }
+
+        //public int? AuditWorkoutId { get; set; }
 
         // Navigation Properties
         public virtual User User { get; set; }

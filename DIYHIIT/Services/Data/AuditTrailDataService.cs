@@ -36,7 +36,7 @@ namespace DIYHIIT.Services.Data
                     break;
             }
 
-            var ex = await _genericRepository.PostAsync<FeedItem>(path, item);
+            var ex = await _genericRepository.PostAsync<AuditTrail>(path, item);
 
             return ex;
         }

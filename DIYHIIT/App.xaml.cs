@@ -35,7 +35,7 @@ namespace DIYHIIT
             //Register Syncfusion license
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(SyncfusionLicense);
 
-            AppHostOptions = HostOptions.LocalHost;
+            AppHostOptions = HostOptions.Production;
 
             AppContainer.Container = setup.CreateContainer();
         }

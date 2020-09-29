@@ -30,6 +30,6 @@ namespace DIYHIIT.Constants
         public const string PostFeedItemEndpoint = "feed/post";
 
         // Audit Trails
-        public const string PostAuditTrailEndpoint;
+        public const string PostAuditTrailEndpoint = "audittrails/post";
     }
 }

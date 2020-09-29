@@ -120,21 +120,18 @@ namespace DIYHIIT.ViewModels.Tabs
 
         private async void GetWorkouts()
         {
-            _dialogService.ShowLoading("Loading workouts...");
+            try
+            {
+                var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.ID);
+                WorkoutList = new ObservableCollection<IWorkout>(workouts);  
 
-                try
-                {
-                    var workouts = await _workoutDataService.GetWorkoutsForUser(App.CurrentUser.ID);
-                    WorkoutList = new ObservableCollection<IWorkout>(workouts);  
+            }
+            catch (Exception ex)
+            {
+                _dialogService.Popup("Loading workouts failed.");
+                Debug.WriteLine(ex);
+            }
 
-                }
-                catch (Exception ex)
-                {
-                    _dialogService.Popup("Loading workouts failed.");
-                    Debug.WriteLine(ex);
-                }
-
-            _dialogService.HideLoading();
         }
 
         #endregion

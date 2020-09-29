@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,6 +12,7 @@ using MvvmCross.ViewModels;
 using Xamarin.Forms;
 using DIYHIIT.Views.Profile;
 using DIYHIIT.ViewModels.Profile;
+using DIYHIIT.ViewModels.Workouts;
 
 using static DIYHIIT.Library.Settings.Settings;
 using static DIYHIIT.Constants.Messages;
@@ -257,6 +259,11 @@ namespace DIYHIIT.ViewModels.Tabs
                 GetProfile();
             });
 
+            MessagingCenter.Subscribe<ExecuteWorkoutViewModel>(this, ProfileUpdated, (sender) =>
+            {
+                GetAuditWorkouts();
+            });
+
             GetProfile();
             GetAuditWorkouts();
             
@@ -266,35 +273,32 @@ namespace DIYHIIT.ViewModels.Tabs
 
         private void GetAuditWorkouts()
         {
-            int total = App.CurrentUser.WorkoutAuditTrails.Count;
+            //var audits = await _au
         
             if (total == 0)
             {
-                EmptyStart = 0.1;
-                EmptyEnd = 100;
-
-                HIITStart = 0;
-                HIITEnd = 0;
-
-                CaliStart = 0;
-                CaliEnd = 0;
-
-                YogaStart = 0;
-                YogaEnd = 0;
-
-                PilaStart = 0;
-                PilaEnd = 0;
-
-                MobStart = 0;
-                MobEnd = 0;
-
-                StretchStart = 0;
-                StretchEnd = 0;
+                SetDefaults();
             }
             else
             {
                 GetWorkoutProportions(total);
             }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void GetProfile()
+        {
+            UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.Surname;
+            UserImage = "https://icons-for-free.com/iconfiles/png/512/neutral+user-131964784832104677.png";
+            UserEmail = App.CurrentUser.Username;
+        }
+
+        private async void OnSettingsTapped()
+        {
+            await _navigation.PushAsync(new SettingsView(), true);
         }
 
         private void GetWorkoutProportions(int total)
@@ -307,14 +311,14 @@ namespace DIYHIIT.ViewModels.Tabs
             int mob = 0;
             int unknown = 0;
 
-            foreach (var workout in App.CurrentUser.WorkoutAuditTrails)
+            foreach (var audit in App.CurrentUser.WorkoutAuditTrails)
             {
-                if (workout.AuditWorkout.Type == WorkoutType.Calisthenics) { cali++; }
-                else if (workout.AuditWorkout.Type == WorkoutType.HIIT) { hiit++; }
-                else if (workout.AuditWorkout.Type == WorkoutType.Yoga) { yoga++; }
-                else if (workout.AuditWorkout.Type == WorkoutType.Mobility) { mob++; }
-                else if (workout.AuditWorkout.Type == WorkoutType.Stretches) { stretch++; }
-                else if (workout.AuditWorkout.Type == WorkoutType.Pilates) { pila++; }
+                if (audit.Type == WorkoutType.Calisthenics) { cali++; }
+                else if (audit.Type == WorkoutType.HIIT) { hiit++; }
+                else if (audit.Type == WorkoutType.Yoga) { yoga++; }
+                else if (audit.Type == WorkoutType.Mobility) { mob++; }
+                else if (audit.Type == WorkoutType.Stretches) { stretch++; }
+                else if (audit.Type == WorkoutType.Pilates) { pila++; }
                 else { unknown++; }
             }
 
@@ -340,20 +344,28 @@ namespace DIYHIIT.ViewModels.Tabs
             StretchEnd = StretchStart + (stretch / total) * 100;
         }
 
-        #endregion
-
-        #region Private Methods
-
-        private void GetProfile()
+        private async void SetDefaults()
         {
-            UserName = App.CurrentUser.FirstName + " " + App.CurrentUser.Surname;
-            UserImage = "https://icons-for-free.com/iconfiles/png/512/neutral+user-131964784832104677.png";
-            UserEmail = App.CurrentUser.Username;
-        }
+            EmptyStart = 0.1;
+            EmptyEnd = 100;
 
-        private async void OnSettingsTapped()
-        {
-            await _navigation.PushAsync(new SettingsView(), true);
+            HIITStart = 0;
+            HIITEnd = 0;
+
+            CaliStart = 0;
+            CaliEnd = 0;
+
+            YogaStart = 0;
+            YogaEnd = 0;
+
+            PilaStart = 0;
+            PilaEnd = 0;
+
+            MobStart = 0;
+            MobEnd = 0;
+
+            StretchStart = 0;
+            StretchEnd = 0;
         }
 
         #endregion

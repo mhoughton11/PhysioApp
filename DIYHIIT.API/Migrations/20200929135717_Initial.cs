@@ -7,6 +7,7 @@ namespace DIYHIIT.API.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -23,6 +24,29 @@ namespace DIYHIIT.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuditTrails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Notes = table.Column<string>(maxLength: 100, nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    DOE = table.Column<DateTime>(nullable: false),
+                    AuditWorkoutType = table.Column<int>(nullable: true),
+                    AuditWorkoutId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditTrails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditTrails_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,34 +74,6 @@ namespace DIYHIIT.API.Migrations
                     table.PrimaryKey("PK_Workouts", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Workouts_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AuditTrails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Notes = table.Column<string>(maxLength: 100, nullable: true),
-                    UserID = table.Column<int>(nullable: false),
-                    DOE = table.Column<DateTime>(nullable: false),
-                    AuditWorkoutID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuditTrails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AuditTrails_Workouts_AuditWorkoutID",
-                        column: x => x.AuditWorkoutID,
-                        principalTable: "Workouts",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_AuditTrails_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID",
@@ -136,14 +132,9 @@ namespace DIYHIIT.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuditTrails_AuditWorkoutID",
+                name: "IX_AuditTrails_UserId",
                 table: "AuditTrails",
-                column: "AuditWorkoutID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuditTrails_UserID",
-                table: "AuditTrails",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exercises_WorkoutID",
@@ -159,6 +150,7 @@ namespace DIYHIIT.API.Migrations
                 name: "IX_Workouts_UserID",
                 table: "Workouts",
                 column: "UserID");
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

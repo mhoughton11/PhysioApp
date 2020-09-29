@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIYHIIT.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200926173328_Initial")]
+    [Migration("20200929135717_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,10 @@ namespace DIYHIIT.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AuditWorkoutID")
+                    b.Property<int?>("AuditWorkoutId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AuditWorkoutType")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DOE")
@@ -38,14 +41,12 @@ namespace DIYHIIT.API.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuditWorkoutID");
-
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("AuditTrails");
                 });
@@ -214,13 +215,9 @@ namespace DIYHIIT.API.Migrations
 
             modelBuilder.Entity("DIYHIIT.Library.Models.AuditTrail", b =>
                 {
-                    b.HasOne("DIYHIIT.Library.Models.Workout", "AuditWorkout")
-                        .WithMany()
-                        .HasForeignKey("AuditWorkoutID");
-
                     b.HasOne("DIYHIIT.Library.Models.User", "User")
                         .WithMany("WorkoutAuditTrails")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
