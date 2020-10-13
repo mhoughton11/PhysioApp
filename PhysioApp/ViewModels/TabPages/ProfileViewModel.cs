@@ -344,7 +344,7 @@ namespace PhysioApp.ViewModels.Tabs
             StretchEnd = StretchStart + (stretch / total) * 100;
         }
 
-        private async void SetDefaults()
+        private void SetDefaults()
         {
             EmptyStart = 0.1;
             EmptyEnd = 100;

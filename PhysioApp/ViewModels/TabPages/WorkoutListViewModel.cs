@@ -81,12 +81,12 @@ namespace PhysioApp.ViewModels.Tabs
 
         public override async Task InitializeAsync(object data)
         {
-            MessagingCenter.Subscribe<CreateWorkoutViewModel>(this, WorkoutsUpdated, (sender) =>
+            MessagingCenter.Subscribe<CreateWorkoutViewModel>(this, WorkoutsUpdated, async (sender) =>
             {
-                GetWorkouts();
+                await GetWorkouts();
             });
 
-            GetWorkouts();
+            await GetWorkouts();
 
             _workoutsUpdated = false;
 
@@ -113,12 +113,12 @@ namespace PhysioApp.ViewModels.Tabs
         {
             IsRefreshing = "True";
 
-            GetWorkouts();
+            await GetWorkouts();
 
             IsRefreshing = "False";
         }
 
-        private async void GetWorkouts()
+        private async Task GetWorkouts()
         {
             try
             {
