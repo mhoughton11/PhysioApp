@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhysioApp.Views.Authentication.LoginView">
+    <ContentPage.Content>
+        <StackLayout Padding="10"
+                     VerticalOptions="Center">
+                    <Label Text="Log in"
+                           HorizontalOptions="Center"
+                           TextColor="#4682B4"
+                           FontSize="35"
+                           Margin="0, 20" />
+        
+                    <Entry Placeholder="E-mail"
+                           Text="{Binding UserEmail}"
+                           Keyboard="Email"/>
+        
+                    <Entry Placeholder="Password"
+                           Text="{Binding UserPassword}"
+                           IsPassword="true"/>
+
+                    <Label Text="Incorrect login details"
+                           HorizontalOptions="CenterAndExpand"
+                           TextColor="Red"
+                           FontSize="16"
+                           IsVisible="{Binding ErrorLabelVisible}" />
+        
+                    <Button Text="Enter"
+                            Command="{Binding LoginCommand}"
+                            Margin="60, 40"
+                            BackgroundColor="#4682B4"
+                            TextColor="White" />
+        
+                    <Button Text="Create new account"
+                            TextColor="#4682B4"
+                            HorizontalOptions="Center"
+                            BackgroundColor="Transparent"
+                            Command="{Binding RegisterCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

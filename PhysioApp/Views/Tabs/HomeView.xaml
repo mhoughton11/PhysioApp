@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhysioApp.Views.Tabs.HomeView"
+             xmlns:ffloadingimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             Title="Feed">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Create"
+                     Command="{Binding CreatePost}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ListView ItemsSource="{Binding FeedItems}"
+                  BackgroundColor="LightGray"
+                  HasUnevenRows="True"
+                  SeparatorVisibility="None"
+                  SelectionMode="None"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="10"
+                               BackgroundColor="{Binding BackgroundColour}"
+                               Margin="5"
+                               HasShadow="False">
+
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <ffloadingimage:CachedImage Source="{Binding ImageURL}"
+                                                                Aspect="AspectFit"
+                                                                Margin="0"
+                                                                Grid.RowSpan="2"
+                                                                VerticalOptions="FillAndExpand"
+                                                                HorizontalOptions="FillAndExpand">
+                                        <ffloadingimage:CachedImage.Transformations>
+                                            <fftransformations:CircleTransformation/>
+                                        </ffloadingimage:CachedImage.Transformations>
+
+                                    </ffloadingimage:CachedImage>
+
+                                    <Label Grid.Column="1"
+                                           Text="{Binding UserName}"
+                                           FontSize="30"
+                                           TextColor="Black"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="StartAndExpand"/>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="1"
+                                           Text="{Binding Date}"
+                                           FontSize="15"
+                                           TextColor="Black"
+                                           VerticalOptions="Start"
+                                           HorizontalOptions="StartAndExpand"/>
+                                </Grid>
+
+                                <Label Text="{Binding Title}"
+                                       FontSize="30"
+                                       Margin="6"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="StartAndExpand"/>
+
+                                <Label Text="{Binding Message}"
+                                       FontSize="14"
+                                       LineBreakMode="WordWrap"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="StartAndExpand"/>
+
+                            </StackLayout>
+                        </Frame>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

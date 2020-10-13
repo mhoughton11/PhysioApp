@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhysioApp.Views.Tabs.WorkoutListView"
+             xmlns:behaviors="clr-namespace:PhysioApp.Behaviors"
+             Title="My Workouts">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Create"
+                     Command="{Binding AddWorkoutCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     BackgroundColor="Transparent">
+
+            <ListView HasUnevenRows="True"
+                      VerticalOptions="FillAndExpand"
+                      ItemsSource="{Binding WorkoutList}"
+                      SeparatorVisibility="None"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing}"
+                      RefreshCommand="{Binding RefreshCommand}">
+
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        EventName="ItemTapped"
+                        Command="{Binding WorkoutTappedCommand}"
+                        EventArgsConverter="{StaticResource LocalItemTappedConverter}">
+                    </behaviors:EventToCommandBehavior>
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="10"
+                                   Margin="6"
+                                   IsClippedToBounds="True"
+                                   HasShadow="False"
+                                   Padding="0"
+                                   HeightRequest="90">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.5*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Image Source="{Binding BackgroundImage}"
+                                           Grid.ColumnSpan="2"
+                                           Grid.RowSpan="2"
+                                           Opacity="0.25"
+                                           Aspect="AspectFill"
+                                           HorizontalOptions="Fill"/>
+
+                                    <Label Text="{Binding Name}"
+                                           TextColor="Black"
+                                           FontSize="30"
+                                           Padding="10"
+                                           Grid.ColumnSpan="2"
+                                           LineBreakMode="WordWrap"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Text="{Binding ExerciseCount}"
+                                           FontSize="Medium"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+
+                                    <Label Text="{Binding Duration, StringFormat='{0} Mins'}"
+                                           FontSize="Medium"
+                                           FontFamily=""
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+                                </Grid>
+
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

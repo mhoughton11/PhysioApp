@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "74800088234",
+    "firebase_url": "https://diy-hiit.firebaseio.com",
+    "project_id": "diy-hiit",
+    "storage_bucket": "diy-hiit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74800088234:android:4e370c33ee637155b4fcd3",
+        "android_client_info": {
+          "package_name": "com.houghtonstudio.uk.diy_hiit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74800088234-gfc9oe10b26vicvcsed0hq0u85eqaafe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChzH_zj1t9kI8gVcYwLG2UxDEouFwRU8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74800088234-gfc9oe10b26vicvcsed0hq0u85eqaafe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "74800088234-p81vr25q8668539o13op1vp698gbi3bi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.houghtonstudio.uk.DIY-HIIT.PhysioApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
